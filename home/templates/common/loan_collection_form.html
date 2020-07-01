@@ -1,0 +1,111 @@
+{% load widget_tweaks %}
+<form action="{% url 'loan_collection' %}" class="loan-collection-form" method="POST">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="form-group">
+                <label class="col-lg-2 col-sm-4 control-label text-semibold">
+                    Date:
+                </label>
+                <label class="col-lg-10 col-sm-8 control-label text-semibold">
+                    <input type="text" class="form-control pickadate sys-input "
+                        style="width: 85%; display:inline-block;" placeholder="Pick a date&hellip;" name="payment_date">
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 ">
+            <div class="form-group">
+                <label class="col-lg-4 col-sm-4 control-label text-semibold mb-10">Select
+                    Borrower:
+                    {% if loan_collection_form.borrower.field.required %}
+                    <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                <div class="col-lg-8 col-sm-6 mb-10">
+                    {% render_field loan_collection_form.borrower class="select" %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="col-sm-4 control-label text-semibold">
+                    Amount:
+                    {% if loan_collection_form.amount.field.required %}
+                    <span class="text-danger">*</span>
+                    {% endif %}
+
+                </label>
+                <div class="col-sm-8">
+                    {% render_field loan_collection_form.amount class="form-control sys-input" min="1" placeholder="Enter Amount" %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 ">
+            <div class="form-group">
+                <label class="col-lg-4 col-sm-4 control-label text-semibold mb-10">Payment Method:
+                    {% if loan_collection_form.payment_method.field.required %}
+                    <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                <div class="col-lg-8 col-sm-6 mb-10">
+                    {% render_field loan_collection_form.payment_method class="select" %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="form-group">
+                <label class="col-sm-2 control-label text-semibold">
+                    Description:
+                    {% if loan_collection_form.description.field.required %}
+                    <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                <div class="col-sm-10">
+                    {% render_field loan_collection_form.description placeholder="Write any comment" class="form-control" rows="5" cols="5" %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-10">
+        <div class="col-md-6 ">
+            <div class="form-group">
+                <label class="col-lg-4 col-sm-4 control-label text-semibold mb-10">Authorized by:
+                    {% if loan_collection_form.authorized_by.field.required %}
+                    <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                <div class="col-lg-8 col-sm-6 mb-10">
+                    {% render_field loan_collection_form.authorized_by class="select" %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 ">
+            <div class="form-group">
+                <label class="col-lg-4 col-sm-4 control-label text-semibold mb-10">Registered
+                    by:
+                    {% if loan_collection_form.collected_by.field.required %}
+                    <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                <div class="col-lg-8 col-sm-6 mb-10">
+                    {% render_field loan_collection_form.collected_by class="select" %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 text-right">
+            <button type="submit" class="btn btn-sm btn-success btn-rounded btn-labeled">
+                <b>
+                    <i class="icon-check"></i>
+                </b>
+                Save</button>
+        </div>
+    </div>
+</form>

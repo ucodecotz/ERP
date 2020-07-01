@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% load control_filters %}
+{% block content %}
+<div class="row">
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="control-label col-lg-3 text-semibold">Staff Name: </label>
+            <div class="col-lg-6">
+                <div class="form-control text-primary b-r-6">
+                    {{ staff.first_name }} {{ staff.last_name }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="control-label col-lg-3 text-semibold">Total Amount: </label>
+            <div class="col-lg-6">
+                <div class="form-control text-primary b-r-6">
+                    TZS {{ staff.id|get_staff_sale_value|intcomma }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel b-r-6 sys-panel-shadow">
+            <div class="panel-heading bg-blue">
+                <h6 class="panel-title text-center" style="font-weight: 500">
+                    <i class="icon-pulse2"></i>
+                    sales list
+                </h6>
+            </div>
+            <div class="">
+                <table class="table datatable-basic sales_list_table">
+                    <thead>
+                        <tr>
+                            <th>Customer</th>
+                            <th><span class="text-primary">Item</span> &nbsp;- &nbsp;<span
+                                    class="text-orange">Quantity</span>
+                                &nbsp;- &nbsp;<span class="text-success">Amount</span></th>
+                            <th>Sales Type</th>
+                            <th>Total Amount</th>
+                            <th>Created</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for sale in sale_list %}
+                        <tr>
+                            <td>
+                                <span>
+                                    {{ sale.customer.first_name }} {{ sale.customer.last_name }}
+                                </span>
+                            </td>
+                            <td>
+
+                                {% for si in sale.id|get_sale_items %}
+                                <span class="">
+                                    <ul>
+                                        <li>
+                                            <span class="text-primary">{{ si.product.name }}</span> &nbsp;- &nbsp;<span
+                                                class="text-orange">
+                                                {{ si.quantity }} {{ si.product.unit }}
+                                            </span> &nbsp;- &nbsp;<span
+                                                class="text-success">{{ si.quantity|total_product_price:si.price|intcomma }}</span>
+                                        </li>
+                                    </ul>
+                                </span>
+                                {% endfor %}
+                            </td>
+                            <td>
+
+                                {% if sale.sale_type %}
+                                <span class="label bg-success-400">CASH</span>
+                                {% else %}
+                                <span class="label bg-warning-400">CREDIT</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <h6 class="text-semibold">{{ sale.id|total_sale_amount|intcomma }}</h6>
+                            </td>
+                            <!-- date:'Y-m-d' -->
+                            <td>{{ sale.created|date:'Y-m-d' }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock content%}
+
+{% block data_table_js %}
+<script>
+    $(function () {
+
+
+        // Table setup
+        // ------------------------------
+
+        // Setting datatable defaults
+        $.extend($.fn.dataTable.defaults, {
+            autoWidth: false,
+            columnDefs: [{
+                orderable: false,
+                width: '100px',
+                targets: [2]
+            }],
+            dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
+            language: {
+                search: '<span>Filter:</span> _INPUT_',
+                searchPlaceholder: 'Type to filter...',
+                lengthMenu: '<span>Show:</span> _MENU_',
+                paginate: { 'first': 'First', 'last': 'Last', 'next': '&rarr;', 'previous': '&larr;' }
+            },
+            drawCallback: function () {
+                $(this).find('tbody tr').slice(-1).find('.dropdown, .btn-group').addClass('dropup');
+            },
+            preDrawCallback: function () {
+                $(this).find('tbody tr').slice(-1).find('.dropdown, .btn-group').removeClass('dropup');
+            }
+        });
+
+
+        // Basic datatable
+        $('.datatable-basic').DataTable({
+            order: []
+        });
+
+    });
+</script>
+{% endblock data_table_js %}

@@ -1,0 +1,54 @@
+{% load widget_tweaks %}
+<form action="{% url 'edit_account' account.id %}" method="POST" class="edit-account-form">
+    {% csrf_token %}
+    <div class="form-group col-md-12">
+        <label class="col-md-4 control-label text-semibold">
+            Name:
+            {% if form.name.field.required %}
+            <span class="text-danger">*</span>
+            {% endif %}
+
+        </label>
+        <div class="col-md-8">
+            {% render_field form.name class="form-control sys-input" placeholder="Account name eg CRDB,Tigopesa" %}
+        </div>
+        <span class="text-danger">{{ form.name.errors }}</span>
+    </div>
+
+    <div class="form-group col-md-12">
+        <label class="col-md-4 control-label text-semibold">
+            Number:
+            {% if form.number.field.required %}
+            <span class="text-danger">*</span>
+            {% endif %}
+        </label>
+        <div class="col-md-8">
+            {% render_field form.number class="form-control sys-input" placeholder="Account number" %}
+        </div>
+        <span class="text-danger">{{ form.number.errors }}</span>
+    </div>
+    <div class="form-group col-md-12">
+        <label class="col-md-4 control-label text-semibold">
+            Opening balance:
+            {% if form.opening_balance.field.required %}
+            <span class="text-danger">*</span>
+            {% endif %}
+        </label>
+        <div class="col-md-8">
+            {% render_field form.opening_balance class="form-control sys-input" placeholder="Account opening balance" %}
+        </div>
+        <span class="text-danger">{{ form.opening_balance.errors }}</span>
+    </div>
+    <div class="form-group col-md-12">
+        <label class="col-md-4 control-label text-semibold">
+            Assigned Branch:
+            {% if form.branch.field.required %}
+            <span class="text-danger">*</span>
+            {% endif %}
+        </label>
+        <div class="col-md-8">
+            {% render_field form.branch class="form-control" %}
+        </div>
+        <span class="text-danger">{{ form.branch.errors }}</span>
+    </div>
+</form>

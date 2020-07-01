@@ -1,0 +1,59 @@
+{% load widget_tweaks %}
+<form action="{% url 'edit_borrower' borrower.id %}" method="POST" class="edit-borrower-form">
+    {% csrf_token %}
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="col-sm-3 control-label text-semibold">
+                Full Name:
+                {% if borrower_form.full_name.field.required %}
+                <span class="text-danger">*</span>
+                {% endif %}
+            </label>
+            <div class="col-lg-9">
+                {% render_field borrower_form.full_name class="form-control sys-input" placeholder="Full name Eg.John Seku" %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="col-sm-3 control-label text-semibold">
+                Borrowers Email:
+                {% if borrower_form.email.field.required %}
+                <span class="text-danger">*</span>
+                {% endif %}
+            </label>
+            <div class="col-lg-9">
+                {% render_field borrower_form.email class="form-control sys-input" placeholder="Email" %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="col-sm-3 control-label text-semibold">
+                Phone Number:
+                {% if borrower_form.phone_number.field.required %}
+                <span class="text-danger">*</span>
+                {% endif %}
+            </label>
+            <div class="col-lg-9">
+                {% render_field borrower_form.phone_number class="form-control sys-input" placeholder="Phone Number" %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="col-sm-3 control-label text-semibold">
+                Opening Balance:
+                {% if borrower_form.balance.field.required %}
+                <span class="text-danger">*</span>
+                {% endif %}
+
+            </label>
+            <div class="col-lg-9">
+                {% render_field borrower_form.balance class="form-control sys-input" placeholder="Borrower balance" %}
+            </div>
+        </div>
+    </div>
+</form>

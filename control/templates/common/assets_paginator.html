@@ -1,0 +1,64 @@
+<table class="table datatable-basic asset_list_table">
+        <thead>
+            <tr>
+                <!-- <th>No.</th> -->
+                <th>Name</th>
+                <th>
+                    Code
+                </th>
+                <th>
+                    Condition
+                </th>
+                <th>
+                    Branch
+                </th>
+                <th>
+                    Description
+                </th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            {% for asset in assets %}
+                <tr>
+                    <!-- <td>
+                        <span>
+                            {{ forloop.counter }}
+                        </span>
+                    </td> -->
+                    <td>
+                        {{ asset.name }}
+                    </td>
+                    <td>
+                        {{ asset.asset_number }}
+                    </td>
+                    <td>
+                        
+                        {% if asset.condition == 'working' %}
+                            <span class="label bg-success-400">Working</span>
+                            {% else %}
+                            <span class="label bg-warning-400">Not Working</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ asset.branch.name }}</td>
+                        <td data-toggle="tooltip" data-placement="top" title="{{ asset.description }}">
+                            {{ asset.description|truncatechars:'10' }}
+                        </td>
+                    <td class="text-center">
+                        <ul class="icons-list">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
+                                        class="icon-menu7"></i></a>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><a href="{% url 'edit_asset' asset.id %}"><i class="icon-pencil text-primary"></i>Edit</a></li>                                       
+                                    <li><a href="javascript;;" data-href="{% url 'delete_asset' asset.id %}" class="delete-asset-link"><i class="icon-trash text-danger"></i>Delete</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>                            
+            {% endfor %}
+                
+        </tbody>
+    </table>

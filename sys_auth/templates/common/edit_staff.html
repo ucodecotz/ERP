@@ -1,0 +1,84 @@
+{% load widget_tweaks %}
+<form action="{% url 'edit_staff' staff.id %}" method="POST" class="edit-staff-form">
+    {% csrf_token %}
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="col-sm-3 control-label text-semibold">
+                Full Name:
+
+            </label>
+            <div class="col-lg-9">
+                {% render_field staff_form.full_name class="form-control sys-input" placeholder="Staff name" %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="col-sm-3 control-label text-semibold">
+                Staff Email:
+            </label>
+            <div class="col-lg-9">
+                {% render_field staff_form.email class="form-control sys-input" placeholder="Staff email" %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="col-sm-3 control-label text-semibold">
+                Phone Number:
+            </label>
+            <div class="col-lg-9">
+                {% render_field staff_form.phone_number class="form-control sys-input" placeholder="Staff Phone number" %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="col-sm-3 control-label text-semibold">
+                Salary:
+            </label>
+            <div class="col-lg-9">
+                {% render_field staff_form.salary class="form-control sys-input" placeholder="Staff Salary" %}
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="col-sm-3 control-label text-semibold">
+                Roles:
+            </label>
+            <div class="col-lg-9">
+                {% render_field staff_form.role class="form-control" %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="col-sm-3 control-label text-semibold">
+                Branch:
+            </label>
+            <div class="col-lg-9">
+                {% render_field staff_form.branch class="form-control" %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="col-sm-3 control-label text-semibold">
+                Opening Balance: 
+                {% if staff_form.balance.field.required %}
+                    <span class="text-danger">*</span>
+                {% endif %}
+            </label>
+            <div class="col-lg-9">
+                {% render_field staff_form.balance class="form-control sys-input" placeholder="Staff Opnening balance" %}
+            </div>
+        </div>
+    </div>
+</form>

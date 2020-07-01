@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+<div class="row">
+    <!-- <div class="col-md-4">
+        <div class="form-group">
+            <label class="control-label col-lg-4">Branch: </label>
+            <div class="col-lg-8">
+                <select name="" class="form-control select text-primary data-filter" style="width: 100%">
+                    <option value="This Month">All</option>
+                    <option value="This Month">Main</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group">
+            <label class="control-label col-lg-4">Filter: </label>
+            <div class="col-lg-6">
+                <select name="" class="form-control select text-primary data-filter" style="width: 100%">
+                    <option value="This Month">This Month</option>
+                    <option value="Last Week">Last Week</option>
+                    <option value="Last Month">Last Month</option>
+                    <option value="Pick Date">Pick Date(s)</option>
+                </select>
+            </div>
+            <div class="col-lg-2">
+                <a href="javascript:;" data-href="" class="btn btn-rounded bg-blue sys-btn">
+                    <i class=" icon-search4"></i>
+                </a>
+            </div>
+        </div>
+    </div> -->
+    <div class="col-md-12 text-right">
+        <a href="javascript:;" data-href="" class="btn btn-rounded bg-blue sys-btn  btn-labeled mb-10 ">
+            <b><i class=" icon-printer"></i></b> Print
+        </a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel b-r-6 sys-panel-shadow">
+            <div class="panel-heading bg-blue">
+                <h6 class="panel-title text-center" style="font-weight: 500">
+                    <i class="icon-pulse2"></i>
+                    Stock Report
+                </h6>
+            </div>
+            <div class="">
+
+                <table class="table datatable-basic payroll_table">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Product</th>
+                            <th>
+                                Quantity
+                            </th>
+                            <th>
+                                @B.Price
+                            </th>
+                            <th>
+                                Capital
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% include 'common/stock_report_paginator.html' %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock content%}
+
+{% block data_table_js %}
+<script>
+    $(function () {
+
+
+        // Table setup
+        // ------------------------------
+
+        // Setting datatable defaults
+        $.extend($.fn.dataTable.defaults, {
+            autoWidth: false,
+            columnDefs: [{
+                orderable: false,
+                width: '100px',
+                targets: [2]
+            }],
+            dom: '<"datatable-header"fBl><"datatable-scroll-wrap"t><"datatable-footer"ip>',
+            language: {
+                search: '<span>Filter:</span> _INPUT_',
+                searchPlaceholder: 'Type to filter...',
+                lengthMenu: '<span>Show:</span> _MENU_',
+                paginate: { 'first': 'First', 'last': 'Last', 'next': '&rarr;', 'previous': '&larr;' }
+            },
+            drawCallback: function () {
+                $(this).find('tbody tr').slice(-1).find('.dropdown, .btn-group').addClass('dropup');
+            },
+            preDrawCallback: function () {
+                $(this).find('tbody tr').slice(-1).find('.dropdown, .btn-group').removeClass('dropup');
+            }
+        });
+
+
+        // Basic datatable
+        $('.datatable-basic').DataTable({
+            order: [],
+            buttons: {
+                buttons: [
+                    {
+                        extend: 'excelHtml5',
+                        className: 'btn btn-primary',
+                        exportOptions: {
+                            columns: [0, 1, 2, 4]
+                        }
+                    },
+                ]
+            }
+        });
+
+    });
+</script>
+{% endblock data_table_js %}

@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load control_filters %}
+{% load humanize %}
+{% block content %}
+<div class="row">
+    <div class="col-xs-12 mb-5 text-right">
+        <a href="javascript:;" data-href="{% url 'add_account' %}" class="btn btn-rounded bg-blue sys-btn add-account-link btn-labeled ml-20">
+            <b><i class="icon-plus22"></i></b>Add Account
+        </a>
+    </div>
+    <div class="col-sm-4">
+        <div class="panel bg-success-400 b-r-6 sys-panel-shadow">
+            <div class="panel-body" style=" padding-bottom:38px">
+                <h6 class="text-semibold no-margin-top text-center">
+                    <a href="#" class="text-white  text-uppercase">
+                        Total Amount <br>
+                         <small class="text-white text-capitalize">(All accounts + COH)</small>
+
+                    </a>
+                </h6>
+                <span class="mt-15" style="font-weight: 600;font-size: 14px">
+                    TZS: {{ total_collection_amount|intcomma }}
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="panel bg-primary-400 b-r-6 sys-panel-shadow">
+            <div class="panel-body ">
+                <h6 class="text-semibold no-margin-top text-center text-uppercase">
+                    <a href="#" class="text-white">
+                        COH <small class="text-white text-capitalize">(Up to date)</small>
+
+                    </a>
+                </h6>
+                <span class="mt-15" style="font-weight: 600;font-size: 14px">
+                    TZS: {{ total_cash_on_hand|intcomma }}
+                </span>
+            </div>
+
+            <div class="panel-footer panel-footer-condensed"
+                style="border-bottom-left-radius: 6px; border-bottom-right-radius:6px">
+                <div class="heading-elements not-collapsible"
+                    style="border-bottom-left-radius: 6px; border-bottom-right-radius:6px">
+                    <span class="heading-text pull-left label label-success">
+                        Active
+                    </span>
+                    <span class=" pull-right">
+                        <ul class="icons-list">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle text-grey-600" data-toggle="dropdown"><i
+                                        class="icon-menu7"></i></a>
+                                <ul class="dropdown-menu dropdown-menu-right animated fadeIn">
+                                    <!-- <li><a href="#"><i class="icon-file-text2 text-primary"></i> View statements</a> -->
+                                    </li>
+                                    <li><a href="javascript:;" data-href="{% url 'cash_collection_transfer' %}" class="cash-collection-transfer-link"><i class=" icon-database-export text-warning"></i> Transfer</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if accounts %}  
+    {% for account in accounts %}
+    <div class="col-sm-4">
+            <div class="panel bg-slate-400 b-r-6 sys-panel-shadow">
+                <div class="panel-body ">
+                    <h6 class="text-semibold no-margin-top text-center text-uppercase">
+                        <a href="#" class="text-white">
+                            {{ account.name }} - #{{ account.number }}
+    
+                        </a>
+                    </h6>
+                    <span class="mt-15" style="font-weight: 600;font-size: 14px">
+                        TZS: {{ account.id|total_account_amount|intcomma }}
+                    </span>
+                </div>
+    
+                <div class="panel-footer panel-footer-condensed"
+                    style="border-bottom-left-radius: 6px; border-bottom-right-radius:6px">
+                    <div class="heading-elements not-collapsible"
+                        style="border-bottom-left-radius: 6px; border-bottom-right-radius:6px">
+                        <!-- <span class="heading-text pull-left label label-warning">
+                                            blocked
+                                        </span> -->
+                        <span class="heading-text pull-left label label-success">
+                            Active
+                        </span>
+                        <span class=" pull-right">
+                            <ul class="icons-list">
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle text-grey-600" data-toggle="dropdown"><i
+                                            class="icon-menu7"></i></a>
+                                    <ul class="dropdown-menu dropdown-menu-right animated fadeIn">
+                                        <li><a href="{% url 'account_transactions' account.id %}"><i class="icon-file-text2 text-primary"></i> Transanctions</a>
+                                        </li>
+                                        <li><a href="javascript:;" data-href="{% url 'edit_account' account.id %}" class="edit-account-link"><i class="icon-pencil text-primary"></i>Edit</a></li>
+                                        <!-- <li><a href="javascript:;" data-href="" class="account-deposit-link"><i class="icon-database-add text-success"></i> Deposit</a></li> -->
+                                        
+                                        {% if account.id|total_account_amount > 0 %}
+                                            <li><a href="javascript:;" data-href="{% url 'account_transfer' account.id %}" class="account-transfer-link"><i class=" icon-database-export text-warning"></i> Transfer</a></li>
+                                        {% endif %}
+                                            <li><a href="javascript:;" data-href="{% url 'delete_account' account.id %}" class="delete-account-link"><i class="icon-trash text-slate"></i> Delete</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>        
+    {% endfor %}
+    {% else %}
+
+    {% endif %}   
+</div>
+{% endblock content %}
+{% block scripts %}
+    <script src="{% static 'assets/control/all_account.js' %}"></script>
+{% endblock scripts %}

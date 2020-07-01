@@ -1,0 +1,20 @@
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            Detail Name
+        </th>
+        <th>
+            Detail Amount
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for detail in expense_details %}
+        <tr>
+            <td>{{ detail.detail }}</td>
+            <td>{{ detail.expense_amount }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

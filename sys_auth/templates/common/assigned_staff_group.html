@@ -1,0 +1,23 @@
+{% if assigned %}
+{% for gp in assigned %}
+    <li class="media-list">
+    <div class="media-left">
+        <i class="icon-unlocked sys-color-text"></i>
+    </div>
+    <div class="media-body ">
+            {{ gp.first_name }} {{ gp.last_name }}
+        <a href="javascript;;" data-href="{% url 'remove_staff_group' gp.id group.id %}" class="pull-right text-danger remove-staff-group-link"
+        data-toggle="tooltip" data-placement="top"
+        title="remove Permission">
+            <i class="icon-cross2"></i>
+        </a>
+    </div>
+</li>
+{% endfor %}
+{% else %}
+    <div class="alert alert-info text-center">
+        <li class="list-group">
+            There is no assigned staff
+        </li>
+    </div>
+{% endif %}

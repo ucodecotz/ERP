@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% load control_filters %}
+{% block content %}
+<div class="row">
+   <div class="panel">
+       <div class="panel-heading">
+        <div class="panel-body">
+            <div class="col-sm-6">
+                <label class="text-semibold col-md-4">
+                    Full Name:
+                </label>
+                <label class="text-semibold col-md-8 text-primary">
+                    {{user}}
+                </label>
+            </div>
+            <div class="col-sm-6">
+                <label class="text-semibold col-md-4">
+                    Phone Number:
+                </label>
+                <label class="text-semibold col-md-8 text-primary">
+                    {% if user.phone_number %}
+                   {{user.phone_number}}
+                   {% else %}
+                   <span class="text-danger">Phone number not registered</span>
+                   {% endif %}
+                </label>
+            </div>
+            <div class="col-sm-6">
+                <label class="text-semibold col-md-4">
+                    Location
+                </label>
+                <label class="text-semibold col-md-8 text-primary">
+                    {% if user.location %}
+                    {{user.location}}
+                    {% else %}
+                    <span class="text-danger">Location not registered</span>
+                    {% endif %}
+                </label>
+            </div>
+            <div class="col-sm-6">
+                <label class="text-semibold col-md-4">
+                    Current Balance
+                </label>
+                <label class="text-semibold col-md-8 text-primary">
+                   TZS: {{ user.user.pk|customer_debt|intcomma }}/=
+                </label>
+            </div>
+            <div class="col-sm-6">
+                <label class="text-semibold col-md-4">
+                    Cash Sales
+                </label>
+                <label class="text-semibold col-md-8 text-primary">
+                   TZS: {{ customer_sales_cash_amount|intcomma }}/=
+                </label>
+            </div>
+            <div class="col-sm-6">
+                <label class="text-semibold col-md-4">
+                    Credit Sales
+                </label>
+                <label class="text-semibold col-md-8 text-primary">
+                   TZS: {{ customer_sales_credit_amount|intcomma }}/=
+                </label>
+            </div>
+            <div class="col-sm-6">
+                <label class="text-semibold col-md-4">
+                    Total Payment Amount
+                </label>
+                <label class="text-semibold col-md-8 text-primary">
+                   TZS: {{ customer_payment_amount|intcomma }}/=
+                </label>
+            </div>
+        </div>
+       </div>
+    <div class="panel-body" style="margin-top: -100px;">
+
+        <table class="table customers_table">
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Customer</th>
+                    <th>Description</th>
+                    <th>Amount</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for obj in sale_lists|dictsortreversed:'date' %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ obj.name }}</td>
+                    <td>
+                        {% if obj.type == 'sale' and obj.sale_type == False %}
+                        <span class="label label-warning">credit sale</span>
+                        {% elif obj.type == 'sale' and obj.sale_type == True %}
+                        <span class="label label-success">cash sale</span>
+                        {% elif obj.type == 'payment' and obj.sale_type == 'customer payment' %}
+                        <span class="label label-primary">payment</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ obj.amount|intcomma }}</td>
+                    <td>{{ obj.date| date:'d F Y' }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+   </div>
+</div>
+{% endblock content %}
+
+{% block data_table_js %}
+<script>
+    $(function () {
+
+
+        // Table setup
+        // ------------------------------
+
+        // Setting datatable defaults
+        $.extend($.fn.dataTable.defaults, {
+            autoWidth: true,
+            columnDefs: [{
+                orderable: false,
+                width: 'auto',
+                targets: [4]
+            }],
+            dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
+            language: {
+                search: '<span>Filter:</span> _INPUT_',
+                searchPlaceholder: 'Type to filter...',
+                lengthMenu: '<span>Show:</span> _MENU_',
+                paginate: { 'first': 'First', 'last': 'Last', 'next': '&rarr;', 'previous': '&larr;' }
+            },
+            drawCallback: function () {
+                $(this).find('tbody tr').slice(-1).find('.dropdown, .btn-group').addClass('dropup');
+            },
+            preDrawCallback: function () {
+                $(this).find('tbody tr').slice(-1).find('.dropdown, .btn-group').removeClass('dropup');
+            }
+        });
+
+
+        // Basic datatable
+        $('.customers_table').DataTable({
+            order: []
+        });
+
+    });
+</script>
+{% endblock data_table_js %}

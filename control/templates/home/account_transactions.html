@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load control_filters %}
+{% load humanize %}
+{% block content %}
+<div class="row">
+    <div class="col-xs-12 mb-5 text-right">
+        <!-- <a href="javascript:;" data-href=""
+            class="btn btn-rounded bg-blue sys-btn btn-labeled ml-20 account-deposit-link">
+            <b><i class="icon-plus22"></i></b>Deposits
+        </a> -->
+        <a href="javascript:;" data-href="{% url 'account_transfer' account.id %}"
+            class="btn btn-rounded btn-success sys-btn btn-labeled ml-20 account-transfer-link">
+            <b><i class="icon-database-export"></i></b>Transfer
+        </a>
+    </div>
+</div>
+<div class="row panel">
+    <div class="panel-body">
+        <div class="col-sm-6">
+            <label class="text-semibold col-md-4">
+                Account Name:
+            </label>
+            <label class="text-semibold col-md-8">
+                {{ account.name }}
+            </label>
+        </div>
+        <div class="col-sm-6">
+            <label class="text-semibold col-md-4">
+                Account Number:
+            </label>
+            <label class="text-semibold col-md-8">
+                {{ account.number }}
+            </label>
+        </div>
+        <div class="col-sm-6">
+            <label class="text-semibold col-md-4">
+                Account Assigned Branch:
+            </label>
+            <label class="text-semibold col-md-8">
+                {{ account.branch.name }}
+            </label>
+        </div>
+    </div>
+
+    <div class="" style="border:solid 0.5px rgba(41, 182, 246, .2)"></div>
+    <div class="panel-body">
+        <div class="col-sm-6">
+            <label class="text-semibold col-md-4">
+                Opening Balance:
+            </label>
+            <label class="text-semibold col-md-8">
+                {{ account.opening_balance|intcomma }} TZS
+            </label>
+        </div>
+        <div class="col-sm-6">
+            <label class="text-semibold col-md-4">
+                Total Account Balance:
+            </label>
+            <label class="text-semibold col-md-8">
+                {{ account.id|total_account_amount|intcomma }} TZS
+            </label>
+        </div>
+        <div class="col-sm-6">
+            <label class="text-semibold col-md-4">
+                Total Deposited:
+            </label>
+            <label class="text-semibold col-md-8">
+                {{ total_deposit|intcomma }} TZS
+            </label>
+        </div>
+        <div class="col-sm-6">
+            <label class="text-semibold col-md-4">
+                Total Withdraw:
+            </label>
+            <label class="text-semibold col-md-8">
+                {{ total_withdraw|intcomma }} TZS
+            </label>
+        </div>
+        <div class="col-sm-6">
+            <label class="text-semibold col-md-4">
+                Total Transfer:
+            </label>
+            <label class="text-semibold col-md-8">
+                {{ total_transfer|intcomma }} TZS
+            </label>
+        </div>
+
+    </div>
+    <div class="" style="border:solid 0.5px rgba(41, 182, 246, .2)"></div>
+    <div class="panel-body">
+        <table class="table table-secondary">
+            <thead>
+                <tr>
+                    <th>
+                        No.
+                    </th>
+                    <th>
+                        Amount
+                    </th>
+                    <th>
+                        Date
+                    </th>
+                    <th>
+                        Type
+                    </th>
+                    <th>
+                        Transaction for
+                    </th>
+                    <th>
+                        Staff
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% if transactions %}
+
+                {% for transanction in transactions %}
+
+                <tr>
+                    <td>
+                        {{ forloop.counter }}
+                    </td>
+                    <td>
+                        {{ transanction.amount|intcomma }}
+                    </td>
+                    <td>
+                        {{ transanction.transanction_date }}
+                    </td>
+                    <td>
+                        {% if transanction.transanction_type == 'deposit' %}
+                        <span class="label label-success">{{ transanction.transanction_type }}</span>
+                        
+                        {% elif transanction.transanction_type == 'transfer' %}
+                        <span class="label label-success">{{ transanction.transanction_type }}</span>
+                        {% else %}
+                        <span class="label label-warning">{{ transanction.transanction_type }}</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {{ transanction.content_type }}
+                    </td>
+                    <td>
+                        {{ transanction.created_by.first_name }} {{ transanction.created_by.last_name }}
+                    </td>
+                </tr>
+                {% endfor %}
+                {% else %}
+                <tr>
+                    <td colspan="6">
+                        <div class="alert alert-primary text-center">
+                            <span>No Transanction(s) Registered....</span>
+                        </div>
+                    </td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}
+{% block scripts %}
+<script src="{% static 'assets/control/all_account.js' %}"></script>
+{% endblock scripts %}

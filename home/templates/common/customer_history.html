@@ -1,0 +1,16 @@
+{% load humanize %}
+<ul>
+    {% for sale in sale_list %}
+    <li>
+        <a href="#">
+            <label class="">{{sale.date|date:"Y-m-d"}}</label>
+            <label class=" pull-right text-success">Tsh {{sale.amount| intcomma}} /=</label>
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+
+{% if sale_list|length > 4 %}
+<a class=""><i class="icon-list-unordered"></i> More </a>
+{% endif %}
+    

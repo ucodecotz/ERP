@@ -1,0 +1,209 @@
+{% load staticfiles %}
+{% load active_link_tags %}
+<li class="{% active_link 'home' strict=True %} ">
+    <a href="{% url 'home' %}" class="text-primary"><i class="icon-home4"></i>
+        <span>Home</span>
+    </a>
+</li>
+
+<li class="{% active_link 'add_sales' %} ">
+    <a href="{% url 'add_sales' %}" class="text-primary">
+        <i class="icon-cart-remove"></i>
+        <span>Sales</span>
+    </a>
+    <!-- <ul>
+        <li class="">
+            <a href="" class="text-primary">
+                <i class="icon-database-add"></i>
+                Add Sales
+            </a>
+        </li>
+        <li>
+            <a href="" class="text-primary">
+                <i class="icon-database-menu"></i>
+                Today Sales
+            </a>
+        </li>
+    </ul> -->
+</li>
+
+<li class="{% active_link 'expenses' %}">
+    <a href="{% url 'expenses' %}" class="text-primary"><i class=" icon-drawer-out"></i>
+        <span>Expenses</span>
+    </a>
+</li>
+
+<li class="{% active_link 'payments' %}">
+    <a href="{% url 'payments' %}" class="text-primary"><i class="icon-calculator3"></i>
+        <span>Payments</span>
+    </a>
+</li>
+
+<li class="{% active_link 'purchases' %} ">
+    <a href="{% url 'purchases' %}" class="text-primary"><i class="icon-cart-add2"></i>
+        <span>Purchases</span>
+    </a>
+</li>
+
+<li class="">
+    <a href="" class="text-primary"><i class="icon-box-add"></i>
+        <span>Products</span>
+    </a>
+    <ul>
+        <li class="{% active_link 'products' %}">
+            <a href="{% url 'products' %}" class="text-primary">
+                <i class="icon-database-add"></i>
+                Add Product
+            </a>
+        </li>
+        <li class="{% active_link 'stocks' %}">
+            <a href="{% url 'stocks' %}" class="text-primary">
+                <i class="icon-database-menu"></i>
+                Stocks
+            </a>
+        </li>
+    </ul>
+</li>
+<li class="{% active_link 'users' %}">
+    <a href="{% url 'users' %}" class="text-primary"><i class="icon-users4"></i>
+        <span>Users</span>
+    </a>
+</li>
+<li class="{% active_link 'payroll' %}">
+    <a href="{% url 'payroll' %}" class="text-primary"><i class="icon-vcard"></i>
+        <span>Payroll</span>
+    </a>
+</li>
+<li class="">
+    <a href="" class="text-primary"><i class="icon-vcard"></i>
+        <span>Advanced Staff Performance</span>
+    </a>
+    <ul>
+        <li class="{% active_link 'attendence' %}">
+            <a href="{% url 'attendence' %}" class="text-primary">
+                <i class="icon-calendar"></i>
+                Attendence
+            </a>
+        </li>
+        <li class="{% active_link 'sales_performance' %}">
+            <a href="{% url 'sales_performance' %}" class="text-primary">
+                <i class="icon-pulse2"></i>
+                Sales Performance
+            </a>
+        </li>
+        <li class="{% active_link 'collection_performance' %}">
+            <a href="{% url 'collection_performance' %}" class="text-primary">
+                <i class="icon-pulse2"></i>
+                Collection Performance
+            </a>
+        </li>
+        <li class="{% active_link 'monthly_employee_assesment' %}">
+            <a href="{% url 'monthly_employee_assesment' %}" class="text-primary">
+                <i class="icon-user"></i>
+                Monthly Employee Assesment
+            </a>
+        </li>
+    </ul>
+</li>
+<li class="{% active_link 'assets' %}">
+    <a href="{% url 'assets' %}" class="text-primary"><i class="icon-windows2"></i>
+        <span>Assets</span>
+    </a>
+</li>
+
+<li class="{% active_link 'ror_calculator' %}">
+    <a href="{% url 'ror_calculator' %}" class="text-primary"><i class="icon-calculator"></i>
+        <span>ROR Calculator</span>
+    </a>
+</li>
+<li class="">
+    <a href="" class="text-primary"><i class="icon-stats-dots"></i>
+        <span>Reports</span>
+    </a>
+    <ul>
+        <li class="{% active_link 'sales_report' %}">
+            <a href="{% url 'sales_report' %}" class="text-primary">
+                <i class="icon-file-text"></i>
+                Sales Report
+            </a>
+        </li>
+
+        <li class="{% active_link 'expense_report' %}">
+            <a href="{% url 'expense_report' %}" class="text-primary">
+                <i class="icon-file-text"></i>
+                Expense Report
+            </a>
+        </li>
+        <li class="{% active_link 'product_report' %}">
+            <a href="{% url 'product_report' %}" class="text-primary">
+                <i class="icon-file-text"></i>
+                Product Report
+            </a>
+        </li>
+        <li class="{% active_link 'stock_report' %}">
+            <a href="{% url 'stock_report' %}" class="text-primary">
+                <i class="icon-file-text"></i>
+                Stock Report
+            </a>
+        </li>
+         <li class="{% active_link 'purchase_report' %}">
+            <a href="{% url 'purchase_report' %}" class="text-primary">
+                <i class="icon-file-text"></i>
+                Purchase Report
+            </a>
+        </li> 
+        <li class="{% active_link 'payment_report' %}">
+            <a href="{% url 'payment_report' %}" class="text-primary">
+                <i class="icon-file-text"></i>
+                Payment Report
+            </a>
+        </li>
+        <li class="{% active_link 'profit_loss' %}">
+            <a href="{% url 'profit_loss' %}" class="text-primary">
+                <i class="icon-stats-growth"></i>
+                Profit and Loss Report
+            </a>
+        </li>
+    </ul>
+</li>
+
+<li class="">
+    <a href="" class="text-primary"><i class="icon-stack"></i>
+        <span>Financial Statements</span>
+    </a>
+</li>
+
+<li class="">
+    <a href="" class="text-warning"><i class="icon-cog6"></i>
+        <span>System Settings</span>
+    </a>
+    <ul>
+        <li class="{% active_link 'all_accounts' %}">
+            <a href="{% url 'all_accounts' %}" class="text-warning">
+                <i class="icon-office"></i>
+                Financial Management
+            </a>
+        </li>
+        <li class="{% active_link 'branches' %}">
+            <a href="{% url 'branches' %}" class="text-warning">
+                <i class="icon-tree7"></i>
+                Branches
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'user_groups' %}" class="text-warning">
+                <i class="icon-shield2"></i>
+                Roles & Permission
+            </a>
+        </li>
+        <li class="{% active_link 'regions' %}">
+            <a href="{% url 'regions' %}" class="text-warning">
+                <i class="icon-shield2"></i>
+                Regions
+            </a>
+        </li>
+    </ul>
+</li>
+{% block side_menu %}
+
+{% endblock %}

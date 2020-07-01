@@ -1,0 +1,33 @@
+{% load humanize %}
+{% load control_filters %}
+
+{% if purchases %}
+{% for purchase in purchases %}
+<tr>
+    <td>
+        {{ forloop.counter }}
+    </td>
+    <td>
+        {{purchase.created_by.first_name}} {{purchase.created_by.last_name}}
+    </td>
+    <td>
+        {{purchase.supplier.first_name}} {{purchase.supplier.last_name}}
+    </td>
+    <td>
+        {{purchase.purchase_date}}
+    </td>
+    <td>
+        {{purchase.product}}
+    </td>
+    <td>
+        {{purchase.quantity}}
+    </td>
+    <td>
+        {{purchase.buying_price|intcomma}}
+    </td>
+    <td>
+        {{purchase.selling_price|intcomma}}
+    </td>
+</tr>
+{% endfor %}
+{% endif %}

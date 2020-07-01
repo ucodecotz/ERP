@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<div class="row">
+    <div class="someBlock"></div>
+    <div class="col-sm-4">
+        {% load widget_tweaks %}
+        <div class="panel b-r-10 sys-panel-shadow">
+            <div class="panel-heading bg-blue">
+                <h6 class="panel-title" style="font-weight: 500">
+                    <i class="  icon-box-add "></i>
+                    &nbsp;
+                    Add New Branch
+                </h6>
+            </div>
+            <div class="panel-body">
+                <form action="{% url 'branches' %}" method="POST" class="add-branch-form">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <div class="row">
+                            <label class="col-md-4 control-label text-semibold">
+                                Name:
+                            </label>
+                            <div class="col-md-8">
+                                {% render_field form.name class="form-control sys-input" placeholder="Enter Branch name" %}
+                            </div>
+                            <span class="text-danger">{{ form.name.errors }}</span>
+                        </div>
+                        <div class="row">
+                            <label class="col-md-4 control-label text-semibold">
+                                Phone Number:
+                            </label>
+                            <div class="col-md-8">
+                                {% render_field form.phone_number class="form-control sys-input" placeholder="Eg. 0786900900" %}
+                            </div>
+                            <span class="text-danger">{{ form.phone_number.errors }}</span>
+                        </div>
+                        <div class="row">
+                            <label class="col-md-4 control-label text-semibold">
+                                Region:
+                            </label>
+                            <div class="col-md-8">
+                                {% render_field form.region class="select" %}
+                            </div>
+                            <span class="text-danger">{{ form.region.errors }}</span>
+                        </div>
+                        <div class="row">
+                            <label class="col-md-4 control-label text-semibold">
+                                Street:
+                            </label>
+                            <div class="col-md-8">
+                                {% render_field form.street class="form-control sys-input" placeholder="Branch Street eg.K/koo"  %}
+                            </div>
+                            <span class="text-danger">{{ form.street.errors }}</span>
+                        </div>
+                        <div class="col-xs-12 text-right">
+                            <button class="btn btn-rounded bg-success-400 sys-btn  btn-labeled ml-20 mt-5"
+                                type="submit">
+                                <b><i class="icon-plus22"></i></b> Save
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <div class="panel b-r-6 sys-panel-shadow">
+            <div class="panel-heading bg-blue">
+                <h6 class="panel-title" style="font-weight: 500">
+                    <i class="icon-list-unordered"></i>
+                    Branch List
+                    <span
+                        class="badge badge-flat border-white text-white pull-right product_badge">{{ total_branch }}</span>
+                </h6>
+            </div>
+            <div class="panel-body">
+                {% include 'common/branch_paginator.html' %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block data_table_js %}
+<script>
+    $(function () {
+
+
+        // Table setup
+        // ------------------------------
+
+        // Setting datatable defaults
+        $.extend($.fn.dataTable.defaults, {
+            autoWidth: false,
+            columnDefs: [{
+                orderable: false,
+                width: '100px',
+                targets: [4]
+            }],
+            dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
+            language: {
+                search: '<span>Filter:</span> _INPUT_',
+                searchPlaceholder: 'Type to filter...',
+                lengthMenu: '<span>Show:</span> _MENU_',
+                paginate: { 'first': 'First', 'last': 'Last', 'next': '&rarr;', 'previous': '&larr;' }
+            },
+            drawCallback: function () {
+                $(this).find('tbody tr').slice(-3).find('.dropdown, .btn-group').addClass('dropup');
+            },
+            preDrawCallback: function () {
+                $(this).find('tbody tr').slice(-3).find('.dropdown, .btn-group').removeClass('dropup');
+            }
+        });
+
+
+        // Basic datatable
+        $('.datatable-basic').DataTable({
+            order: []
+        });
+
+    });
+</script>
+{% endblock data_table_js %}
+
+{% block scripts %}
+<script src="{% static 'assets/control/branches.js' %}"></script>
+{% endblock scripts %}

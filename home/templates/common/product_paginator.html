@@ -1,0 +1,62 @@
+<table class="table datatable-basic product_list_table">
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Product Name</th>
+                <th>
+                    Product Unit
+                </th>
+                <th>
+                    Availability
+                </th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            {% for product in products %}
+                <tr>
+                    <td>
+                        <span>
+                            {{ forloop.counter }}
+                        </span>
+                    </td>
+                    <td>
+                        {{ product.name }}
+                    </td>
+                    <td>
+                        {{ product.unit }}
+                    </td>
+                    <td>
+                        
+                        {% if product.is_active %}
+                            <span class="label bg-success-400">Available</span>
+                            {% else %}
+                            <span class="label bg-warning-400">Not available</span>
+                        {% endif %}
+                    </td>
+
+                    <td class="text-center">
+                        <ul class="icons-list">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
+                                        class="icon-menu7"></i></a>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><a href="{% url 'edit_product' product.id %}"><i class="icon-pencil text-primary"></i>Edit</a></li>
+                                    
+                                    {% if product.is_active %}
+                                            <li><a href="javascript;;" data-href="{% url 'block_product' product.id %}" class="block-product-link"><i class="icon-lock4 text-slate"></i>Block</a></li>
+                                        {% else %}
+                                            <li><a href="javascript;;" data-href="{% url 'unblock_product' product.id %}" class="unblock-product-link"><i class="icon-key text-slate"></i>Unblock</a></li>
+                                    {% endif %}
+                                        
+                                    <li><a href="javascript;;" data-href="{% url 'delete_product' product.id %}" class="delete-product-link"><i class="icon-trash text-danger"></i>Delete</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>                            
+            {% endfor %}
+                
+        </tbody>
+    </table>

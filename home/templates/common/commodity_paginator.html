@@ -1,0 +1,63 @@
+{% load control_filters %}
+<table class="table datatable-basic product_list_table">
+    <thead>
+        <tr>
+            <th>No.</th>
+            <th>Name</th>
+            <th>
+                B.Price
+            </th>
+            <th>
+                S.Price                
+            </th>
+            <th>
+                ROR               
+            </th>
+            <th class="text-center">
+                Remarks                
+            </th>
+            <th class="text-center">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for ror_obj in ror_objs %}
+    <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ror_obj.name}}</td>
+            <td>{{ror_obj.b_price}}</td>
+            <td>{{ror_obj.s_price}}</td>
+            <td class="table_ror">
+            {{ror_obj.s_price|get_ror:ror_obj.b_price}}%
+            </td>
+            <td class="text-center table_ror_remarks">
+                {% if ror_obj.s_price|get_ror:ror_obj.b_price < 45 %}
+                <span class="label bg-danger-400">bad</span>
+                {% elif  ror_obj.s_price|get_ror:ror_obj.b_price >= 45 and ror_obj.s_price|get_ror:ror_obj.b_price <= 59 %}
+                <span class="label bg-slate-400">average </span>
+                {% elif  ror_obj.s_price|get_ror:ror_obj.b_price >= 60 and ror_obj.s_price|get_ror:ror_obj.b_price <= 79 %}
+                <span class="label bg-info-400">good</span>
+                {% elif  ror_obj.s_price|get_ror:ror_obj.b_price >= 80 and ror_obj.s_price|get_ror:ror_obj.b_price <= 99 %}
+                <span class="label bg-primary-400">very good</span>
+                {% elif  ror_obj.s_price|get_ror:ror_obj.b_price >= 100 %}
+                <span class="label bg-success-400">excellent</span>
+                {% else %}
+                <span class="label bg-danger-400">null</span>
+                {% endif %}
+            </td>
+            <td class="text-center">
+                        <ul class="icons-list">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
+                                        class="icon-menu7"></i></a>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><a href="{% url 'edit_ror_commodity' ror_obj.id %}"><i class="icon-pencil text-primary edit_ror_commodity"></i>Edit</a></li>
+                                    <li><a href="javascript;;" data-href="{% url 'delete_ror_commodity' ror_obj.id %}" class="delete_ror_commodity"><i class="icon-trash text-danger"></i>Delete</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </td>
+        </tr>
+    {% endfor %}
+        
+    </tbody>
+</table>

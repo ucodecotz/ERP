@@ -1,0 +1,48 @@
+{% load widget_tweaks %}
+<form action="{% url 'cash_collection_transfer' %}" class="cash-collection-transfer-form" method="POST">
+    {% csrf_token %}
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="col-sm-4 control-label text-semibold">
+                Amount:
+                {% if other_payment_form.amount.field.required %}
+                <span class="text-danger">*</span>
+                {% endif %}
+
+            </label>
+            <div class="col-sm-8">
+                {% render_field other_payment_form.amount class="form-control sys-input" placeholder="Enter Amount" min="1" %}
+            </div>
+            <span class="text-danger">{{ other_payment_form.amount.errors }}</span>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="col-lg-4 col-sm-4 control-label text-semibold mb-10">Payment Method:
+                {% if other_payment_form.payment_method.field.required %}
+                <span class="text-danger">*</span>
+                {% endif %}
+            </label>
+            <div class="col-lg-8 col-sm-6 mb-10">
+                {% render_field other_payment_form.payment_method class="form-control" %}
+            </div>
+            <span class="text-danger">{{ other_payment_form.payment_method.errors }}</span>
+        </div>
+    </div>
+    <div class="col-xs-12">
+        <div class="form-group">
+            <label class="col-sm-2 control-label text-semibold">
+                Description:
+                {% if other_payment_form.description.field.required %}
+                <span class="text-danger">*</span>
+                {% endif %}
+
+            </label>
+            <div class="col-sm-10">
+                {% render_field other_payment_form.description placeholder="Write any comment" class="form-control" rows="5" cols="5" %}
+            </div>
+            <span class="text-danger">{{ other_payment_form.description.errors }}</span>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<div class="row">
+    <div class="someBlock"></div>
+    <div class="col-sm-4">
+        {% load widget_tweaks %}
+        <div class="panel b-r-10 sys-panel-shadow">
+            <div class="panel-heading bg-blue">
+                <h6 class="panel-title" style="font-weight: 500">
+                    <i class="  icon-box-add "></i>
+                    &nbsp;
+                    Add New Product
+                </h6>
+            </div>
+            <div class="panel-body">
+                <form action="{% url 'products' %}" method="POST" class="add-product-form">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <div class="row">
+                            <label class="col-md-4 control-label text-semibold">
+                                Product Name:
+                                {% if form.name.field.required %}
+                                <span class="text-danger">*</span>
+                                {% endif %}
+                            </label>
+                            <div class="col-md-8">
+                                {% render_field form.name class="form-control sys-input" placeholder="Product name Eg.Bamboo" %}
+                            </div>
+                            <span class="text-danger">{{ form.name.errors }}</span>
+                        </div>
+                        <div class="row">
+                            <label class="col-md-4 control-label text-semibold">
+                                Product Unit:
+                                {% if form.unit.field.required %}
+                                <span class="text-danger">*</span>
+                                {% endif %}
+                            </label>
+                            <div class="col-md-8">
+                                {% render_field form.unit class="form-control sys-input" placeholder="Eg BAGS,KG,CARTONS" %}
+                            </div>
+                            <span class="text-danger">{{ form.unit.errors }}</span>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                {% render_field form.is_active class="control-success" %}
+                                Availability
+                            </label>
+                        </div>
+                        <div class="col-xs-12 text-right">
+                            <button class="btn btn-rounded bg-success-400 sys-btn  btn-labeled ml-20" type="submit">
+                                <b><i class="icon-plus22"></i></b> Save
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <div class="panel b-r-6 sys-panel-shadow">
+            <div class="panel-heading bg-blue">
+                <h6 class="panel-title" style="font-weight: 500">
+                    <i class="icon-list-unordered"></i>
+                    Product List
+                    <span class="badge badge-flat border-white text-white pull-right product_badge">0</span>
+                </h6>
+            </div>
+            <div class="">
+                {% include 'common/product_paginator.html' %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block data_table_js %}
+<script>
+    $(function () {
+
+
+        // Table setup
+        // ------------------------------
+
+        // Setting datatable defaults
+        $.extend($.fn.dataTable.defaults, {
+            autoWidth: false,
+            columnDefs: [{
+                orderable: false,
+                width: '100px',
+                targets: [4]
+            }],
+            dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
+            language: {
+                search: '<span>Filter:</span> _INPUT_',
+                searchPlaceholder: 'Type to filter...',
+                lengthMenu: '<span>Show:</span> _MENU_',
+                paginate: { 'first': 'First', 'last': 'Last', 'next': '&rarr;', 'previous': '&larr;' }
+            },
+            drawCallback: function () {
+                $(this).find('tbody tr').slice(-3).find('.dropdown, .btn-group').addClass('dropup');
+            },
+            preDrawCallback: function () {
+                $(this).find('tbody tr').slice(-3).find('.dropdown, .btn-group').removeClass('dropup');
+            }
+        });
+
+
+        // Basic datatable
+        $('.datatable-basic').DataTable({
+            order: []
+        });
+
+    });
+</script>
+{% endblock data_table_js %}
+{% block scripts %}
+<script src="{% static 'assets/home/products.js' %}"></script>
+{% endblock scripts %}

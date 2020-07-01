@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% load control_filters %}
+{% block content %}
+<div class="row">
+   <div class="panel">
+       <div class="panel-heading">
+        <div class="panel-body">
+            <div class="col-sm-6">
+                <label class="text-semibold col-md-4">
+                    Full Name:
+                </label>
+                <label class="text-semibold col-md-8 text-primary">
+                    {{user}}
+                </label>
+            </div>
+            <div class="col-sm-6">
+                <label class="text-semibold col-md-4">
+                    Phone Number:
+                </label>
+                <label class="text-semibold col-md-8 text-primary">
+                   {% if user.phone_number %}
+                   {{user.phone_number}}
+                   {% else %}
+                   <span class="text-danger">Phone number not registered</span>
+                   {% endif %}
+                </label>
+            </div>
+            <div class="col-sm-6">
+                <label class="text-semibold col-md-4">
+                    Current Balance
+                </label>
+                <label class="text-semibold col-md-8 text-primary">
+                   TZS: {{ user.user.pk|get_borrower_total_balance|intcomma }}/=
+                </label>
+            </div>
+            <div class="col-sm-6">
+                <label class="text-semibold col-md-4">
+                    Total Loans
+                </label>
+                <label class="text-semibold col-md-8 text-primary">
+                   TZS: {{borrower_loan_amount|intcomma}}/=
+                </label>
+            </div>
+            <div class="col-sm-6">
+                <label class="text-semibold col-md-4">
+                    Total Loan paid
+                </label>
+                <label class="text-semibold col-md-8 text-primary">
+                   TZS: {{borrower_payments_amount|intcomma}}/=
+                </label>
+            </div>
+        </div>
+       </div>
+    <div class="panel-body" style="margin-top: -100px;">
+
+        <table class="table customers_table">
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Borrower</th>
+                    <th>Description</th>
+                    <th>Amount</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for obj in borrower_lists|dictsortreversed:'date' %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ user }}</td>
+                    <td>
+                        {% if obj.item_type == 'loan provision' %}
+                        <span class="label label-warning">loan </span>
+                        {% elif obj.item_type == 'loan collection' %}
+                        <span class="label label-success">payment</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ obj.amount|intcomma }}</td>
+                    <td>{{ obj.date| date:'d F Y' }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+   </div>
+</div>
+{% endblock content %}
+
+{% block data_table_js %}
+<script>
+    $(function () {
+
+
+        // Table setup
+        // ------------------------------
+
+        // Setting datatable defaults
+        $.extend($.fn.dataTable.defaults, {
+            autoWidth: true,
+            columnDefs: [{
+                orderable: false,
+                width: 'auto',
+                targets: [4]
+            }],
+            dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
+            language: {
+                search: '<span>Filter:</span> _INPUT_',
+                searchPlaceholder: 'Type to filter...',
+                lengthMenu: '<span>Show:</span> _MENU_',
+                paginate: { 'first': 'First', 'last': 'Last', 'next': '&rarr;', 'previous': '&larr;' }
+            },
+            drawCallback: function () {
+                $(this).find('tbody tr').slice(-1).find('.dropdown, .btn-group').addClass('dropup');
+            },
+            preDrawCallback: function () {
+                $(this).find('tbody tr').slice(-1).find('.dropdown, .btn-group').removeClass('dropup');
+            }
+        });
+
+
+        // Basic datatable
+        $('.customers_table').DataTable({
+            order: []
+        });
+
+    });
+</script>
+{% endblock data_table_js %}

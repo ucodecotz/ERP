@@ -1,0 +1,82 @@
+{% extends 'auth/index.html' %}
+
+{% load widget_tweaks %}
+
+{% load staticfiles %}
+
+{% block content %}
+<!-- Advanced login -->
+
+
+<form method="POST">
+    {% csrf_token %}
+
+
+    {% for hidden in hidden_fields %}
+    {{ hidden }}
+    {% endfor %}
+
+    <div class="panel panel-body login-form  b-r-15">
+        <div class="text-center">
+            <div class="icon-object border-primary-400 text-primary-400"><i class="icon-user"></i></div>
+            <h5 class="content-group-lg">Login to your account
+                <small class="display-block">Enter your credentials</small>
+            </h5>
+        </div>
+
+        <div class="form-group has-feedback has-feedback-left">
+            {% render_field form.username class='form-control sys-input' placeholder=form.username.label %}
+            <div class="form-control-feedback">
+                <i class="icon-user text-primary"></i>
+            </div>
+        </div>
+
+        <div class="form-group has-feedback has-feedback-left">
+            {% render_field form.password class='form-control sys-input' placeholder=form.password.label %}
+            <div class="form-control-feedback">
+                <i class="icon-lock2 text-primary"></i>
+            </div>
+        </div>
+
+        <div class="form-group login-options">
+            <div class="row">
+                <div class="col-sm-6">
+                    <label class="checkbox-inline ">
+                        <input type="checkbox" class="styled" checked="checked">
+                        Remember
+                    </label>
+                </div>
+
+                <div class="col-sm-6 text-right ">
+                    <a href="" class="text-primary">Forgot password?</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn bg-primary btn-block btn-rounded sys-btn">Login <i
+                    class=" icon-arrow-right15 position-right"></i></button>
+        </div>
+
+        <span class="help-block text-center no-margin">By continuing, you're confirming that you've read our <a href="#"
+                class="text-primary">Terms &amp; Conditions</a> and <a href="#" class="text-primary">Cookie
+                Policy</a></span>
+    </div>
+</form>
+{% if form.errors %}
+<script>
+    document.addEventListener("DOMContentLoaded", function (event) {
+        noty({
+            width: 200,
+            text: 'Wrong credentials please try again!',
+            type: 'error',
+            dismissQueue: true,
+            timeout: 10000,
+            layout: 'topRight'
+        });
+    });
+
+</script>
+{% endif %}
+<!-- /advanced login -->
+{% endblock %}

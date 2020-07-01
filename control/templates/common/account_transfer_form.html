@@ -1,0 +1,31 @@
+{% load widget_tweaks %}
+<form action="{% url 'account_transfer' account.id %}" method="POST" class="account-transfer-form">
+    {% csrf_token %}
+    <div class="form-group col-md-12">
+        <label class="col-md-4 control-label text-semibold">
+            Amount:
+            {% if form.amount.field.required %}
+            <span class="text-danger">*</span>
+            {% endif %}
+
+        </label>
+        <div class="col-md-8">
+            {% render_field form.amount class="form-control sys-input" placeholder="Enter amount to be transfered" %}
+        </div>
+        <span class="text-danger">{{ form.amount.errors }}</span>
+    </div>
+
+    <div class="form-group col-md-12">
+        <label class="col-md-4 control-label text-semibold">
+            Account:
+            {% if form.to_account.field.required %}
+            <span class="text-danger">*</span>
+            {% endif %}
+
+        </label>
+        <div class="col-md-8">
+            {% render_field form.to_account class="form-control" %}
+        </div>
+        <span class="text-danger">{{ form.to_account.errors }}</span>
+    </div>
+</form>

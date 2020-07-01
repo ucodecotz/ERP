@@ -1,0 +1,18 @@
+{% load widget_tweaks %}
+<form action="{% url 'account_deposit' account.id %}" method="POST" class="account-deposit-form">
+    {% csrf_token %}
+    {% render_field form.transanction_type hidden=true %}
+    <div class="form-group col-md-12">
+        <label class="col-md-4 control-label text-semibold">
+            Amount:
+            {% if form.amount.field.required %}
+            <span class="text-danger">*</span>
+            {% endif %}
+
+        </label>
+        <div class="col-md-8">
+            {% render_field form.amount class="form-control sys-input" placeholder="Enter deposit amount" %}
+        </div>
+        <span class="text-danger">{{ form.amount.errors }}</span>
+    </div>
+</form>

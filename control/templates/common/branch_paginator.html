@@ -1,0 +1,53 @@
+<table class="table datatable-basic product_list_table">
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Name</th>
+                <th>
+                    Phone Number
+                </th>
+                <th>
+                    Region
+                </th>
+                <th>
+                    Street
+                </th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            {% for branch in branches %}
+                <tr>
+                    <td>
+                        <span>
+                            {{ forloop.counter }}
+                        </span>
+                    </td>
+                    <td>
+                        <a href="" data-toggle="tooltip" title="Click to see more {{ branch.name }} branch details">{{ branch.name }}</a>
+                    </td>
+                    <td>
+                        {{ branch.phone_number }}
+                    </td>
+                    <td>
+                        {{ branch.region.name }}
+                    </td>
+                        <td>{{ branch.street }}</td>
+                    <td class="text-center">
+                        <ul class="icons-list">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
+                                        class="icon-menu7"></i></a>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><a href="{% url 'edit_branch' branch.id %}"><i class="icon-pencil text-primary"></i>Edit</a></li>                                       
+                                    <li><a href="javascript;;" data-href="{% url 'delete_branch' branch.id %}" class="delete-branch-link"><i class="icon-trash text-danger"></i>Delete</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>                            
+            {% endfor %}
+                
+        </tbody>
+    </table>

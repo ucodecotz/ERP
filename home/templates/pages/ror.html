@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load widget_tweaks %}
+{% block content %}
+<div class="row">
+<div class="someBlock"></div>
+    <div class="col-md-4">
+        <div class="panel b-r-10 sys-panel-shadow">
+            <div class="panel-heading bg-blue">
+                <h6 class="panel-title" style="font-weight: 500">
+                    <i class="  icon-box-add "></i>
+                    &nbsp;
+                    Add New Calculations
+                </h6>
+            </div>
+            <div class="panel-body">
+                <form action="{% url 'ror_calculator' %}" class="ror_form" method="post">
+                {% csrf_token %}
+                    <div class="form-group ">
+                        <div class="row">
+                            <label class="col-md-4 control-label text-semibold">
+                                Name:
+                            </label>
+                            <div class="col-md-8">
+                            {% render_field form.name class="form-control sys-input p_name" placeholder="Product name...." %}
+                                
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-md-4 control-label text-semibold">
+                                Buying Price:
+                            </label>
+                            <div class="col-md-8">
+                            {% render_field form.b_price class="form-control sys-input b_price" min="1" value="1" placeholder="0" %}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-md-4 control-label text-semibold">
+                                Selling Price:
+                            </label>
+                            <div class="col-md-8">
+                            {% render_field form.s_price class="form-control sys-input s_price" min="1" value="1" placeholder="0" %}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-md-4 control-label text-semibold">
+                                Profit:
+                            </label>
+                            <div class="col-md-8">
+                                <span class="label label-info p_price" style="width: 100%">0</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-md-4 control-label text-semibold">
+                                ROR:
+                            </label>
+                            <div class="col-md-8 ror_percent">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-md-4 control-label text-semibold">
+                                REMARKS:
+                            </label>
+                            <div class="col-md-8 ror_remarks">
+                            </div>
+                        </div>
+                        <div class="col-xs-12 text-right">
+                            <button class="btn btn-rounded bg-success-400 sys-btn  btn-labeled ml-20" type="submit">
+                                <b><i class="icon-plus22"></i></b> Save
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <div class="panel b-r-6 sys-panel-shadow">
+            <div class="panel-heading bg-blue">
+                <h6 class="panel-title" style="font-weight: 500">
+                    <i class="icon-list-unordered"></i>
+                    Commodity List
+                </h6>
+            </div>
+            <div class="">
+                {% include 'common/commodity_paginator.html' %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+    <script src="{% static 'assets/home/ror.js' %}"></script>
+{% endblock scripts %}

@@ -1,0 +1,39 @@
+<form action="{% url 'add_purchase' %}" method="post" class="add-purchase-form">
+    {% csrf_token %} {% load widget_tweaks %}
+
+    <div class="form-group">
+        <div class=" mb-10">
+            <div class="col-lg-12 col-sm-4 col-xs-12 control-label text-semibold">Purchase Date:</div>
+            <div class="col-lg-12 col-sm-8 col-xs-12 text-primary">
+                <input type="date" name="purchase_date" class="form-control pickadate sys-input" />
+            </div>
+            <input type="hidden" name="last">
+        </div>
+        <div class="mb-10">
+            <label class="col-lg-12 col-sm-4 control-label text-semibold mb-10">Supplier: <span
+                    class="text-danger">*</span> </label>
+
+            <div class="col-lg-12 col-sm-6 mb-10">
+                {% render_field form.supplier class="form-control" %}
+            </div>
+        </div>
+
+
+
+        <div class="mb-10">
+            <label class="col-md-12 control-label text-semibold">
+                Attach Receipt: <span class="text-danger">*</span>
+            </label>
+            <div class="col-md-12">
+                {% render_field form.receipt class="form-control" %}
+                <span class="help-block"> Max file size 2Mb</span>
+            </div>
+            <span class="text-danger">{{ form.receipt.errors }}</span>
+        </div>
+        <div class="mb-10">
+
+            <div>Payment Type: {% render_field form.purchase_type data-on-text="Cash" data-on-color="success" data-off-text="Credit" data-off-color="warning" class="switch" data-size="mini" checked="checked" %}</div>
+
+        </div>
+
+</form>

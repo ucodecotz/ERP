@@ -1,0 +1,88 @@
+{% load humanize %}
+{% load control_filters %}
+<div class="panel b-r-10 sys-panel-shadow">
+    <div class="panel-heading bg-success-400">
+        <h6 class="panel-title" style="font-weight: 500">
+            <i class=" icon-database-check "></i>
+            TODAY SALES LIST
+            <span class="badge badge-flat border-white text-white pull-right sales_list_badge"></span>
+        </h6>
+    </div>
+    <table class="table datatable-basic sales_list_table">
+        <thead>
+            <tr>
+                <th>Customer</th>
+                <th><span class="text-primary">Item</span> &nbsp;- &nbsp;<span class="text-orange">Quantity</span>
+                    &nbsp;- &nbsp;<span class="text-success">Amount</span></th>
+                <th>Sales Type</th>
+                <th>Total Amount</th>
+                <th>Time</th>
+                <th class="text-center">Status</th>
+                <th class="text-center">Print</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            {% for sale in sale_list %}
+            <tr>
+                <td>
+                    <span>
+                        {{ sale.customer.first_name }} {{ sale.customer.last_name }}
+                    </span>
+                </td>
+                <td>
+
+                    {% for si in sale.id|get_sale_items %}
+                    <span class="">
+                        <ul>
+                            <li>
+                                <span class="text-primary">{{ si.product.name }}</span> &nbsp;- &nbsp;<span
+                                    class="text-orange">
+                                    {{ si.quantity }} {{ si.product.unit }}
+                                </span> &nbsp;- &nbsp;<span
+                                    class="text-success">{{ si.quantity|total_product_price:si.price|intcomma }}</span>
+                            </li>
+                        </ul>
+                    </span>
+                    {% endfor %}
+                </td>
+                <td>
+
+                    {% if sale.sale_type %}
+                    <span class="label bg-success-400">CASH</span>
+                    {% else %}
+                    <span class="label bg-warning-400">CREDIT</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <h6 class="text-semibold">{{ sale.id|total_sale_amount|intcomma }}</h6>
+                </td>
+                <td>{{ sale.created|time }}</td>
+                <td class="text-center">
+                    {% if sale.waiting_approval %}
+                    <a href="javascript:;" data-href="{% url 'approve_sale' sale.id %}"
+                        class="sale-aprove-link label label-warning" title="Click to approve" data-popup="tooltip"
+                        data-placement="left"><i class=" icon-database-check"></i>&nbsp;Aprove</a>
+                    {% else %}
+                    <span class="label label-success">approved</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if sale.waiting_approval %}
+                    <span class="label bg-slate">pending</span>
+                    {% else %}
+                    <a href="{% url 'sales_info' sale.id %}" class="btn btn-sm bg-slate btn-rounded sys-btn print_btn"
+                        data-popup="tooltip" title="Print his/her sale sheet"><i class="icon-printer"></i></a>
+                    {% endif %}
+
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<script>
+    // $('.print_btn').click(function(){
+    //     print_system_doc('documents');
+    // })
+</script>

@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+<form
+    action="{% url 'edit_note' note.id %}" class="form-horizontal edit-note-form" method="POST">
+    {% csrf_token %}
+    {% load widget_tweaks %}
+
+    <input type="hidden" value="{{request.user.id}}" name='created_by'>
+
+    <h4 class="text-center text-semibold text-primary">
+        <i class="icon-notebook"></i>
+        {{add_title}}
+    </h4>
+    <div class="panel-body">
+        <div class="form-group">
+            <label class="col-lg-3 control-label text-primary">Note Title:</label>
+            <div class="col-lg-9">
+                {% render_field form.title class="form-control" placeholder="Enter title..." %}
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <label class="col-lg-3 control-label text-primary">Note Description:</label>
+            <div class="col-lg-12">
+                {% render_field form.description rows="5" cols="5" class=" summernote" placeholder="Enter your description here..." %}
+            </div>
+        </div>
+        <div class="checkbox pull-right">
+            <label>
+                {% render_field form.priority class="control-danger" %}
+                High Priority
+            </label>
+            <label>
+                <button type="submit" class="btn btn-sm btn-success btn-rounded btn-labeled edit-note">
+                    <b>
+                        <i class="icon-checkmark4"></i>
+                    </b>
+                    Save
+                </button>
+            </label>
+        </div>
+    </div>
+</form>
+{% endblock content %}
+{% block scripts %}
+<script>
+    
+    $(document).on('click','.edit-note',function (e) {
+    e.preventDefault();
+    let $link = $(this);
+    $.confirm({
+        type: 'blue',
+        closeIcon: false,
+        title: 'Confirm to save changes.',
+        titleClass: 'text-center',
+        content: 'url:' + $link.data('href'),
+        onContentReady: function () {
+
+            let self = this;
+            $(document).on('submit', '.edit-note-form', function(e){
+                e.preventDefault();
+                var form = $(this);
+                self.showLoading();
+                $.ajax({
+                    url: form.attr('action'),
+                    type: form.attr('method'),
+                    data: form.serializeArray(),
+                }).done(function(response){
+                    self.hideLoading();
+                    try {
+                        let data = JSON.parse(response)[0];
+                        if (data.status){
+                            self.setType('green');
+                            self.setContent(data.message);
+                            self.$$cancel.hide();
+                            self.$$save.hide();
+                            setTimeout(function(){
+                                self.close();
+                            },1000);
+                        }else{
+                            self.setType('red');
+                            self.setContent(data.message);
+                        }
+                    } catch (error) {
+                        self.setType('red');
+                        self.setContent(response);
+                    }
+                })
+            });
+        },
+        buttons: {
+            cancel: {
+                text: 'Cancel',
+                btnClass: 'btn btn-danger',
+            },
+            save: {
+                text: 'Save',
+                btnClass: 'btn-success btn',
+                action: function () {
+                    $('.edit-note-form').trigger('submit');
+                    return false
+                }
+            },
+        },
+        onOpenBefore: function () {
+            $("body").css('overflow', 'hidden');
+        },
+        onClose: function () {
+            window.location.href = '/control/notepad/';
+        }
+
+    })
+})
+</script>
+{% endblock scripts %}

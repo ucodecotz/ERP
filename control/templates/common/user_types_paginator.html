@@ -1,0 +1,37 @@
+<table class="table datatable-basic">
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Name</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            {% for user_type in user_types %}
+                <tr>
+                    <td>
+                        <span>
+                            {{ forloop.counter }}
+                        </span>
+                    </td>
+                    <td>
+                        {{ user_type.name }}
+                    </td>
+                    <td class="text-center">
+                        <ul class="icons-list">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
+                                        class="icon-menu7"></i></a>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><a href="{% url 'edit_user_type' user_type.id %}"><i class="icon-pencil text-primary"></i>Edit</a></li>                                       
+                                    <li><a href="javascript;;" data-href="{% url 'delete_user_type' user_type.id %}" class="delete-user-type-link"><i class="icon-trash text-danger"></i>Delete</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>                            
+            {% endfor %}
+                
+        </tbody>
+    </table>

@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="control-label col-lg-2">Filter: </label>
+            <div class="col-lg-6">
+                {% load widget_tweaks %}
+                <!-- <div class="input-group"> -->
+                <select name="" class="form-control select text-primary data-filter" style="width: 100%">
+                    <option value="This Month">This Month</option>
+                    <option value="Last Week">Last Week</option>
+                    <option value="Last Month">Last Month</option>
+                    <option value="Pick Date">Pick Date(s)</option>
+                </select>
+                <!-- <input type="text" class="form-control pickadate text-primary" placeholder=""
+                        style="border-top-left-radius: 20px; border-bottom-left-radius:20px; height: 33px"> -->
+                <!-- <span class="input-group-btn">
+                        <button class="btn bg-primary btn-sm" type="button" data-popup="tooltip" data-placement="top"
+                            title="Click to Filter">
+                            <i class=" icon-search4"></i>
+                        </button>
+                    </span> -->
+                <!-- </div> -->
+            </div>
+        </div>
+    </div>
+    <!-- <div class="col-sm-6 text-right">
+        <a href="javascript:;" data-href="" class="btn btn-rounded bg-blue sys-btn  btn-labeled ml-20 pull-right ">
+            <b><i class=" icon-printer"></i></b> Print
+        </a>
+    </div> -->
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel b-r-6 sys-panel-shadow">
+            <div class="panel-heading bg-blue">
+                <h6 class="panel-title text-center" style="font-weight: 500">
+                    <i class="icon-pulse2"></i>
+                    Sales Performance
+                </h6>
+            </div>
+            <div class="">
+
+                <table class="table datatable-basic payroll_table">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Staff</th>
+                            <th>
+                                Quantity
+                            </th>
+                            <th>
+                                Sales Value
+                            </th>
+                            <th>
+                                Profit
+                            </th>
+                            <th class="text-center">
+                                Actions
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% include 'common/sales_performance_paginator.html' %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock content%}
+
+{% block data_table_js %}
+<script>
+    $(function () {
+
+
+        // Table setup
+        // ------------------------------
+
+        // Setting datatable defaults
+        $.extend($.fn.dataTable.defaults, {
+            autoWidth: false,
+            columnDefs: [{
+                orderable: false,
+                width: '100px',
+                targets: [2]
+            }],
+            dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
+            language: {
+                search: '<span>Filter:</span> _INPUT_',
+                searchPlaceholder: 'Type to filter...',
+                lengthMenu: '<span>Show:</span> _MENU_',
+                paginate: { 'first': 'First', 'last': 'Last', 'next': '&rarr;', 'previous': '&larr;' }
+            },
+            drawCallback: function () {
+                $(this).find('tbody tr').slice(-1).find('.dropdown, .btn-group').addClass('dropup');
+            },
+            preDrawCallback: function () {
+                $(this).find('tbody tr').slice(-1).find('.dropdown, .btn-group').removeClass('dropup');
+            }
+        });
+
+
+        // Basic datatable
+        $('.datatable-basic').DataTable({
+            order: []
+        });
+
+    });
+</script>
+{% endblock data_table_js %}

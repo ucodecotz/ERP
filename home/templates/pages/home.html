@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load humanize %}
+{% block content %}
+<style>
+	.home_cards .panel-body {
+		padding: 20px;
+		padding-left: 5px;
+		padding-right: 5px;
+	}
+</style>
+<div class="row home_cards">
+
+	<div class="col-xs-12 col-sm-6 col-md-2">
+		<div class="panel panel-body bg-success-400 sys-shadow-btn-2 b-r-6 sys-panel-shadow">
+			<div class="media no-margin">
+				<div class="">
+					<i class="icon-cart-remove  "></i>
+					<span class="text-muted position-right">Sales</span>
+				</div>
+
+				<div class="media-body text-right">
+					<h6 class="media-heading text-semibold">
+						{{ total_today_sales|intcomma }}
+					</h6>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-6 col-md-2">
+		<div class="panel panel-body bg-pink-400 sys-shadow-btn-2 b-r-6 sys-panel-shadow">
+			<div class="media no-margin">
+				<div class="">
+					<i class="icon-cash2  "></i>
+					<span class="text-muted position-right">Cash Collection</span>
+				</div>
+
+				<div class="media-body text-right">
+					<h6 class="media-heading text-semibold">
+						{{ total_cash_collection|intcomma }}
+					</h6>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-6 col-md-2" style="display: None">
+		<div class="panel panel-body bg-slate-400 sys-shadow-btn-2 b-r-6 sys-panel-shadow">
+			<div class="media no-margin">
+				<div class="text-muted text-center">
+					<i class=" icon-credit-card2  "></i>
+					<span class="">Acc(s) Collection</span>
+				</div>
+
+				<div class="media-body text-right">
+					<h6 class="media-heading text-semibold">
+						{{ total_bank_collection|intcomma }}
+					</h6>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-6 col-md-2">
+		<div class="panel panel-body bg-primary-400 sys-shadow-btn-2 b-r-6 sys-panel-shadow">
+			<div class="media no-margin">
+				<div class="">
+					<i class="icon-coins  "></i>
+					<span class="text-muted position-right">Petty Cash</span>
+				</div>
+
+				<div class="media-body text-right">
+					<h6 class="media-heading text-semibold">
+						{{ petty_cash_account|intcomma }}
+					</h6>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-6 col-md-2">
+		<div class="panel panel-body bg-orange-400 sys-shadow-btn-2 b-r-6 sys-panel-shadow">
+			<div class="media no-margin">
+				<div class="">
+					<i class=" icon-drawer-out  "></i>
+					<span class="text-muted position-right">Expenses</span>
+				</div>
+
+				<div class="media-body text-right">
+					<h6 class="media-heading text-semibold">
+						{{ today_total_expenses|intcomma }}
+					</h6>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-xs-12 col-sm-6 col-md-2">
+		<div class="panel panel-body bg-teal-400 sys-shadow-btn-2 b-r-6 sys-panel-shadow">
+			<div class="media no-margin">
+				<div class="">
+					<i class="icon-cash4  "></i>
+					<span class="text-muted position-right">COH</span>
+				</div>
+
+				<div class="media-body text-right">
+					<h6 class="media-heading text-semibold">
+						{{ coh|intcomma }}
+					</h6>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+
+	{% include 'common/today_sales_paginator.html' %}
+
+	{% include 'common/today_expenses_paginator.html' %}
+</div>
+{% endblock %}
+
+
+{% block scripts %}
+<script src="{% static 'assets/home/home.js' %}"></script>
+{% endblock%}

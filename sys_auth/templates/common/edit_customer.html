@@ -1,0 +1,125 @@
+{% load widget_tweaks %}
+<form action="{% url 'edit_customer' customer.id %}" method="POST" class="edit-customer-form">
+    {% csrf_token %}
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="col-sm-3 control-label text-semibold">
+                    Full Name:
+                    {% if customer_form.full_name.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                        
+                </label>
+                <div class="col-lg-9">
+                    {% render_field customer_form.full_name class="form-control sys-input" placeholder="Enter full name.." %}
+                    <span class="text-danger">{{ customer_form.full_name.errors }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="col-sm-3 control-label text-semibold">
+                    Customer Email:
+                    {% if customer_form.email.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                        
+                </label>
+                <div class="col-lg-9">
+                    {% render_field customer_form.email class="form-control sys-input" placeholder="Email" %}
+                    <span class="text-danger">{{ customer_form.email.errors }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="col-sm-3 control-label text-semibold">
+                    Phone Number:
+                    {% if customer_form.phone_number.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                        
+                </label>
+                <div class="col-lg-9">
+                        {% render_field customer_form.phone_number class="form-control sys-input" placeholder="Phone Number" %}
+                        <span class="text-danger">{{ customer_form.phone_number.errors }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="col-sm-3 control-label text-semibold">
+                    Location: 
+                    {% if customer_form.location.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                        
+                </label>
+                <div class="col-lg-9">
+                        {% render_field customer_form.location class="form-control sys-input" placeholder="Location" %}
+                        <span class="text-danger">{{ customer_form.location.errors }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="col-sm-3 control-label text-semibold">
+                    Max Credit: 
+                    {% if customer_form.credit_limit.field.required %}
+                       <span class="text-danger">*</span> 
+                    {% endif %}
+                        
+                </label>
+                <div class="col-lg-9">
+                        {% render_field customer_form.credit_limit class="form-control sys-input" placeholder="Maximum Credit Amount" %}
+                        <span class="text-danger">{{ customer_form.credit_limit.errors }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="col-sm-3 control-label text-semibold">
+                    Credit's Days:
+                    {% if customer_form.credit_day.field.required %}
+                       <span class="text-danger">*</span> 
+                    {% endif %}
+                </label>
+                <div class="col-lg-9">
+                        {% render_field customer_form.credit_day class="form-control sys-input" placeholder="Maximum Credit Days" %}
+                        <span class="text-danger">{{ customer_form.credit_day.errors }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="col-sm-3 control-label text-semibold">
+                    Added By:
+                    {% if customer_form.added_by.field.required %}
+                       <span class="text-danger">*</span> 
+                    {% endif %}
+                </label>
+                <div class="col-lg-9">
+                        {% render_field customer_form.added_by class="form-control" %}
+                        <span class="text-danger">{{ customer_form.added_by.errors }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="col-sm-3 control-label text-semibold">
+                    Opening Balance: 
+                    {% if customer_form.balance.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                <div class="col-lg-9">
+                    {% render_field customer_form.balance class="form-control sys-input" placeholder="Customer Opnening balance" %}
+                </div>
+            </div>
+        </div>
+</form>

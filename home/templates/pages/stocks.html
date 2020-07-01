@@ -1,0 +1,278 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load humanize %}
+{% load control_filters %}
+{% block content %}
+<div class="row">
+    <div class="col-xs-12 mb-5 text-right">
+        <a href="javascript:;" class="btn btn-rounded bg-blue sys-btn  btn-labeled ml-20 print_btn">
+            <b><i class="icon-printer"></i></b>Print
+        </a>
+    </div>
+    <div class="col-sm-12">
+        <div class="panel b-r-6 sys-panel-shadow">
+            <div class="panel-heading bg-blue">
+                <h6 class="panel-title" style="font-weight: 500">
+                    <i class="icon-list-unordered"></i>
+                    Product List (Stock)
+                    <span class="badge badge-flat border-white text-white pull-right purchase_badge">0</span>
+                </h6>
+            </div>
+            <div class="">
+
+                <table class="table datatable-basic sales_table">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Product Name</th>
+                            <th>
+                                Quantity
+                            </th>
+                            <!-- <th>
+                                BPrice @ 1
+                            </th>
+                            <th>
+                                SPrice @ 1
+                            </th> -->
+                            <!-- <th>
+                                Last Added
+                            </th> -->
+                            <th>
+                                Status
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if products %}
+                        {% for product in products %}
+                        <tr>
+                            <td>
+                                <span>
+                                    {{ forloop.counter }}
+                                </span>
+                            </td>
+                            <td>
+                                <span class="">
+                                    {{ product.name }}
+                                </span>
+
+                                <span class="badge badge-success">
+                                    {{ product.unit }}
+                                </span>
+                            </td>
+                            <td>{{ product.remaining_stock }}
+                            </td>
+                            <td>
+                                <!-- <span class="label bg-success-400">Available</span></span> -->
+                                {% if product.remaining_stock  > 0 %}
+                                <span class="label bg-success-400">available</span></span>
+                                {% else %}
+                                <span class="label bg-danger-400">Out of stock</span></span>
+                                {% endif %}
+
+                            </td>
+                        </tr>
+                        {% endfor %}
+
+                        {% else %}
+                        <tr>
+                            <td colspan="7">
+                                <div class="alert alert-info text-center">
+                                    No Stock Found
+                                </div>
+                            </td>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="print_div" style="display: none">
+    <style>
+        .header-logo {
+            width: 15%;
+            text-align: center;
+        }
+
+        .header-bland {
+            width: 85%;
+            text-align: center;
+        }
+
+        .header-title {
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: 500;
+            text-align: left;
+            margin-bottom: 0;
+            margin-top: 30px
+        }
+
+        .header-title-min {
+            width: 100%;
+            display: block;
+            text-align: left;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .header {
+            display: -webkit-box;
+            -webkit-box-orient: horizontal;
+            /* border-bottom: 1px solid rgba(41, 182, 246, 1); */
+            padding-bottom: 10px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 96%;
+        }
+        /* .print_div > table, */
+        .print_div table td,
+        .print_div > th {
+            border: 1px solid;
+            text-align: left;
+        }
+    </style>
+    <div class="header">
+        <div class="header-logo" style="margin-top: 20px;">
+            <img src="{% static 'assets/images/halisia.jpeg' %}" width="100">
+        </div>
+        <div class="header-bland">
+            <h2 class="header-title">{{ sysname }}</h2>
+            <div style="width:100%;text-align: left; margin: 0 auto;">
+
+                <div class="header-title-min" style="">P.O. Box 78794, Dar es Salaam, Tanzania.</div>
+                <div class="header-title-min" style="">Kariakoo, Mtaa wa Kariakoo na sikukuu</div>
+            </div>
+        </div>
+    </div>
+    <div style="font-weight:600; margin-bottom:10px">
+        Date: {% now "jS F Y H:i" %}
+    </div>
+    <table style="font-family: 'roboto'; width: 100%; border-collapse:collapse">
+        <thead style="background:#bbb;">
+            <tr>
+
+                <th style="padding: 7px;font-weight:600; text-align: left;border: 1px solid;">S/N</th>
+                <th style="padding: 7px;font-weight:600; text-align: left;border: 1px solid;">Product Name</th>
+                <th style="padding: 7px;font-weight:600; text-align: left;border: 1px solid;">System Amount</th>
+                <th style="padding: 7px;font-weight:600; text-align: left;border: 1px solid;">Physical Amount</th>
+                <th style="padding: 7px;font-weight:600; text-align: left;border: 1px solid;">Loss/Gain</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if products %}
+            {% for product in products %}
+            <tr>
+                <td style="font-weight:600;padding-left: 7px;border: 1px solid;">
+                    <span>
+                        {{ forloop.counter }}
+                    </span>
+                </td>
+                <td style="font-weight:600;padding-left: 7px;border: 1px solid;">
+                    <span class="">
+                        {{ product.name }}
+                    </span>
+                    &nbsp;
+                       ({{ product.unit }})
+                </td>
+                <td style="font-weight:600;padding-left: 7px;border: 1px solid;">{{ product.remaining_stock }}
+                </td>
+                <td style="border: 1px solid;"></td>
+                <td style="border: 1px solid;"></td>
+            </tr>
+            {% endfor %}
+            {% endif%}
+        </tbody>
+    </table>
+
+    <div class="col-sm-12" style=" margin-top:20px">
+        <div class="col-sm-6">
+            <label for="" class="col-xs-4  text-semibold">
+                    Accountant: &nbsp;&nbsp;&nbsp;
+            </label>
+            <label for="" class="col-xs-8  text-semibold" style="font-weight:600;">
+
+                -----------------------------------------------------------------
+            </label>
+        </div>
+    </div>
+    <div class="col-sm-12" style=" margin-top:5px">
+        <div class="col-sm-6">
+            <label for="" class="col-xs-4  text-semibold">
+                Maneger: &nbsp;&nbsp;&nbsp;
+            </label>
+            <label for="" class="col-xs-8  text-semibold" style="font-weight:600;">
+
+                -----------------------------------------------------------------
+            </label>
+        </div>
+    </div>
+    <div class="col-sm-12" style=" margin-top:5px">
+        <div class="col-sm-6">
+            <label for="" class="col-xs-4  text-semibold">
+                Store keeper: &nbsp;&nbsp;&nbsp;
+            </label>
+            <label for="" class="col-xs-8  text-semibold" style="font-weight:600;">
+
+                -----------------------------------------------------------------
+            </label>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+{% block data_table_js %}
+<script>
+    $(function () {
+
+
+        // Table setup
+        // ------------------------------
+
+        // Setting datatable defaults
+        $.extend($.fn.dataTable.defaults, {
+            autoWidth: false,
+            columnDefs: [{
+                orderable: false,
+                width: '100px',
+                targets: [3]
+            }],
+            dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
+            language: {
+                search: '<span>Filter:</span> _INPUT_',
+                searchPlaceholder: 'Type to filter...',
+                lengthMenu: '<span>Show:</span> _MENU_',
+                paginate: { 'first': 'First', 'last': 'Last', 'next': '&rarr;', 'previous': '&larr;' }
+            },
+            drawCallback: function () {
+                $(this).find('tbody tr').slice(-3).find('.dropdown, .btn-group').addClass('dropup');
+            },
+            preDrawCallback: function () {
+                $(this).find('tbody tr').slice(-3).find('.dropdown, .btn-group').removeClass('dropup');
+            }
+        });
+
+
+        // Basic datatable
+        $('.datatable-basic').DataTable({
+            order: []
+        });
+
+    });
+</script>
+{% endblock data_table_js %}
+{% block scripts %}
+<script>   
+ $(function () {
+        $('.print_div').hide();
+        let data = $('.print_div').html();
+        $(document).on('click', '.print_btn', function (e) {
+            e.preventDefault();
+            print_system_doc(data);
+        })
+    }); 
+</script>
+{% endblock scripts %}

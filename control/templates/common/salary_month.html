@@ -1,0 +1,14 @@
+<div class="form-group">
+    <label for="years">Year</label>
+    <select name="year" class="form-control year">
+        {% for year in years %}
+            <option value="{{ year }}">{{ year }}</option>
+        {% endfor %}
+    </select>
+    <label for="month">Month</label>
+    <select name="months" class="form-control months">
+        {% for months_choice in months_choices %}
+            <option value="{{ months_choice.0 }}">{{ months_choice.1|upper }}</option>
+        {% endfor %}
+    </select>
+</div>

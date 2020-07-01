@@ -1,0 +1,77 @@
+{% load control_filters %}
+
+<table class="table customers_table">
+    <thead>
+    <tr>
+        <th>Full Name</th>
+        <th>Location</th>
+        <th>Phone Number</th>
+        <th>Balance</th>
+        <th> Added By</th>
+        <th class="text-center">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for customer in customers %}
+        <tr>
+            <td>
+                             <span>
+                                 {{ customer.user.first_name }} {{ customer.user.last_name }}
+                             </span>
+            </td>
+            <td>
+                {{ customer.location}}
+            </td>
+            <td>
+                {% if customer.phone_number %}
+                    {{ customer.phone_number }}
+                {% else %}
+                    <span class="text-danger">Phone number not registered</span>
+                {% endif %}
+            </td>
+            <td>
+                <span class="text-semibold">
+                    {% load humanize %}
+                    {{ customer.user.pk|customer_debt|intcomma }}
+                </span>
+            </td>
+            <td>
+                    {{ customer.added_by.first_name}}  {{ customer.added_by.last_name}}
+            </td>
+            <td class="text-center">
+                <ul class="icons-list">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
+                                class="icon-menu7"></i></a>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li><a href="{% url 'customer_details' customer.id  %}"><i class=" icon-enlarge7 text-success"></i>View</a></li>
+                            {% with customer.user.pk|customer_debt  as amount %}
+                                {% if amount > 0 %}
+                                    <li><a href="javascript:;" class="bad-debt"
+                                           data-href="{% url 'bad_debt' customer.id %}"><i
+                                            class=" icon-share2 text-orange"></i>Bad Debt</a></li>
+                                {% endif %}
+                            {% endwith %}
+
+                            <li><a href="javascript;;" data-href="{% url 'edit_customer' customer.id %}"
+                                   class="edit-customer-link"><i class="icon-pencil text-info"></i>Edit</a></li>
+
+                            {% if customer.is_active %}
+                                <li><a href="javascript;;" data-href="{% url 'block_customer' customer.user.id %}"
+                                       class="block-customer-link"><i class="icon-lock text-slate"></i>Block</a></li>
+                            {% else %}
+                                <li><a href="javascript;;" data-href="{% url 'unblock_customer' customer.user.id %}"
+                                       class="unblock-customer-link"><i class="icon-lock text-slate"></i>Unblock</a>
+                                </li>
+                            {% endif %}
+
+                            <li><a href="javascript;;" data-href="{% url 'delete_customer' customer.user.id %}"
+                                   class="delete-customer-link"><i class="icon-trash text-danger"></i>Delete</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

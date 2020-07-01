@@ -1,0 +1,468 @@
+{% extends 'base.html' %} {% load humanize %} {% block content %}
+<style>
+    @media (min-width: 1200px) {
+        .customer_sales_container .history {
+            height: 170px;
+        }
+    }
+</style>
+<form action="{% url 'add_sales' %}" class="add-sales-form" method="post">
+    {% csrf_token %} {% load widget_tweaks %}
+    <div class="row sys-panel-shadow" style="border: rgba(41, 182, 246, .4) solid 1px; border-radius: 6px; padding-top:10px;">
+
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-6 ">
+                    <div class="row">
+                        <label class="col-lg-4 col-sm-4 control-label text-semibold mb-10">Customer:</label>
+                        <div class="col-lg-6 col-sm-6 mb-10">
+                            {% render_field form.customer_name class="select customer" %}
+                        </div>
+                        <div class="col-xs-2">
+                            <a href="{% url 'users' %}" class="btn btn-rounded bg-blue sys-btn"><i
+                                        class="icon-user-plus"></i></a>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-lg-4 col-sm-4 col-xs-12 control-label text-semibold">Name:</div>
+                        <div class="col-lg-8 col-sm-8 col-xs-12 text-primary control-label name">NONE</div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4 col-sm-4 col-xs-12 control-label text-semibold ">Current Credit:</div>
+                        <div class="col-lg-8 col-sm-8 col-xs-12 text-warning control-label balance">NONE</div>
+                        <input type="hidden" name="current_credit" value="">
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4 col-sm-4 col-xs-12 control-label text-semibold ">Max Credit:</div>
+                        <div class="col-lg-8 col-sm-8 col-xs-12 text-slate control-label credit_limit">NONE</div>
+                        <input type="hidden" name="max_credit" value="">
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4 col-sm-4 col-xs-12 control-label text-semibold">Wallet:</div>
+                        <div class="col-lg-8 col-sm-8 col-xs-12 text-primary control-label">NONE</div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+
+                    <div class="row">
+                        <label class="col-lg-4 col-sm-4 control-label text-semibold">Staff:</label>
+                        <div class="col-lg-8 col-sm-6 mb-10">
+                            {% render_field form.staff_name class="select" %}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4 col-sm-4 col-xs-12 control-label text-semibold">Date:</div>
+                        <div class="col-lg-8 col-sm-8 col-xs-12 text-primary">
+                            <input type="text" name="sale_date" class="form-control pickadate sys-input" placeholder="Pick a date&hellip;">
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-lg-4 col-sm-4 col-xs-5 control-label text-semibold">Payment Type:</div>
+                        <div class="col-lg-8 col-sm-8 col-xs-7 text-slate">
+                            <div class="checkbox checkbox-switch switch_btn">
+                                <label class="">
+                                        {% render_field form.sale_type data-on-color="success" data-off-color="danger" data-on-text="Cash" data-off-text="Credit" class="sale_type switch" %}
+
+                                    </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row payment-method">
+
+                        <div class="col-lg-4 col-sm-4 control-label text-semibold">Payment Type:</div>
+                        <div class="col-lg-8 col-sm-6 mb-10">
+                            {% render_field form.payment_method class="select" %}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="" style="border:solid 0.5px rgba(41, 182, 246, .2)"></div>
+            <div class="row mt-5 ">
+                <div class="col-md-6">
+                    <div class="row">
+                        <label class="col-sm-4 control-label text-semibold"> Select Product:</label>
+                        <div class="col-lg-8 col-sm-6">
+                            {% render_field form.product class="select" %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <label class="col-sm-4  text-semibold">
+                                Remaining Stock
+                            </label>
+
+                        <label class="col-sm-4 mt-5 text-semibold  text-center">
+                                <label class='col-sm-12 remain_stock pb-5 pt-5 b-r-6'>
+
+                                </label>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-10">
+                <div class="col-md-6">
+                    <div class="row">
+                        <label class="col-sm-4 control-label text-semibold">
+                                Selling Price:
+                            </label>
+                        <div class="col-lg-8">
+                            {% render_field form.price min="1" class="form-control sys-input selling_price" placeholder="Selling price..." %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <label class="col-sm-3 control-label text-semibold">
+                                Quantity:
+                            </label>
+                        <div class="col-sm-6">
+                            {% render_field form.quantity min="1" class="form-control sys-input quantity" placeholder="Quantity.." value="0" onkeyup="check_stock()" %}
+                        </div>
+                        <input type="hidden" name="total_price" class="total_price">
+                        <div class="col-sm-3">
+                            <button class="btn btn-rounded bg-blue sys-btn add-cart"><i class="icon-plus22"></i> Add
+                                </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 customer_sales_container">
+            <div class="panel b-r-10" style="margin-bottom:0px">
+                <div class="panel-heading bg-blue">
+                    <h6 class="panel-title" style="font-weight: 500">
+                        <i class="  icon-history "></i> &nbsp; Customer Sales History
+                    </h6>
+                </div>
+                <div class="panel-body history">
+
+                </div>
+            </div>
+            <div class="col-xs-12 text-right mt-20 ">
+                <button class="btn btn-rounded bg-warning sys-btn btn-labeled close-sales">
+                        <b><i class="icon-x"></i></b> Cancel
+                    </button>
+                <button type="button" class="btn btn-rounded add-sales bg-success-400 sys-btn  btn-labeled ml-20">
+                        <b><i class="icon-plus22"></i></b> Save
+                    </button>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-10">
+
+        <div class="panel b-r-10 sys-panel-shadow">
+            <div class="panel-heading bg-blue">
+                <h6 class="panel-title" style="font-weight: 500">
+                    <i class="icon-stack-plus "></i> Sales Details &nbsp;
+                    <span class="badge badge-flat border-white text-white sales_badge">0</span>
+                    <label class="text-primary bg-white pull-right" style="border-radius: 3px;padding-left:5px; padding-right: 5px;">
+                            Total:
+                            <span class="bg-blue total_cart" style="padding-right: 6px; padding-left:6px ">
+                            0.0
+                        </span>
+                        </label>
+                </h6>
+            </div>
+            <table class="table  sales_table">
+                <thead>
+                    <tr>
+                        <th>Product Name</th>
+                        <th>
+                            Quantity
+                        </th>
+                        <th>
+                            Price @ 1
+                        </th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</form>
+{% endblock %} {% block scripts %}
+<script>
+    $(document).ready(function() {
+        $(".payment-method").hide();
+        $(document).on("change", ".sale_type", function(e) {
+            e.preventDefault();
+            // console.log("Hello world");
+            if ($(this).is(":checked")) {
+                $(".payment-method").show();
+            } else {
+                $(".payment-method").hide();
+            }
+        });
+        $('.bootstrap-switch-container span').click(function(e) {
+            e.preventDefault();
+            let data = $('.switch_btn').children().children().hasClass('bootstrap-switch-off');
+            if (data) {
+                $(".payment-method").hide();
+            } else {
+                $(".payment-method").show();
+            }
+        });
+    });
+    // variable iniatization
+    var no_history = `<label for="" class="alert alert-info col-xs-12 text-center">No history available!</label>`;
+    // insert remain stock val here
+    let remain_stock = 0;
+    $.get(`/remaining_product/${$("select[name=product] option:selected").val()}/`, function(response) {
+        var data = JSON.parse(response)[0];
+        remain_stock = data.total;
+        change_stock_label_color(remain_stock);
+        $(".selling_price").val(data.selling_price);
+    });
+
+    $(document).on("change", "select[name=product]", function(e) {
+        e.preventDefault();
+        $.get(`/remaining_product/${$(this).val()}/`, function(response) {
+            var data = JSON.parse(response)[0];
+            remain_stock = data.total;
+            change_stock_label_color(remain_stock);
+            $(".selling_price").val(data.selling_price);
+        });
+
+    });
+
+    change_stock_label_color(remain_stock);
+
+    function change_stock_label_color(stock) {
+        if (stock >= 20) {
+            $('.remain_stock').addClass('bg-success-400');
+            $('.remain_stock').removeClass('bg-danger-400');
+        } else {
+            $('.remain_stock').addClass('bg-danger-400');
+            $('.remain_stock').removeClass('bg-success-400');
+        }
+        $('.remain_stock').html(stock)
+    }
+
+    function check_stock() {
+
+        let temp_val = $('.remain_stock').html();
+        let remain_stock_int = parseInt(remain_stock);
+
+        if (temp_val > 0) {
+            let quantity = $('.quantity').val();
+            let remain_stock_int_deducted = remain_stock_int - quantity;
+            if (remain_stock_int_deducted < 0) {
+                remain_stock_int_deducted = 0;
+                $('.quantity').val(remain_stock_int);
+            }
+            $('.remain_stock').html(remain_stock_int_deducted);
+            change_stock_label_color(remain_stock_int_deducted);
+            if (quantity > remain_stock_int) {
+                call_notify('Out of stock', 'error', 'topCenter');
+            }
+        } else if (temp_val == 0) {
+            let quantity = $('.quantity').val();
+            if (quantity > remain_stock_int) {
+                $('.quantity').val(remain_stock_int);
+                call_notify('Out of stock', 'error', 'topCenter');
+            } else {
+                let remain_stock_int_deducted = remain_stock_int - quantity;
+                if (remain_stock_int_deducted < 0) {
+                    remain_stock_int_deducted = 0;
+                    $('.quantity').val(remain_stock_int);
+                }
+                $('.remain_stock').html(remain_stock_int_deducted);
+                change_stock_label_color(remain_stock_int_deducted);
+                if (quantity > remain_stock_int) {
+                    call_notify('Out of stock', 'error', 'topCenter');
+                }
+            }
+
+        }
+
+    }
+
+    let table_rows = $('.sales_table tbody').children().length;
+    $('.sales_badge').html(table_rows);
+
+    $('.sales_table tbody').change(function() {
+        let table_rows = $('.sales_table tbody').children().length;
+        $('.sales_badge').html(table_rows);
+    })
+
+    $(function() {
+        $('.history').html(no_history);
+    })
+    $(document).on("change", ".customer", function(e) {
+        e.preventDefault();
+        $.get(`/customer_history/${$(this).val()}/`, function(response) {
+            if (response.length > 24) {
+                $(".history").html(response);
+            } else {
+                $('.history').html(no_history);
+            }
+        });
+        $.get(`/customer_info/${$(this).val()}/`, function(response) {
+            var data = JSON.parse(response)[0];
+            $(".name").html(data.name);
+            if (data.credit_limit == null) {
+                $(".credit_limit").html('NONE');
+                $("input[name=max_credit]").val(0);
+            } else {
+                $(".credit_limit").html(data.credit_limit);
+                $("input[name=max_credit]").val(data.credit_limit);
+            }
+            if (data.balance == null) {
+                $(".balance").html('NONE');
+                $("input[name=current_credit]").val(0);
+            } else {
+                $(".balance").html(data.balance);
+                $("input[name=current_credit]").val(data.balance);
+            }
+
+        });
+    });
+    var total = 0.0;
+    var total_quantity = 0;
+    $(".add-cart").on("click", function(e) {
+        e.preventDefault();
+        var productName = $(this).parents().find("select[name=product] option:selected").text();
+        var quantity = $(this).parents().find("input[name=quantity]").val();
+        var selling_price = $(this).parents().find("input[name=price]").val();
+        if (productName != null && (parseInt(quantity) > 0 || parseInt(quantity) > 0) && (parseInt(selling_price) > 0 || parseInt(selling_price) > 0)) {
+            total = total + (quantity * selling_price);
+            $(".total_price").val(total);
+            total_quantity = total_quantity + parseInt(quantity);
+            change_stock_label_color(remain_stock - total_quantity);
+            $(".total_cart").html(total);
+            $(".sales_table > tbody").prepend(`
+        <tr>
+                        <td>
+                        <input type="hidden" name="product_selected" value="${$(this).parents().find("select[name=product] option:selected").val()}"/>
+                            ${productName}
+                        </td>
+                        <td>${quantity}
+                            <input type="hidden" name="quantity_selected" value="${quantity}"/>
+                        </td>
+                        <td>
+                            <input type="hidden" name="price_selected" value="${selling_price}"/>
+                            ${selling_price}
+                        </td>
+                        <td class="text-center">
+                            <button type="button" class="btn btn-warning remove-item btn-icon btn-sm btn-rounded sys-btn"><i
+                                    class="icon-trash"></i></button>
+                        </td>
+                    </tr>`);
+        } else {
+            call_notify('Field required', 'error', 'topCenter');
+        }
+    });
+
+
+    $(document).on("click", ".remove-item", function(e) {
+        e.preventDefault();
+        var quantity = $(this).parents().find("input[name=quantity]").val();
+        var selling_price = $(this).parents().find("input[name=price]").val();
+        $(this).parent().parent().remove();
+        total = total - (quantity * selling_price);
+        total_quantity = total_quantity - parseInt(quantity);
+        change_stock_label_color(remain_stock - total_quantity);
+        $(".total_cart").html(total);
+    });
+
+    $(document).on("click", ".add-sales", function(e) {
+
+        e.preventDefault();
+        console.log($("select[name=staff_name]").val());
+        if (($("select[name=customer_name]").val() != "") && ($("select[name=staff_name]").val() != "") && ($("select[name=product]").val() != "") && ($("input[name=quantity]").val() > 0)) {
+            $('.add-sales').hide();
+            $('.close-sales').hide();
+            $.confirm({
+                title: "Sales Confirmation",
+                type: "green",
+                closeIcon: true,
+                content: "You are about to submit Sales",
+                onContentReady: function() {
+                    var self = this;
+                    self.$$confirm.show();
+                    self.$$allow.hide();
+                    $(document).on("submit", ".add-sales-form", function(e) {
+                        e.preventDefault();
+                        console.log("working");
+                        self.showLoading();
+                        let $formData = new FormData($(this)[0]);
+                        $.ajax({
+                            url: $(this).attr("action"),
+                            method: "POST",
+                            data: $formData,
+                            processData: false,
+                            contentType: false,
+                        }).done(function(response) {
+                            self.hideLoading();
+                            try {
+                                let data = JSON.parse(response)[0];
+                                if (data.status) {
+                                    self.$$confirm.hide();
+                                    self.$$allow.hide();
+                                    call_notify(String(data.message), "success", "topCenter");
+                                    var total_calculated = parseInt($(".total_price").val()) + parseInt($("input[name=current_credit]").val());
+                                    if ((total_calculated > parseInt($("input[name=max_credit]").val())) && ($("input[name=sale_type]").is(":checked") == false)) {
+                                        setTimeout(function() {
+                                            window.location.reload();
+                                        }, 1000);
+                                    } else {
+                                        setTimeout(function() {
+                                            window.location.href = "/control/sales_info/" + data.id + "/";
+                                        }, 1000);
+                                    }
+
+                                }
+                            } catch (error) {
+                                $(".add-sales-form").html(response);
+                            }
+                        });
+                    });
+                },
+                buttons: {
+                    confirm: {
+                        text: "Confirm",
+                        btnClass: "btn-success",
+                        action: function() {
+                            var self = this;
+                            var total_calculated = parseInt($(".total_price").val()) + parseInt($("input[name=current_credit]").val());
+                            if ((total_calculated > parseInt($("input[name=max_credit]").val())) && ($("input[name=sale_type]").is(":checked") == false)) {
+                                self.$$confirm.hide();
+                                self.$$allow.show();
+                                self.setContent("The Customer Credit is bigger Do you want to Allow it?");
+                                self.setType("red");
+                            } else {
+                                $(".add-sales-form").submit();
+                            }
+                            return false;
+                        }
+                    },
+                    allow: {
+                        text: "Allow",
+                        isHidden: true,
+                        btnClass: "btn-danger",
+                        action: function() {
+                            $(".add-sales-form").submit();
+                            return false;
+                        }
+                    }
+                },
+                onClose: function() {
+                    window.location.reload();
+                }
+            });
+        } else {
+            call_notify("Field required", "warning", "topCenter");
+        }
+
+    });
+</script>
+{% endblock %}

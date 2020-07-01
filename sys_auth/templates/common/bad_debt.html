@@ -1,0 +1,75 @@
+<!-- <style>
+    .debt_select .select2-container{
+        z-index: 99999999999999999999999999;
+        display: none
+    }
+</style> -->
+{% load control_filters %}
+{% load widget_tweaks %}
+<form action="{% url 'bad_debt' customer.id %}" class="customer-bad-debt-form" method="post">
+    {% csrf_token %}
+<div class="col-md-6">
+    <div class="form-group">
+        <label class="col-sm-3 control-label text-semibold">
+            Debtor:
+        </label>
+        <div class="col-sm-9">
+            {% render_field form.customer class="form-control sys-input" %}
+        </div>
+    </div>
+</div>
+<div class="col-md-6">
+    <div class="form-group">
+        <label class="col-sm-3 control-label text-semibold">
+            Debt Amount:
+        </label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control sys-input" placeholder=".." value="{{ customer.user.pk|customer_debt }}" disabled>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-6">
+    <div class="form-group">
+        <label class="col-sm-3 control-label text-semibold">
+            Charging Amount:
+        </label>
+        <div class="col-sm-9">
+            {% render_field form.amount class="form-control sys-input" min="1" placeholder="Enter amount"  %}
+        </div>
+    </div>
+</div>
+
+<div class="col-md-6 ">
+    <div class="form-group">
+        <label class="col-sm-3 control-label text-semibold">
+            Charge By:
+        </label>
+        <div class="col-sm-9 debt_select">
+            {% render_field form.debt_type class="form-control debt_type" %}
+        </div>
+    </div>
+</div>
+
+<div class="col-md-6 staff-selection">
+        <div class="form-group">
+            <label class="col-sm-3 control-label text-semibold">
+                Staff:
+            </label>
+            <div class="col-sm-9 debt_select">
+                {% render_field form.staff class="form-control" %}
+            </div>
+        </div>
+</div>
+<div class="col-md-12">
+    <div class="form-group">
+        <label>Reason for Destruction:</label>
+        {% render_field form.description class="form-control" rows="3" cols="5" placeholder="Write comment" %}
+    </div>
+</div>
+</form>
+<script>
+    $(function(){
+        $(".staff-selection").hide();
+    });
+</script>

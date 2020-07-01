@@ -1,0 +1,224 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load humanize %}
+{% block content %}
+<div class="panel">
+    <div class="panel-body">
+        <div class="row">
+            <form action="{% url 'profit_loss' %}" method="get">
+                    <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label col-lg-4">Branch: </label>
+                                <div class="col-lg-8">
+                                    <select name="branch" class="form-control select text-primary data-filter" style="width: 100%">
+                                        <option value="all" {% if request.GET.branch == "all" %}selected="selected" {% endif %}>All
+                                        </option>
+                                        {% for branch in branches %}
+                                        <option value="{{ branch.pk }}" {% if request.GET.branch == branch.pk %}selected="selected"
+                                            {% endif %}>{{ branch.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label col-lg-4">Filter: </label>
+                                <div class="col-lg-6">
+                                    <select name="period" class="form-control select text-primary data-filter data-days"
+                                        style="width: 100%">
+                                        <option value="1" {% if request.GET.period == "1" %}selected="selected" {% endif %}>This
+                                            Month
+                                        </option>
+                                        <option value="2" {% if request.GET.period == "2" %}selected="selected" {% endif %}>Last
+                                            Week
+                                        </option>
+                                        <option value="3" {% if request.GET.period == "3" %}selected="selected" {% endif %}>Last
+                                            Month
+                                        </option>
+                                        <option value="0" {% if request.GET.period == "0" %}selected="selected" {% endif %}>Pick Date(s)
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-2">
+                                    <button class="btn btn-rounded bg-blue sys-btn" type="submit"><i class=" icon-search4"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8 pickadaterange">
+                            <div class=" col-md-6 ">
+                                <label class="control-label col-lg-4">Start Date: </label>
+                                <div class="col-lg-8">
+                                    <input name="start_date" class="form-control sys-input pickadate">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="control-label col-lg-4">End Date: </label>
+                                <div class="col-lg-8">
+                                    <input name="end_date" class="form-control sys-input pickadate">
+                                </div>
+                            </div>
+                        </div>
+            </form>
+            <div class="col-md-4">
+                <a href="javascript:;" data-href=""
+                    class="btn btn-rounded bg-blue sys-btn  btn-labeled ml-20 pull-right print_btn ">
+                    <b><i class=" icon-printer"></i></b> Print
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <table class="table-secondary table">
+                <thead>
+                    <tr>
+                        <th colspan="2">SALES</th>
+                        <th colspan="2">EXPENSES</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Sales</td>
+                        <td style="font-weight:600">{{total_sales|intcomma}}</td>
+                        <td>Expenses</td>
+                        <td style="font-weight:600">{{total_expense|intcomma}}</td>
+                    </tr>
+                    <tr>
+                        <td>Cost of Goods Sold</td>
+                        <td style="font-weight:600">{{total_cost_of_goods|intcomma}}</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Gross Profit</td>
+                        <td style="font-weight:600">{{gross_profit|intcomma}}</td>
+                        <td>Total Expense</td>
+                        <td style="font-weight:600">{{total_expense|intcomma}}</td>
+                    </tr>
+                    <tr style="font-weight:600;">
+                        <td colspan="2">NET PROFIT</td>
+                        <td colspan="2">{{net_profit|intcomma}}TZS</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="print_div" style="display: none">
+    <style>
+        .header-logo {
+            width: 15%;
+            text-align: center;
+        }
+
+        .header-bland {
+            width: 85%;
+            text-align: center;
+        }
+
+        .header-title {
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: 500;
+            text-align: left;
+            margin-bottom: 0;
+            margin-top: 30px
+        }
+
+        .header-title-min {
+            width: 100%;
+            display: block;
+            text-align: left;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .header {
+            display: -webkit-box;
+            -webkit-box-orient: horizontal;
+            /* border-bottom: 1px solid rgba(41, 182, 246, 1); */
+            padding-bottom: 10px;
+        }
+    </style>
+    <div class="header">
+        <div class="header-logo" style="margin-top: 20px;">
+            <img src="{% static 'assets/images/halisia.jpeg' %}" width="100">
+        </div>
+        <div class="header-bland">
+            <h2 class="header-title">{{ sysname }}</h2>
+            <div style="width:100%;text-align: left; margin: 0 auto;">
+
+                <div class="header-title-min" style="">P.O. Box 78794, Dar es Salaam, Tanzania.</div>
+                <div class="header-title-min" style="">Kariakoo, Mtaa wa Kariakoo na sikukuu</div>
+            </div>
+        </div>
+    </div>
+    <table style="font-family: 'roboto'; width: 100%; border-collapse:collapse">
+        <thead style="background:#bbb;">
+            <tr>
+                <th colspan="2" style="padding: 7px">SALES</th>
+                <th colspan="2" style="border-right: 1px solid #bbb">EXPENSES</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="border-bottom:1px solid #bbb">
+                <td style="padding: 7px;border-left: 1px solid #bbb">Sales</td>
+                <td style="font-weight:600;padding: 7px; ">0.00</td>
+                <td style="padding: 7px;border-left: 1px solid #bbb">Expenses</td>
+                <td style="font-weight:600;padding: 7px;border-right: 1px solid #bbb">0.00</td>
+            </tr>
+            <tr style="border-bottom:1px solid #bbb">
+                <td style="padding: 7px;border-left: 1px solid #bbb">Cost of Goods Sold</td>
+                <td style="font-weight:600;padding: 7px">0.00</td>
+                <td style="border-left: 1px solid #bbb"></td>
+                <td style="border-right: 1px solid #bbb"></td>
+            </tr>
+            <tr style="border-bottom:1px solid #bbb">
+                <td style="padding: 7px;border-left: 1px solid #bbb">Gross Profit</td>
+                <td style="font-weight:600;padding: 7px">0.00</td>
+                <td style="padding: 7px;border-left: 1px solid #bbb">Total Expense</td>
+                <td style="font-weight:600;padding: 7px;border-right: 1px solid #bbb">0.00</td>
+            </tr>
+            <tr style="font-weight:600;">
+                <td colspan="2" style="padding: 7px"></td>
+                <td style="padding: 7px;border-right: 1px solid #bbb;border-left: 1px solid #bbb;border-bottom: 1px solid #bbb
+                ">NET PROFIT:</td>
+                <td style="padding: 7px;border-right: 1px solid #bbb;border-bottom: 1px solid #bbb"> 0.00 TZS</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+{% endblock content %}
+
+
+{% block scripts %}
+<script>
+    $(function () {
+        $('.print_div').hide();
+        let data = $('.print_div').html();
+        $(document).on('click', '.print_btn', function () {
+            print_system_doc(data);
+        })
+    });
+
+    $(function () {
+        var url = new URL(window.location.href);
+        var period = url.searchParams.get("period");
+        if (period == 0) {
+            $("input[name=start_date]").val(url.searchParams.get("start_date"));
+            $("input[name=end_date]").val(url.searchParams.get("end_date"));
+            $('.pickadaterange').show();
+        } else {
+            $('.pickadaterange').hide();
+        }
+    });
+    $(document).on('change', '.data-days', function () {
+        let data = $('.data-days').val();
+        if (data == 0) {
+            $('.pickadaterange').show(200);
+        } else {
+            $('.pickadaterange').hide(100);
+        }
+    });
+</script>
+{% endblock scripts%}

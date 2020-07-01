@@ -1,0 +1,375 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load humanize %}
+{% load control_filters %}
+{% block content %}
+    <div class="print_data">
+        <div style="margin-left: 10px;">
+            <style>
+                .print_panel {
+                    font-family: Arial;
+                    text-transform: uppercase
+                }
+        
+                table,
+                td,
+                th {
+                    border: 1px solid;
+                    text-align: left;
+                }
+        
+                table {
+                    border-collapse: collapse;
+                    width: 96%;
+                }
+        
+                thead th {
+                    font-weight: bold;
+                    background-color: rgb(190, 190, 190);
+                }
+        
+                th,
+                td {
+                    padding: 5px;
+                }
+        
+                tbody td {
+                    padding: 10px
+                }
+        
+                .header-logo {
+                    width: 15%;
+                    text-align: center;
+                }
+        
+                .header-bland {
+                    width: 85%;
+                    text-align: center;
+                }
+        
+                .header-title {
+                    font-family: Arial, Helvetica, sans-serif;
+                    font-weight: 500;
+                    text-align: left;
+                    margin-bottom: 0;
+                    margin-top: 30px
+                }
+        
+                .header-title-min {
+                    width: 100%;
+                    display: block;
+                    text-align: left;
+                    font-family: Arial, Helvetica, sans-serif;
+                }
+        
+                .header {
+                    display: -webkit-box;
+                    -webkit-box-orient: horizontal;
+                    border-bottom: 1px solid rgba(41, 182, 246, 1);
+                    padding-bottom: 10px;
+                }
+            </style>
+        
+            <div class="header">
+                <div class="header-logo" style="margin-top: 20px;">
+                    <img src="{% static 'assets/images/halisia.jpeg' %}" width="100">
+                </div>
+                <div class="header-bland">
+                    <h2 class="header-title">{{ sysname }}</h2>
+                    <div style="width:100%;text-align: left; margin: 0 auto;">
+        
+                        <div class="header-title-min" style="">P.O. Box 78794, Dar es Salaam, Tanzania.</div>
+                        <div class="header-title-min" style="">Kariakoo, Mtaa wa Kariakoo na sikukuu</div>
+                    </div>
+                </div>
+            </div>
+            <h3
+                    style="text-align:center; background-color: #03A9F4; border-radius: 4px; padding: 5px; font-family: Arial, Helvetica, sans-serif; margin-bottom: 10px; color: white">
+                MONTHLY EMPLOYEE ASSESMENT
+            </h3>
+            <h4 style="font-family: Arial, Helvetica, sans-serif; margin-left:10px; margin-bottom:7px">
+                A: STAFF DETAILS
+            </h4>
+            <div style="padding-left: 30px; padding-right: 30px;">
+                <div style=" width:100%; margin-bottom: 5px;font-family: Arial, Helvetica, sans-serif; display: flex">
+                    <div style="display:inline-block; width:28%;">
+                        NAME :
+                    </div>
+                    <!-- display value below -->
+                    <div style="display:inline-block;">
+                        {{ user_obj }}
+                    </div>
+                </div>
+                <div style=" width:100%; margin-bottom: 5px;font-family: Arial, Helvetica, sans-serif;">
+                    <div style="display:inline-block; width:28%;">
+                        POSITION :
+                    </div>
+                    <!-- display value below -->
+                    <div style="display:inline-block;">
+                        {% if user_obj.user.groups.all %}
+                            {% for role in user_obj.user.groups.all %}
+                                <span class="badge badge-success">{{ role.name }}</span>,
+                            {% endfor %}
+                        {% else %}
+                            <span class="badge badge-danger">No Role</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div style=" width:100%; margin-bottom: 5px;font-family: Arial, Helvetica, sans-serif;">
+                    <div style="display:inline-block; width:28%;">
+                        AVERANGE TIME IN :
+                    </div>
+                    <!-- display value below -->
+                    <div style="display:inline-block;">
+                        {{ average_time_in }}
+                    </div>
+                </div>
+                <div style=" width:100%; margin-bottom: 5px;font-family: Arial, Helvetica, sans-serif;">
+                    <div style="display:inline-block; width:28%;">
+                        MISSING DAYS :
+                    </div>
+                    <!-- display value below -->
+                    <div style="display:inline-block;">
+                        {{ not_attended_days|length }}
+                    </div>
+                </div>
+
+                <div
+                        style="width: 100%; margin-bottom: 7px;font-family: Arial, Helvetica, sans-serif; border-bottom: solid 2px rgba(3, 169, 244, 0.7);">
+                    <!-- <div style="margin-bottom: 0px">Missing Days</div> -->
+                    <ol>
+                        {% if not_attended_days %}
+                            {% for not_attended_day in not_attended_days %}
+                                <li>
+                                    <div style="display:inline-block; width:30%">
+                                        {{ not_attended_day.created|date:"d F Y" }}
+                                    </div>
+                                    <div style="display:inline-block; width:30%">
+                                        {{ not_attended_day.created|date:"l" }}
+                                    </div>
+                                    <div style="display:inline-block; width:30%">
+                                        {% if not_attended_day.comment %}
+                                            {{ not_attended_day.comment }}
+                                        {% else %}
+                                            <span class="badge badge-danger">No Comment</span>
+                                        {% endif %}
+
+                                    </div>
+                                </li>
+                            {% endfor %}
+
+                        {% else %}
+                            <div
+                                    style=" width:100%; margin-bottom: 7px;font-family: Arial, Helvetica, sans-serif; background-color: rgba(3, 169, 244, 0.37); border: solid 2px rgba(3, 169, 244, 1); text-align: center; border-radius: 5px; padding:10px;">
+                                No missing days!
+                            </div>
+                        {% endif %}
+
+                    </ol>
+                </div>
+
+            </div>
+            <h4 style="font-family: Arial, Helvetica, sans-serif; margin-left:10px; margin-bottom:7px">
+                B: SALES
+            </h4>
+            <div
+                    style="padding-left: 30px; padding-right: 30px;width: 100%; margin-bottom: 7px;font-family: Arial, Helvetica, sans-serif;">
+                {% if sales_items %}
+                    <table>
+                        <thead>
+
+                        <tr>
+                            <th>
+                                Item
+                            </th>
+                            <th>
+                                Quantity
+                            </th>
+                            <th>
+                                Avg. Price
+                            </th>
+                            <th>
+                                Total
+                            </th>
+                        </tr>
+
+                        </thead>
+                        <tbody>
+                        {% for sales_item in sales_items %}
+                            <tr>
+                                <td>{{ sales_item.name }}</td>
+                                <td>{{ sales_item.quantity }}</td>
+                                <td>{{ sales_item.price|intcomma }}</td>
+                                <td style="font-weight: 600">{{ sales_item.total|intcomma }}</td>
+                            </tr>
+                        {% endfor %}
+
+                        <!-- total -->
+                        <tr style="font-weight: 600">
+                            <td>TOTAL</td>
+                            <td>{{ total_quantity_counts }}</td>
+                            <td></td>
+                            <td>{{ total_price_counts|intcomma }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                {% else %}
+                    <tr>
+                        <td colspan="4">
+                            <div class="alert alert-info text-center">
+                                No Item
+                            </div>
+                        </td>
+                    </tr>
+                {% endif %}
+            </div>
+
+            <div style="width: 100%; margin-bottom: 7px;font-family: Arial, Helvetica, sans-serif; ">
+
+                <h4 style="font-family: Arial, Helvetica, sans-serif; margin-left:22px; margin-bottom:7px">
+                    THEREFOR :-
+                </h4>
+                <!-- <div style="margin-bottom: 0px">Missing Days</div> -->
+                <ol style="text-transform: uppercase; margin-left:22px; ">
+                    <li>
+                        total quantity of goods solid : <span
+                            style="text-decoration: underline; font-weight:600">{{ total_quantity_counts }}</span>
+                    </li>
+                    <li>
+                        total value of goods sold: <span
+                            style="text-decoration: underline; font-weight:600">{{ total_price_counts|intcomma }}</span>
+                    </li>
+                    <li>
+                        total amount of cash collected from customer by the employee: <span
+                            style="text-decoration: underline; font-weight:600">{{ user_obj.user.id|get_total_amount_staff_collected|intcomma }}</span>
+                    </li>
+                </ol>
+            </div>
+
+            <h4 style="font-family: Arial, Helvetica, sans-serif; margin-left:10px; margin-bottom:7px">
+                C: CUSTOMERS ADDED BY EMPLOYEE IN THIS PARTICULAR MONTH
+            </h4>
+            <div
+                    style="padding-left: 30px; padding-right: 30px;width: 100%; margin-bottom: 7px;font-family: Arial, Helvetica, sans-serif;">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>
+                            No.
+                        </th>
+                        <th>
+                            CUSTOMER
+                        </th>
+                        <th>
+                            AREA
+                        </th>
+                        <th>
+                            PHONE NUMBER
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% if customers %}
+                        {% for customer in customers %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ customer }}</td>
+                                <td>{{ customer.location }}</td>
+                                <td style="font-weight: 600">{{ customer.phone_number }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="4">
+                                <div class="alert alert-info text-center" style="text-align: center">
+                                    No Customer
+                                </div>
+                            </td>
+                        </tr>
+                    {% endif %}
+
+                    </tbody>
+                </table>
+            </div>
+
+            <h4 style="font-family: Arial, Helvetica, sans-serif; margin-left:10px; margin-bottom:7px">
+                D: CONCLUSION( MANAGING DIRECTOR )
+            </h4>
+            <div
+                    style="padding-left: 30px; padding-right: 30px;width: 100%; margin-bottom: 7px;font-family: Arial, Helvetica, sans-serif;">
+                <!-- <textarea name="" id="" cols="30" rows="10" style="width: 50%" class="form-control"></textarea> -->
+                --------------------------------------------------------------------------------------------------------------------------------------<br>
+                --------------------------------------------------------------------------------------------------------------------------------------<br>
+                --------------------------------------------------------------------------------------------------------------------------------------<br>
+            </div>
+            <div
+                    style="padding-left: 30px; padding-right: 30px;width: 100%; margin-bottom: 7px;font-family: Arial, Helvetica, sans-serif; text-align: left; text-transform: uppercase">
+                <!-- return the owner/ md name -->
+                xxxx xxxx <br>
+                ...............................................
+                <br>
+                <small style="text-transform: capitalize; color:#555">
+                    ( signature)
+                </small>
+            </div>
+            <div
+                    style="padding-left: 30px; padding-right: 30px;width: 100%; margin-bottom: 7px;font-family: Arial, Helvetica, sans-serif; text-align: center; text-transform: uppercase; font-weight: 600">
+                EMPLOYEE REMARKS :
+                <!-- return selected remark -->
+                <span id="remarks">NOT SELECTED</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="border-top: solid 2px rgba(3, 169, 244, 0.37); padding-top:30px">
+        <div class="col-sm-6 remarks_wrapp">
+            <label class="radio-inline">
+                <input type="radio" class="styled remark_radio" name="remarks" value="V. GOOD">
+                V. GOOD
+            </label>
+
+            <label class="radio-inline ">
+                <input type="radio" class="styled remark_radio" name="remarks" value="GOOD">
+                GOOD
+            </label>
+            <label class="radio-inline ">
+                <input type="radio" class="styled remark_radio" name="remarks" value="AVERANGE">
+                AVERANGE
+            </label>
+            <label class="radio-inline ">
+                <input type="radio" class="styled remark_radio" name="remarks" value="BAD">
+                BAD
+            </label>
+        </div>
+
+        <div class="col-sm-6 text-right">
+            <a href="#" class="btn btn-sm bg-blue btn-labeled btn-rounded btn_print">
+                <b>
+                    <i class="icon-printer"></i>
+                </b>
+                Print
+            </a>
+        </div>
+    </div>
+{% endblock content %}
+
+
+{% block scripts %}
+    <script>
+        $(document).on('click', '.remark_radio', function () {
+            let data = $(this).val();
+            $('#remarks').html(data)
+        });
+        $(document).on('click', '.btn_print', function (e) {
+            e.preventDefault();
+            if ($('.remarks_wrapp input[type="radio"].remark_radio').is(':checked')) {
+                let data = $('.remarks_wrapp input[type="radio"].remark_radio').is(':checked');
+                let print_data = $('.print_data').html();
+                print_system_doc(print_data)
+
+            } else {
+                call_notify('Please select remarks!', "warning", "topCenter");
+            }
+        })
+    </script>
+{% endblock scripts %}

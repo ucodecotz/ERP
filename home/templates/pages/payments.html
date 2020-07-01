@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load widget_tweaks %}
+{% block content %}
+<div class="row">
+<div class="someBlock"></div>
+    <div class="tabbable">
+        <div style="display: flex; justify-content:space-evenly">
+            <ul class="nav nav-sm nav-tabs nav-justified  nav-tabs-component bg-success "
+                style=" display: inline-block;">
+                <li class="active">
+                    <a href="#customer_payment" data-toggle="tab">
+                        <i class="icon-users2"></i>
+                        Customer <br> Payment
+                    </a>
+                </li>
+                <!-- <li><a href="#staff_collection" data-toggle="tab">
+                        <i class="icon-users2"></i>
+                        Staff <br> Collection
+                    </a>
+                </li> -->
+                <li><a href="#loan_collection" data-toggle="tab">
+                        <i class="icon-cash"></i>
+                        Loan <br> Payment
+                    </a>
+                </li>
+                
+                <li class="bg-warning-400">
+                    <a href="#supplier_payment" data-toggle="tab">
+                        <i class=" icon-user-tie"></i>
+                        Supplier <br> Payment
+                    </a>
+                </li>
+                <li class="bg-warning-400"><a href="#other_payment" data-toggle="tab">
+                        <i class="icon-coins"></i>
+                        Other <br> Payment
+                    </a>
+                </li>
+                <li class="bg-warning-400"><a href="#loan_provision" data-toggle="tab">
+                        <i class="icon-cash4"></i>
+                        Loan <br> Provision
+                    </a>
+                </li>
+                <li class="bg-warning-400"><a href="#staffs_loan" data-toggle="tab">
+                        <i class="icon-cash4"></i>
+                        Staffs <br> Loan
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="tab-content">
+            <div class="tab-pane active fade in" id="customer_payment">
+                <div class="col-md-8 col-md-offset-2 ">
+                    <div class="panel  sys-panel-shadow">
+                        <div class="panel-heading bg-success text-center">
+                            <i class="icon-users2"></i>
+                            CUSTOMER PAYMENT
+                        </div>
+                        <div class="panel-body customer-payment-div">
+                            {% include 'common/customer_payment_form.html' %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="staff_collection">
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="panel  sys-panel-shadow">
+                        <div class="panel-heading bg-success text-center">
+                            <i class="icon-users2"></i>
+                            STAFF COLLECTION
+                        </div>
+                        <div class="panel-body staff-collection-div">
+                            {% include 'common/staff_collection_form.html' %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="loan_collection">
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="panel  sys-panel-shadow ">
+                        <div class="panel-heading bg-success text-center">
+                            <i class="icon-users2"></i>
+                            LOAN PAYMENT
+                        </div>
+                        <div class="panel-body loan-collection-div">
+                            {% include 'common/loan_collection_form.html' %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="supplier_payment">
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="panel  sys-panel-shadow ">
+                        <div class="panel-heading bg-warning-400 text-center">
+                            <i class="icon-users2"></i>
+                            SUPPLIER PAYMENT
+                        </div>
+                        <div class="panel-body supplier-payment-div">
+                            {% include 'common/supplier_payment_form.html' %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="other_payment">
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="panel  sys-panel-shadow">
+                        <div class="panel-heading bg-warning-400 text-center">
+                            <i class="icon-users2"></i>
+                            OTHER PAYMENT
+                        </div>
+                        <div class="panel-body other-payment-div">
+                            {% include 'common/other_payment_form.html' %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="loan_provision">
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="panel  sys-panel-shadow">
+                        <div class="panel-heading bg-warning-400 text-center">
+                            <i class="icon-users2"></i>
+                            LOAN PROVISION
+                        </div>
+                        <div class="panel-body loan-provision-div">
+                            {% include 'common/loan_provision_form.html' %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="staffs_loan">
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="panel  sys-panel-shadow">
+                        <div class="panel-heading bg-warning-400 text-center">
+                            <i class="icon-users2"></i>
+                            STAFF PROVISION
+                        </div>
+                        <div class="panel-body staff-loan-div">
+                            {% include 'common/staff_loan_form.html' %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+    <script src="{% static 'assets/home/payments.js' %}"></script>
+{% endblock scripts %}
+    

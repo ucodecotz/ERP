@@ -1,0 +1,190 @@
+{% extends 'base.html' %} {% load staticfiles %} {% load humanize %} {% load control_filters %} {% block content %}
+    <form action="" method="get" class="payroll-form">
+        <div class="row">
+            <div class="col-xs-12 mb-5">
+                <label class="text-semibold">
+                    Payroll For:
+                    <a href="javascript:;"><span class="label bg-blue">
+                        {{ month|month_name }} {{ year }}
+                    </span></a>
+                    <a href="javascript:;" class="select-month" data-payroll="{% url 'payroll' %}"
+                       data-month="{{ month }}" data-year="{{ year }}" data-href="{% url 'get_salary_month' %}"
+                       data-popup="tooltip" title="Change Payroll Month">
+                        <i class="icon-pencil text-slate"></i>
+                    </a>
+                </label> {% if staffs %}
+                <a href="javascript:;" data-href="{% url 'salary_payment' %}"
+                   class="btn btn-rounded bg-blue sys-btn  btn-labeled ml-20 pull-right pay_salaries">
+                    <b><i class=" icon-user-check"></i></b> Pay Salaries
+                </a>
+            {% endif %}
+            </div>
+            <div class="col-sm-12">
+                <div class="panel b-r-6 sys-panel-shadow">
+                    <div class="panel-heading bg-blue">
+                        <h6 class="panel-title text-center" style="font-weight: 500">
+                            <i class="icon-cash3"></i> Salary Preparation
+                        </h6>
+                    </div>
+                    <div class="">
+
+                        <table class="table datatable-basic payroll_table">
+                            <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Staff Name</th>
+                                <th>
+                                    Salary Amount (Tsh)
+                                </th>
+                                <th>
+                                    Advance (Tsh)
+                                </th>
+                                <th>
+                                    Loan (Tsh)
+                                </th>
+                                <th>
+                                    Deduction
+                                </th>
+                                <th>
+                                    Net Payable
+                                </th>
+                                <th>
+                                    status
+                                </th>
+                                <th class="">
+                                    Pay
+                                </th>
+                                <!-- <th class="text-center">
+                                    Actions
+                                </th> -->
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% if staffs %} {% for staff in staffs %}
+                                <tr class="staff_row">
+                                    <td>
+                                    <span>
+                                        {{ forloop.counter }}
+                                    </span>
+                                    </td>
+                                    <td class="staff_name">
+                                        {{ staff }}
+                                    </td>
+                                    <td class="staff_salary"> {{ staff.salary_amount | intcomma }}
+                                    </td>
+                                    <td class="staff_adv">
+                                        {{ staff.pk|get_total_advance:month | intcomma }}
+                                    </td>
+                                    <td class="staff_loan">
+                                        {{ staff.user.pk|staff_loan|intcomma }}
+                                    </td>
+                                    <td style=" padding: 0">
+                                        {% if staff.user.pk|check_payment_status:month %}
+                                            {% with staff.user.pk|get_deduction_amount as amount_deducted %}
+                                                <input type="hidden" name="deduct" value="{{ amount_deducted }}"
+                                                       class="form-control sys-input deduction" style="width: 100%;"
+                                                       placeholder="type here......."
+                                                        {% if staff.user.pk|check_payment_status:month %}
+                                                       disabled {% else %} {% endif %}>
+                                                {% if amount_deducted > 0 %}
+                                                    {{ amount_deducted }}
+                                                {% else %}
+                                                    <span class="text-primary">N/A</span>
+                                                {% endif %}
+                                                <input type="hidden" name="staff" class="staff" value="{{ staff.pk }}">
+                                            {% endwith %} {% else %}
+                                            {% with staff.user.pk|get_deduction_amount as amount_deducted %}
+                                                {% if amount_deducted > 0 %}
+                                                    <input type="text" name="deduct" value="{{ amount_deducted }}"
+                                                           class="form-control sys-input deduction" style="width: 100%;"
+                                                           placeholder="type here......."
+                                                            {% if staff.user.pk|check_payment_status:month %}
+                                                           disabled {% else %} {% endif %}>
+                                                {% else %}
+                                                    <input type="text" name="deduct" value=""
+                                                           class="form-control sys-input deduction" style="width: 100%;"
+                                                           placeholder="type here......."
+                                                            {% if staff.user.pk|check_payment_status:month %}
+                                                           disabled {% else %} {% endif %}>
+                                                {% endif %}
+                                                <input type="hidden" name="staff" class="staff" value="{{ staff.pk }}">
+                                            {% endwith %} {% endif %}
+                                    </td>
+                                    <td class="staff_net_pay">
+
+                                        {% with staff.user.pk|get_deduction_amount as deduction_amount %}
+                                            {% get_staff_net_pay staff.pk deduction_amount month %} {% endwith %}
+                                    </td>
+                                    <td>
+                                        {% if staff.user.pk|check_payment_status:month %}
+                                            <span class="badge badge-success">Paid</span> {% else %}
+                                            <span class="badge badge-danger">Not Paid</span> {% endif %}
+                                    </td>
+                                    <td class="text-center">
+                                        {% if staff.user.pk|check_payment_status:month %}
+                                            <input type="checkbox" class="control-  user-selected"
+                                                   data-user="{{ staff.pk }}" data-popup="tooltip" name="selected"
+                                                   title="Select This Staff" disabled checked> {% else %}
+                                            <input type="checkbox" class="control-  user-selected"
+                                                   data-user="{{ staff.pk }}" data-popup="tooltip" name="selected"
+                                                   title="Select This Staff"> {% endif %}
+                                    </td>
+                                    <!-- <td class="text-">
+                                        <button class="btn btn-sm bg-slate btn-rounded sys-btn print_staff_paysheet" data-popup="tooltip" title="Print his/her payroll sheet"><i
+                                                class="icon-printer"></i></button>
+                                    </td> -->
+                                </tr>
+                            {% endfor %} {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+
+{% endblock content %} {% block scripts %}
+    <script>
+        $(document).on('click', '.print_staff_paysheet', function () {
+            let staff_paysheet = $('.staff_paysheet').html();
+            var mywindow = window.open('', 'PRINT', 'height=600,width=1000');
+            mywindow.document.write(staff_paysheet);
+
+            mywindow.document.close(); // necessary for IE >= 10
+            mywindow.focus(); // necessary for IE >= 10*/
+
+            mywindow.print();
+            // mywindow.close();
+        });
+
+        //    function calculate_deduction(e) {
+        //         let data = $(this);
+        //         console.log(data.val())
+        //     }
+        $(document).on('keyup', '.calculate_deduction', function () {
+            let data = $(this).val();
+            console.log(data)
+        });
+
+
+        $(document).on("click", ".user-select-all", function (e) {
+            e.preventDefault();
+            if ($(this).is(':checked')) {
+                $('.user-selected').prop('checked', false);
+            } else {
+                $('.user-selected').prop('checked', true);
+            }
+        });
+        $(document).ready(function () {
+            $('.staff_row').each(function () {
+                let staff_salary, staff_adv, staff_deduction;
+                staff_salary = parseInt($('.staff_salary').text());
+                staff_adv = parseInt($('.staff_loan').text());
+                let total = staff_salary + staff_adv;
+                console.log(total)
+            });
+        })
+    </script>
+    <script src="{% static 'assets/js/payroll.js' %}"></script>
+{% endblock scripts %}

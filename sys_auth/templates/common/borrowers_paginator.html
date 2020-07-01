@@ -1,0 +1,75 @@
+<table class="table  borrowers_table">
+    <thead>
+        <tr>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            <th>Balance</th>
+            <th> Comments</th>
+            <th class="text-center">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for borrower in borrowers %}
+        <tr>
+            <td>
+                <span>
+                    {{ borrower.user.first_name }} {{ borrower.user.last_name }}
+                </span>
+            </td>
+            <td>
+
+                {% if borrower.user.email %}
+                {{ borrower.user.email }}
+                {% else %}
+                <span class="text-danger">Email not registered</span>
+                {% endif %}
+
+            </td>
+            <td>
+
+                {% if borrower.phone_number %}
+                {{ borrower.phone_number }}
+                {% else %}
+                <span class="text-danger">Phone number not registered</span>
+                {% endif %}
+
+            </td>
+            <td>
+                <span class="text-semibold">
+                    {% load humanize %}
+                    {% load control_filters %}
+                    {{ borrower.user.id|get_borrower_total_balance|intcomma }}
+                </span>
+            </td>
+            <td class="text-center">
+                -
+            </td>
+            <td class="text-center">
+                <ul class="icons-list">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i></a>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li><a href="{% url 'borrower_details' borrower.user.id %}"><i class=" icon-enlarge7 text-success"></i>View</a></li>
+                            <li><a href="javascript;;" data-href="{% url 'edit_borrower' borrower.id %}"
+                                    class="edit-borrower-link"><i class="icon-pencil text-info"></i>Edit</a></li>
+
+                            {% if borrower.is_active %}
+                            <li><a href="javacript;;" data-href="{% url 'block_borrower' borrower.user.id %}"
+                                    class="block-borrower-link"><i class="icon-lock text-slate"></i>Block</a></li>
+                            {% else %}
+                            <li><a href="javacript;;" data-href="{% url 'unblock_borrower' borrower.user.id %}"
+                                    class="unblock-borrower-link"><i class="icon-lock text-slate"></i>Unblock</a></li>
+                            {% endif %}
+
+                            <li><a href="javascripts;;" data-href="{% url 'delete_borrower' borrower.user.id %}"
+                                    class="delete-borrower-link"><i class="icon-trash text-danger"></i>Delete</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        {% endfor %}
+
+    </tbody>
+</table>

@@ -1,0 +1,275 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load control_filters %}
+{% load humanize %}
+{% block content %}
+<div class="row text-right mb-10">
+    <a href="javascript:;" class="printer btn btn-sm btn-rounded btn-labeled bg-blue">
+        <b>
+            <i class="icon-printer"></i>
+        </b>
+        print
+    </a>
+</div>
+<div class="row panel print_panel">
+    <style>
+        .print_panel {
+            font-family: Arial;
+            text-transform: uppercase
+        }
+
+        table,
+        td,
+        th {
+            border: 1px solid;
+            text-align: left;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 96%;
+        }
+
+        thead th {
+            font-weight: bold;
+            background-color: rgb(190, 190, 190);
+        }
+
+        th,
+        td {
+            padding: 5px;
+        }
+
+        tbody td {
+            padding: 10px
+        }
+
+        .header-logo {
+            width: 15%;
+            text-align: center;
+        }
+
+        .header-bland {
+            width: 85%;
+            text-align: center;
+        }
+
+        .header-title {
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: 500;
+            text-align: left;
+            margin-bottom: 0;
+            margin-top: 30px
+        }
+
+        .header-title-min {
+            width: 100%;
+            display: block;
+            text-align: left;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .header {
+            display: -webkit-box;
+            -webkit-box-orient: horizontal;
+            border-bottom: 1px solid rgba(41, 182, 246, 1);
+            padding-bottom: 10px;
+        }
+    </style>
+
+    <div class="header">
+        <div class="header-logo" style="margin-top: 20px;">
+            <img src="{% static 'assets/images/halisia.jpeg' %}" width="100">
+        </div>
+        <div class="header-bland">
+            <h2 class="header-title">{{ sysname }}</h2>
+            <div style="width:100%;text-align: left; margin: 0 auto;">
+
+                <div class="header-title-min" style="">P.O. Box 78794, Dar es Salaam, Tanzania.</div>
+                <div class="header-title-min" style="">Kariakoo, Mtaa wa Kariakoo na sikukuu</div>
+            </div>
+        </div>
+    </div>
+
+    <h3
+        style="text-align:center; background-color: #03A9F4; border-radius: 4px; padding: 5px; font-family: Arial, Helvetica, sans-serif; margin-bottom: 10px; color: white">
+        Sales Sheet DETAILS
+    </h3>
+    <!-- <h4 style="font-family: Arial, Helvetica, sans-serif; margin-left:10px; margin-bottom:7px">
+        CUSTOMER 
+    </h4> -->
+    <div style="padding-left: 30px; padding-right: 30px;">
+        <div style=" width:100%; margin-bottom: 5px;font-family: Arial, Helvetica, sans-serif; display: flex">
+            <label style="display:inline-block; width:20%;">
+                customer :
+            </label>
+            <!-- display value below -->
+            <label style="display:inline-block;">
+                {{ sale.customer.first_name }} {{ sale.customer.last_name }}
+            </label>
+        </div>
+        <div style=" width:100%; margin-bottom: 5px;font-family: Arial, Helvetica, sans-serif; display: flex">
+            <label style="display:inline-block; width:20%;">
+                Number:
+            </label>
+            <!-- display value below -->
+            <label style="display:inline-block;">
+                {{ profile.phone_number }}
+            </label>
+        </div>
+        <div style=" width:100%; margin-bottom: 5px;font-family: Arial, Helvetica, sans-serif; display: flex">
+            <label style="display:inline-block; width:20%;">
+                Email:
+            </label>
+            <!-- display value below -->
+            <label style="display:inline-block; text-transform: lowercase">
+                {{ sale.customer.email }}
+            </label>
+        </div>
+        <div style=" width:100%; margin-bottom: 5px;font-family: Arial, Helvetica, sans-serif; display: flex">
+            <label style="display:inline-block; width:20%;">
+                Location:
+            </label>
+            <!-- display value below -->
+            <label style="display:inline-block;">
+                {{ profile.location }}
+            </label>
+        </div>
+        <div style=" width:100%; margin-bottom: 5px;font-family: Arial, Helvetica, sans-serif; display: flex">
+            <label style="display:inline-block; width:20%;">
+                Max Credit (TZS):
+            </label>
+            <!-- display value below -->
+            <label style="display:inline-block;">
+                {{ profile.credit_limit|intcomma }}
+            </label>
+        </div>
+        <div style=" width:100%; margin-bottom: 5px;font-family: Arial, Helvetica, sans-serif; display: flex">
+            <label style="display:inline-block; width:20%;">
+                Current Credit (TZS):
+            </label>
+            <!-- display value below -->
+            <label style="display:inline-block;">
+                {{ sale.customer.id|customer_debt|intcomma }}
+            </label>
+        </div>
+        <div style=" width:100%; margin-bottom: 5px;font-family: Arial, Helvetica, sans-serif; display: flex">
+            <label style="display:inline-block; width:20%;">
+                Sales Type:
+            </label>
+            <!-- display value below -->
+            <label style="display:inline-block;">
+                {% if sale.sale_type  %}
+                <span
+                    style="background-color: rgb(67, 160, 71); padding-left: 5px; padding-right:5px; border-radius: 3px; color: white; padding-top: 1px; padding-bottom: 1px ">cash</span>
+                {% else %}
+                <label
+                    style="background-color: rgb(255, 87, 34); padding-left: 5px; padding-right:5px; border-radius: 3px; color: white; padding-top: 1px; padding-bottom: 1px ">
+                    credit
+                </label>
+                {% endif %}
+            </label>
+        </div>
+    </div>
+
+    <div class="" style="border:solid 0.5px rgba(41, 182, 246, .2); margin-bottom: 10px; margin-top: 5px"></div>
+    <div class="panel-body">
+        <table class="table table-secondary" style="width: 100%">
+            <thead>
+                <tr>
+                    <th>
+                        No.
+                    </th>
+                    <th>
+                        Product Name
+                    </th>
+                    <th>
+                        Quantity
+                    </th>
+                    <th>
+                        Price @ 1
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for item in sale_items %}
+                <tr>
+                    <td>
+                        {{ forloop.counter }}
+                    </td>
+                    <td>
+                        {{ item.product.name }}
+                    </td>
+                    <td>
+                        {{ item.quantity }}
+                    </td>
+                    <td>
+                        {{ item.price|intcomma }}
+                    </td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td style="font-weight: 600">Total (TZS):</td>
+                    <td style="font-weight: 600">{{ sale.id|total_sale_amount|intcomma }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="col-sm-12" style="margin-top: 30px; ">
+            <div class="col-sm-6">
+                <label for="" class="col-xs-4  text-semibold">
+                    Sold By: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </label>
+                <label for="" class="col-xs-8  text-semibold" style="font-weight:600;">
+                    {{ sale.staff.first_name }} {{ sale.staff.last_name }}
+                    &nbsp;&nbsp;&nbsp;
+                    ---------------------------------
+                </label>
+            </div>
+        </div>
+        <div class="col-sm-12" style=" margin-top:5px">
+            <div class="col-sm-6">
+                <label for="" class="col-xs-4  text-semibold">
+                    Added By: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </label>
+                <label for="" class="col-xs-8  text-semibold" style="font-weight:600;">
+                    {{ sale.created_by.first_name }} {{ sale.created_by.last_name }}
+                    &nbsp;&nbsp;&nbsp;
+                    ---------------------------------
+                </label>
+            </div>
+        </div>
+        <div class="col-sm-12" style=" margin-top:5px">
+            <div class="col-sm-6">
+                <label for="" class="col-xs-4  text-semibold">
+                    storekeeper: &nbsp;&nbsp;&nbsp;
+                </label>
+                <label for="" class="col-xs-8  text-semibold" style="font-weight:600;">
+
+                    -----------------------------------------------------------------
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-xs-12 text-right">
+    <a href="javascript:;" class="printer btn btn-sm btn-rounded btn-labeled bg-blue">
+        <b>
+            <i class="icon-printer"></i>
+        </b>
+        print
+    </a>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+<script>
+    $(document).on('click', '.printer', function () {
+        let data = $('.print_panel').html();
+        print_system_doc(data);
+        // window.print()
+    })
+</script>
+{% endblock scripts %}

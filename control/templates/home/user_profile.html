@@ -1,0 +1,259 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load humanize %}
+{% block content %}
+<div class="row">
+    <div class="col-sm-9">
+
+        <div class="tabbable">
+            <ul class="nav nav-sm nav-tabs  nav-tabs-component bg-blue sys-panel-shadow">
+                <li class="active">
+                    <a href="#user_info" data-toggle="tab">
+                        <i class="icon-user"></i>
+                        User Info
+                    </a>
+                </li>
+                <li><a href="#user_salary_history" data-toggle="tab">
+                        <i class="icon-history"></i>
+                        Salaries History
+                    </a>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+
+                <div class="tab-pane fade in active " id="user_info">
+
+                    <!-- Profile info -->
+                    <div class="panel panel-flat sys-panel-shadow b-r-10">
+                        <div class="panel-heading  b-r-10">
+                            <h6 class="panel-title">Profile information</h6>
+                        </div>
+
+                        <div class="panel-body">
+                            <form action="{% url 'update_profile_info' %}" class="update-profile-info-form" method="POST">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Username</label>
+                                            <input type="text" value="{{ profile.user.username }}"
+                                                class="form-control sys-input" readonly>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Full Name</label>
+                                            <input type="text"
+                                                value="{{ profile.user.first_name }} {{ profile.user.last_name }}"
+                                                class="form-control sys-input" name="full_name">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Phone Number</label>
+                                            <input type="text" class="form-control sys-input"
+                                                value="{{ profile.phone_number }}" name="phone_number">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Email</label>
+                                            <input type="text" readonly="readonly" value="{{ profile.user.email }}"
+                                                class="form-control sys-input">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Branch</label>
+                                            <input type="text" value="{{ profile.branch.name }}"
+                                                class="form-control sys-input" readonly>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Salary(Tshs)</label>
+                                            <input type="text" readonly="readonly" class="form-control sys-input"
+                                                value="{{ profile.salary_amount|intcomma }}">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="text-right">
+                                    <button type="button" class="btn btn-success btn-rounded btn-labeled update-profile-information-link">Update
+                                        <b>
+                                            <i class="icon-arrow-right14 position-right"></i>
+                                        </b>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- /profile info -->
+
+
+                    <!-- Account settings -->
+                    <div class="panel panel-flat sys-panel-shadow">
+                        <div class="panel-heading">
+                            <h6 class="panel-title">Account settings</h6>
+                        </div>
+
+                        <div class="panel-body">
+                            <form action="{% url 'change_password' %}" class="change-password-form" method="POST">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label>Username</label>
+                                            <input type="text" value="{{ profile.user.username }}" readonly="readonly"
+                                                class="form-control sys-input">
+                                        </div>
+                                        <!-- 
+                                        <div class="col-md-6">
+                                            <label>Current password</label>
+                                            <input type="password" value="password" readonly="readonly"
+                                                class="form-control sys-input">
+                                        </div> -->
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>New password</label>
+                                            <input type="password" placeholder="Enter new password"
+                                                class="form-control sys-input" name="password" required>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label>Repeat password</label>
+                                            <input type="password" placeholder="Repeat new password"
+                                                class="form-control sys-input" name="confirm_password" required>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="text-right">
+                                    <button type="button" class="btn btn-success btn-rounded btn-labeled change-password-link">Change
+                                        <b>
+                                            <i class="icon-arrow-right14 position-right"></i>
+                                        </b>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- /account settings -->
+
+                </div>
+
+                <div class="tab-pane fade " id="user_salary_history">
+
+                    <div class="panel  b-r-10 sys-panel-shadow">
+                        <div class="panel-heading bg-blue">
+                            <h6 class="panel-title " style="font-weight: 500">
+
+                            </h6>
+                        </div>
+                        <table class="table datatable-basic ">
+                            <thead>
+                                <tr>
+                                    <th>NO.</th>
+                                    <th>Date</th>
+                                    <th>Amount Taked</th>
+                                    <th>Balance Remained</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for salary in salaries %}
+                                <tr>
+                                    <td>
+                                        {{ forloop.counter }}
+                                    </td>
+                                    <td>
+                                        {{ salary.salary_date }}
+                                    </td>
+                                    <td>
+                                        <span class="text-semibold text-danger">Tsh {{ salary.salary_take_home|intcomma }}</span>
+                                    </td>
+                                    <td>
+                                        <span class="text-semibold text-success">5,489</span>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+
+        <!-- User thumbnail -->
+        <div class="thumbnail b-r-10 sys-panel-shadow">
+            <div class="thumb thumb-rounded thumb-slide">
+                <img src="/static/assets/images/user.png" alt="user image">
+            </div>
+
+            <div class="caption text-center">
+                <h6 class="text-semibold no-margin">
+                    <span class="text-primary">{{ request.user.first_name }} {{ request.user.last_name }}</span>
+                    <!-- loop her roles -->
+                    <small class="display-block">Staff</small>
+                </h6>
+                <!-- <div class="badge badge-success">ACTIVE</div> -->
+            </div>
+        </div>
+        <!-- /user thumbnail -->
+    </div>
+
+</div>
+{% endblock content %}
+
+{% block data_table_js %}
+<script>
+    $(function () {
+
+
+        // Table setup
+        // ------------------------------
+
+        // Setting datatable defaults
+        $.extend($.fn.dataTable.defaults, {
+            autoWidth: false,
+            columnDefs: [{
+                orderable: false,
+                width: '100px',
+                targets: [3]
+            }],
+            dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
+            language: {
+                search: '<span>Filter:</span> _INPUT_',
+                searchPlaceholder: 'Type to filter...',
+                lengthMenu: '<span>Show:</span> _MENU_',
+                paginate: { 'first': 'First', 'last': 'Last', 'next': '&rarr;', 'previous': '&larr;' }
+            },
+            drawCallback: function () {
+                $(this).find('tbody tr').slice(-3).find('.dropdown, .btn-group').addClass('dropup');
+            },
+            preDrawCallback: function () {
+                $(this).find('tbody tr').slice(-3).find('.dropdown, .btn-group').removeClass('dropup');
+            }
+        });
+
+
+        // Basic datatable
+        $('.datatable-basic').DataTable({
+            order: []
+        });
+
+    });
+</script>
+{% endblock data_table_js %}
+
+{% block scripts %}
+    <script src="{% static 'assets/control/user_profile.js' %}"></script>
+{% endblock scripts %}
+    

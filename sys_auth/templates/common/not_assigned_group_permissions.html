@@ -1,0 +1,23 @@
+{% if not_assigned %}
+{% for p in not_assigned %}
+    <li class="media-list" style="margin: 10px 0px">
+    <div class="media-left">
+        <i class="icon-lock2 sys-color-text"></i>
+    </div>
+    <div class="media-body">
+            {{p.name}}
+        <a href="javascript;;" data-href="{% url 'assign_group_permission' p.id group.id %}"class="pull-right add-permission-link"
+        data-toggle="tooltip" data-placement="top"
+        title="add Permission">
+            <i class="icon-plus3 text-success"></i>
+        </a>
+    </div>
+</li>
+{% endfor %}
+{% else %}
+    <div class="alert alert-info text-center no-permission">
+        <li class="list-group">
+            There is no Permissions
+        </li>
+    </div>
+{% endif %}

@@ -1,0 +1,59 @@
+{% load widget_tweaks %}
+<form action="{% url 'edit_supplier' supplier.id %}" method="POST" class="edit-supplier-form">
+    {% csrf_token %}
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="col-sm-3 control-label text-semibold">
+                Full Name:
+                {% if supplier_form.full_name.field.required %}
+                <span class="text-danger">*</span>
+                {% endif %}
+            </label>
+            <div class="col-lg-9">
+                {% render_field supplier_form.full_name class="form-control sys-input" placeholder="Full name Eg.John Seku" %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="col-sm-3 control-label text-semibold">
+                Supplier Email:
+                {% if supplier_form.email.field.required %}
+                <span class="text-danger">*</span>
+                {% endif %}
+            </label>
+            <div class="col-lg-9">
+                {% render_field supplier_form.email class="form-control sys-input" placeholder="Email" %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="col-sm-3 control-label text-semibold">
+                Phone Number:
+                {% if supplier_form.phone_number.field.required %}
+                <span class="text-danger">*</span>
+                {% endif %}
+            </label>
+            <div class="col-lg-9">
+                {% render_field supplier_form.phone_number class="form-control sys-input" placeholder="Phone Number" %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="col-sm-3 control-label text-semibold">
+                Opening Balance:
+                {% if supplier_form.balance.field.required %}
+                <span class="text-danger">*</span>
+                {% endif %}
+
+            </label>
+            <div class="col-lg-9">
+                {% render_field supplier_form.balance class="form-control sys-input" placeholder="Supplier balance" %}
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,30 @@
+{% load humanize %}
+{% load control_filters %}
+
+{% for staff in staffs %}
+<tr>
+    <td>
+        {{ forloop.counter }}
+    </td>
+    <td>
+        {{ staff }}
+    </td>
+    <td>
+        {{ staff.user.id|get_staff_sale_quantity }}
+    </td>
+    <td>
+        {{ staff.user.id|get_staff_sale_value|intcomma }}
+    </td>
+    <td>
+        {{ staff.user.id|get_staff_sale_profit|intcomma }}
+    </td>
+    <td class="text-center">
+        {% if staff.user.id|get_staff_sale_quantity > 0 %}
+        <a href="{% url 'staff_sale_detail' staff.user.id %}" class="btn btn-sm bg-primary btn-rounded sys-btn " data-popup="tooltip"
+            title="Open staff sale details"><i class="icon-square-right"></i></a>
+        {% else %}
+        -
+        {% endif %}
+    </td>
+</tr>
+{% endfor %}

@@ -1,0 +1,355 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load widget_tweaks %}
+{% load control_filters %}
+{% load humanize %}
+{% block content %}
+<div class="someBlock"></div>
+<div class="row sys-panel-shadow"
+    style="border: rgba(41, 182, 246, .4) solid 1px; border-radius: 6px; padding-top:10px;">
+    <h3 class="bg-blue sys-panel-shadow col-md-3 col-sm-6 text-center"
+        style="border-radius: 20px;position: relative; top:-27px;margin-bottom: 0">
+        Add Expense
+    </h3>
+
+    <form action="{% url 'expenses' %}" class="expenses-form" method="post">
+        {% csrf_token %}
+        {% load widget_tweaks %}
+        <div class="sys-panel-shadow col-md-3 col-sm-6 col-md-offset-6 bg-blue"
+            style="border-radius: 20px;position: relative; top:-7px;margin-bottom: 0;">
+            Date:
+            <span class="text-primary">
+                <input type="text" name="expense_date" class="form-control pickadate sys-input "
+                    style="width: 85%; display:inline-block;" placeholder="Pick a date&hellip;" />
+            </span>
+        </div>
+        <div class="col-md-12" style="margin-top:0">
+            <div class="row">
+                <div class="col-md-6 ">
+                    <!-- <div class="form-group"> -->
+                    <label class="col-lg-4 col-sm-12 control-label text-semibold mb-10">Authorized By:</label>
+                    <div class="col-lg-8 col-sm-12 mb-10">
+                        {% render_field form.authorized_by class="select" %}
+                    </div>
+                    <span class="text-danger">{{ form.authorized_by.errors }}</span>
+                    <!-- </div> -->
+                </div>
+                <div class="col-md-6 ">
+                    <!-- <div class="form-group"> -->
+                    <label class="col-lg-4 col-sm-4 control-label text-semibold mb-10">Expense Type:</label>
+                    <div class="col-lg-8 col-sm-8 mb-10">
+                        {% render_field form.expense_type class="select expense_type" %}
+                    </div>
+                    <span class="text-danger">{{ form.expense_type.errors }}</span>
+                    <!-- </div> -->
+                </div>
+            </div>
+            <div class="row staff-selection">
+                <div class="col-md-6 ">
+                    <!-- <div class="form-group"> -->
+                    <label class="col-lg-4 col-sm-4 control-label text-semibold mb-10">Select Staff:</label>
+                    <div class="col-lg-8 col-sm-8 mb-10">
+                        {% render_field form.staff class="select" %}
+                    </div>
+                    <span class="text-danger">{{ form.staff.errors }}</span>
+                    <!-- </div> -->
+                </div>
+            </div>
+            <div class="row asset-selection">
+                <div class="col-md-6 ">
+                    <!-- <div class="form-group"> -->
+                    <label class="col-lg-4 col-sm-4 control-label text-semibold mb-10">Select Asset:</label>
+                    <div class="col-lg-8 col-sm-8 mb-10">
+                        {% render_field form.asset class="select" %}
+                    </div>
+                    <span class="text-danger">{{ form.asset.errors }}</span>
+                    <!-- </div> -->
+                </div>
+            </div>
+            <div class="mb-10" style="border:solid 0.5px rgba(41, 182, 246, .2)"></div>
+            <div class="row mb-10 expense_container">
+                <div class="col-md-10 col-sm-12">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label text-semibold">
+                                Expense For:
+                            </label>
+                            <div class="col-sm-8">
+                                {% render_field form.expense_for class="form-control sys-input" placeholder="Expense For" %}
+                            </div>
+                            <span class="text-danger">{{ form.expense_for.errors }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 ">
+                        <!-- <div class="form-group"> -->
+                        <label class="col-lg-4 col-sm-4 control-label text-semibold mb-10">Payment Method:</label>
+                        <div class="col-lg-8 col-sm-8 mb-10">
+                            {% render_field form.payment_method class="select Payment Method select_payment" %}
+                        </div>
+                        <span class="text-danger">{{ form.payment_method.errors }}</span>
+                        <!-- </div> -->
+                    </div>
+                </div>
+                <div class="expense_container_wrapper col-md-10 col-sm-12">
+                    <div class="col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label text-semibold">
+                                Description:
+                            </label>
+                            <div class="col-sm-8">
+                                {% render_field form.detail class="form-control sys-input" placeholder="Expense Description" %}
+                            </div>
+                            <span class="text-danger">{{ form.detail.errors }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label text-semibold">
+                                Amount:
+                            </label>
+                            <div class="col-sm-8">
+                                {% render_field form.expense_amount class="form-control sys-input" placeholder="Amount" %}
+                            </div>
+                            <span class="text-danger">{{ form.expense_amount.errors }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class=" col-md-2 col-sm-6 expense_container_btn">
+                    <div class="col-md-12">
+                        <button type="button" class="btn btn-rounded bg-blue sys-btn" onclick="add_expense_row()"
+                            style="width: 100%">
+                            <i class="icon-plus22"></i>
+                            Add Row
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="col-md-2 col-sm-6 col-md-offset-10">
+                        <button class="btn btn-rounded bg-success sys-btn" style="width: 100%"><i
+                                class="icon-checkmark"></i> Save Expense
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="row mt-10">
+
+    <div class="panel b-r-10 sys-panel-shadow">
+        <div class="panel-heading bg-blue">
+            <h6 class="panel-title" style="font-weight: 500">
+                <i class="icon-stack-plus "></i>
+                Today Expenses &nbsp;
+                <span class="badge badge-flat border-white text-white sales_badge">0</span>
+            </h6>
+        </div>
+        <table class="table datatable-basic sales_table">
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Authorized By</th>
+                    <th>
+                        Expense Type
+                    </th>
+                    <th>
+                        Expense For
+                    </th>
+                    <th>Total Price</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if expenses %}
+                {% for expense in expenses %}
+                <tr>
+                    <td>
+                        <span>
+                            {{ forloop.counter }}
+                        </span>
+                    </td>
+                    <td>
+                        {{ expense.authorized_by }}
+                    </td>
+                    <td>{{ expense.expense_type }}
+                    </td>
+                    <td>
+                        {{ expense.expense_for }}
+                    </td>
+                    <td>
+                        Tsh {{ expense.pk|get_total_expense_detail | intcomma }} /=
+                    </td>
+                    <td class="text-center">
+                        <button type="button" class="btn btn-info btn-icon btn-sm btn-rounded sys-btn expense-details"
+                            data-href="{% url 'expenses_details' expense.pk %}"><i class="icon-list"></i></button>
+                        <button type="button" data-href="{% url 'remove_expenses' expense.pk %}"
+                            class="btn btn-warning btn-icon btn-sm btn-rounded sys-btn remove-expense"><i
+                                class="icon-trash"></i></button>
+                    </td>
+                </tr>
+                {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+{% endblock content %}
+
+
+{% block scripts %}
+<script>
+    $(document).ready(function () {
+        $(".expense_type").trigger("change");
+        let expense_container = `
+                                <div >
+                                <div class="col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label text-semibold">
+                                            Description:
+                                        </label>
+                                        <div class="col-sm-8">
+                                            {% render_field form.detail class="form-control sys-input" placeholder="Expense Description" %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label text-semibold">
+                                            Amount:
+                                        </label>
+                                        <div class="col-sm-8">
+                                            {% render_field form.expense_amount class="form-control sys-input" placeholder="Description Amount" %}
+                                        </div>
+                                    </div>
+                                    <i class="icon-x text-danger remove_this_row"  data-popup="tooltip" title="Remove This">
+                                        <span class='remove_this_row_span'>Remove Row</span>
+                                </i>
+                                </div>
+                                </div>
+                                </div>`;
+        add_expense_row = () => {
+            $('.expense_container_wrapper').append(expense_container);
+
+        }
+
+    });
+
+    $(document).on('click', '.remove_this_row', function () {
+        if ($(this).parent().parent().parent().children().length > 1) {
+            $(this).parent().parent().remove();
+        }
+    });
+
+    $(document).on("change", ".expense_type", function (e) {
+        e.preventDefault();
+        if ($(this).val() == "normal") {
+            $(".staff-selection").hide();
+            $(".asset-selection").hide();
+        } else if ($(this).val() == "staff") {
+            $(".asset-selection").hide();
+            $(".staff-selection").show();
+        } else {
+            $(".staff-selection").hide();
+            $(".asset-selection").show();
+        }
+    })
+
+    $(document).on("submit", ".expenses-form", function (e) {
+        e.preventDefault();
+        let $formData = new FormData($(this)[0]);
+        $('.someBlock').preloader({
+        text: 'Please wait the form is submitting',
+        percent: 100,
+        duration: 5000,
+        zIndex: '99999999999',
+        // setRelative: true
+    });
+        $.ajax({
+            url: $(this).attr("action"),
+            method: "POST",
+            data: $formData,
+            processData: false,
+            contentType: false,
+        }).done(function (response) {
+            let data = JSON.parse(response)[0];
+            if (data.status) {
+                call_notify(String(data.message), "success", "topCenter");
+                setTimeout(function () {
+                    window.location.reload();
+                }, 1000);
+            } else {
+                $('.someBlock').preloader('remove');
+                call_notify(String(data.message)+', Something wrong, please check your data!', "warning", "topCenter");
+            }
+        });
+    });
+
+    $(document).on('click', '.remove-expense', function (e) {
+        e.preventDefault();
+        let $link = $(this);
+        $.confirm({
+            title: "Remove Confirmation",
+            type: "red",
+            closeIcon: true,
+            content: "Are you sure?",
+            buttons: {
+                remove: {
+                    text: "Remove",
+                    btnClass: "btn-danger",
+                    action: function () {
+                        let self = this;
+                        $.get($link.data("href"), function (response) {
+                            let data = JSON.parse(response)[0];
+                            if (data.status) {
+                                self.setContent(data.message);
+                                self.setType("green");
+                                self.$$remove.hide();
+                                setInterval(() => {
+                                    self.close();
+                                }, 1000);
+                            } else {
+                                self.setContent(data.message);
+                                self.setType("red");
+                            }
+                        });
+                        return false;
+                    }
+                }
+            },
+            onOpenBefore: function () {
+                $("body").addClass("no-scroll");
+            },
+            onClose: function () {
+                $("body").removeClass("no-scroll");
+                window.location.reload();
+            },
+        });
+    });
+    $(document).on("click", ".expense-details", function (e) {
+        $.confirm({
+            title: "Expense Details",
+            type: "green",
+            content: "url: " + $(this).data("href"),
+            closeIcon: true,
+            columnClass: "medium",
+            buttons: {
+                btn: {
+                    text: "btn",
+                    isHidden: true
+                }
+            },
+            onOpenBefore: function () {
+                $("body").addClass("no-scroll");
+            },
+            onClose: function () {
+                $("body").removeClass("no-scroll");
+                window.location.reload();
+            },
+        });
+    });
+    $(document).ready(function(){
+        $('.select_payment option:not(:selected)').attr('disabled',true)
+    })
+</script>
+{% endblock scripts %}

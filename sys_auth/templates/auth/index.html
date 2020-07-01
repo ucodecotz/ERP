@@ -1,0 +1,97 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title> {{title}} | Authentication | {{ sysname }} </title>
+
+    <!-- Global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet"
+        type="text/css">
+    <link href="{% static 'assets/css/icons/icomoon/styles.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static   'assets/css/bootstrap.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'assets/css/core.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'assets/css/components.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'assets/css/colors.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{% static 'assets/confirm_js/css/jquery-confirm.css' %}">
+    <!-- /global stylesheets -->
+
+    <script type="text/javascript" src="{% static 'assets/js/core/libraries/jquery.min.js' %}"></script>
+
+
+</head>
+
+<body class="login-container login-cover"
+    style="background: url('/static/assets/images/back.jpg') no-repeat; background-size: cover">
+
+    <!-- Page container -->
+    <div class="page-container ">
+
+        <!-- Page content -->
+        <div class="page-content" style="padding-bottom: 0">
+
+            <!-- Main content -->
+            <div class="content-wrapper">
+
+                <!-- Content area -->
+                <div class="content">
+
+                    {% block content %}
+
+                    {% endblock %}
+
+                </div>
+                <!-- /content area -->
+
+            </div>
+            <!-- /main content -->
+        </div>
+        <!-- /page content -->
+
+        <div class="col-xs-12 text-primary text-center " style="position: absolute;bottom: 0;margin-bottom: 0">
+             
+            Copyrights
+            &nbsp;&copy;
+            <script>
+                document.write(new Date().getFullYear())
+            </script>
+            {{sysname}} - POS
+          
+            by
+            <a href="https://ngomecloud.com" target="_blank" class="text-orange-600">NgomeCloud</a>
+        </div>
+    </div>
+    <!-- /page container -->
+
+    <!-- Core JS files -->
+    <script type="text/javascript" src="{% static 'assets/js/plugins/loaders/pace.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/js/core/libraries/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/js/plugins/loaders/blockui.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/confirm_js/js/jquery-confirm.js' %}"></script>
+    <!-- /core JS files -->
+
+    <!-- Theme JS files -->
+    {% block theme_js_1 %}
+
+    <script type="text/javascript" src="{% static 'assets/js/plugins/notifications/pnotify.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/js/plugins/notifications/noty.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/js/plugins/notifications/jgrowl.min.js' %}"></script>
+    {% endblock %}
+
+
+    <script type="text/javascript" src="{% static 'assets/js/core/app.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/js/pages/components_notifications_other.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/js/pages/login.js' %}"></script>
+    {% block theme_js_2 %}
+
+    {% endblock %}
+    <!-- /theme JS files -->
+</body>
+
+</html>

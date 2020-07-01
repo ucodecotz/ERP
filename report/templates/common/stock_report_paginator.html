@@ -1,0 +1,28 @@
+{% load humanize %}
+{% load control_filters %}
+
+{% for product in products %}
+<tr>
+    <td>
+        {{ forloop.counter }}
+    </td>
+    <td>
+        <span class="">
+            {{ product.name }}
+        </span>
+        
+        <span class="text-primary">
+            {{ product.unit }}
+        </span>
+    </td>
+    <td>
+        {{ product.remaining_stock }}
+    </td>
+    <td>
+        {{ product.pk|get_last_added_purchase_price|intcomma }}
+    </td>
+    <td>
+        {{ product.id|get_product_capital|intcomma }}
+    </td>
+</tr>
+{% endfor %}

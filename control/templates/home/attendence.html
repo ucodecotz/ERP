@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% load staticfiles %}
+{% load control_filters %}
+{% block content %}
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label class="control-label col-lg-2">Filter: </label>
+                <div class="col-lg-10">
+                    <div class="input-group">
+                        <input type="text" class="form-control pickadate text-primary" placeholder=""
+                               style="border-top-left-radius: 20px; border-bottom-left-radius:20px; height: 33px"
+                               value="{% now 'Y-m-d' %}" data-href="{% url 'attendence_form' %}">
+                        <span class="input-group-btn">
+                        <button class="btn bg-primary btn-sm" type="button" data-popup="tooltip" data-placement="top"
+                                title="Click to Filter">
+                            <i class=" icon-search4"></i>
+                        </button>
+                    </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 text-right">
+            <a href="javascript:;" data-href=""
+               class="btn btn-rounded bg-blue sys-btn  btn-labeled ml-20 pull-right attendence-btn ">
+                <b><i class=" icon-check"></i></b> Save Attendence
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel b-r-6 sys-panel-shadow">
+                <div class="panel-heading bg-blue">
+                    <h6 class="panel-title text-center" style="font-weight: 500">
+                        <i class="icon-users4"></i>
+                        Attendence Sheet
+                    </h6>
+                </div>
+                <div class="attendence_form_div" style="overflow-x:auto">
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock content %}
+
+{% block scripts %}
+    <script src="{% static 'assets/js/attendence.js' %}"></script>
+    <script>
+        $(document).on('click', '.attend', function () {
+
+            let parent_wrapp = $(this).parent().parent().parent().parent();
+            let name = parent_wrapp.find('.username').text();
+            if ($(this).is(':checked')) {
+                call_notify(name.trim() + ' attended today!', "success", "topCenter");
+                parent_wrapp.find('.arrive_time').attr('disabled', false);
+                parent_wrapp.find('.comment').attr('required', false);
+
+            } else {
+                call_notify(name.trim() + ' hasn\'t attended today!', "warning", "topCenter");
+                parent_wrapp.find('.arrive_time').attr('disabled', true);
+                parent_wrapp.find('.comment').attr('required', true);
+            }
+        })
+    </script>
+{% endblock scripts %}

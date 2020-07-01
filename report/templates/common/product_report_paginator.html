@@ -1,0 +1,40 @@
+{% load humanize %}
+{% load control_filters %}
+
+{% for product in products %}
+<tr>
+    <td>
+        {{ forloop.counter }}
+    </td>
+    <td>
+        <span class="">
+            {{product.name}}
+        </span>
+
+        <span class="text-primary">
+            {{ product.unit }}
+        </span>
+    </td>
+    <td>
+        
+        <a href="javascript:;" data-toggle="modal" data-target="#modal_{{product.pk }}"
+        data-placement="bottom" data-popup="tooltip"
+        title="Click to open details">
+        {% with total_sales_items|get_product_reports:product.pk as product_report %}
+        {{product_report.3|intcomma}}
+        {% endwith %}
+        </a>
+   
+    </td>
+    <td>
+        {% with total_sales_items|get_product_reports:product.pk as product_report %}
+        {{product_report.1|intcomma}}
+        {% endwith %}
+    </td>
+    <td>
+        {% with total_sales_items|get_product_reports:product.pk as product_report %}
+        {{product_report.2|intcomma}}
+        {% endwith %}
+    </td>
+</tr>
+{% endfor %}

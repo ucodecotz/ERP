@@ -1,0 +1,61 @@
+<table class="table staff_table">
+    <thead>
+        <tr>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            <th>Roles</th>
+            <th>Branch </th>
+            <th class="text-center">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+            {% for staff in staffs %}
+            <tr>
+                 <td>
+                    <span> 
+                        {{ staff.user.first_name }} {{ staff.user.last_name }}
+                    </span>
+                    </td>
+                    <td> 
+                        {{ staff.user.email }}
+                    </td>
+                    <td>
+                        {{ staff.phone_number }}
+                    </td>
+                    <td>
+                        
+                        {% for gp in staff.user.groups.all %}
+                            {{ gp.name }}
+                        {% endfor %}
+                            
+                        
+                    </td>
+                    <td>
+                        {{ staff.branch.name }}
+                    </td>
+                    <td class="text-center">
+                        <ul class="icons-list">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i></a>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><a href="#"><i class=" icon-enlarge7 text-success"></i>View</a></li>
+                                    <li><a href="javascript;;" data-href="{% url 'edit_staff' staff.id %}" class="edit-staff-link"><i class="icon-pencil text-info"></i>Edit</a></li>
+                                    
+                                    <li><a href="javascript;;" data-href="{% url 'recover_staff_password' staff.user.id %}" class="recover-staff-password-link"><i class=" icon-rotate-ccw3 text-teal"></i>Recover Password</a></li>
+                                    
+                                    {% if staff.user.is_active %}
+                                    <li><a href="javascript;;" data-href="{% url 'block_staff' staff.user.id %}" class="block-staff-link"><i class="icon-lock text-slate"></i>Block</a></li>
+                                    {% else %}
+                                    <li><a href="javascript;;" data-href="{% url 'unblock_staff' staff.user.id %}" class="unblock-staff-link"><i class="icon-lock text-slate"></i>Unblock</a></li>
+                                    {% endif %}
+                                        
+                                    <li><a href="javascript;;" data-href="{% url 'delete_staff' staff.user.id %}" class="delete-staff-link"><i class="icon-trash text-danger"></i>Delete</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+    </tbody>
+</table>

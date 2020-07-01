@@ -1,0 +1,39 @@
+<table class="table datatable-basic product_list_table">
+    <thead>
+        <tr>
+            <th>No.</th>
+            <th>Name</th>
+            <th class="text-center">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        
+        {% for group in groups %}
+            <tr>
+                <td>
+                    <span>
+                        {{ forloop.counter }}
+                    </span>
+                </td>
+                <td>
+                    {{ group.name }}
+                </td>
+                <td class="text-center">
+                    <ul class="icons-list">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
+                                    class="icon-menu7"></i></a>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li><a href="{% url 'edit_user_group' group.id %}"><i class="icon-pencil text-primary"></i>Edit</a></li>
+                                <li><a href="javascript;;" data-href="{% url 'group_permissions' group.id %}" class="group-permissions-link"><i class="icon-key text-info"></i>Permissions</a></li>
+                                <li><a href="javascript;;" data-href="{% url 'group_staffs' group.id %}" class="staff-available-link"><i class="icon-user-check text-success"></i>Staffs</a></li>                                       
+                                <li><a href="javascript;;" data-href="{% url 'delete_group' group.id %}" class="delete-group-link"><i class="icon-trash text-danger"></i>Delete</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </td>
+            </tr>                            
+        {% endfor %}
+            
+    </tbody>
+</table>

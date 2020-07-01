@@ -1,0 +1,178 @@
+/* scroll css */
+::-webkit-scrollbar {
+    width: 13px !important;
+}
+
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey !important; 
+    border-radius: 10px !important;
+}
+ 
+
+::-webkit-scrollbar-thumb {
+    background: rgba(3, 169, 244,.6) !important; 
+    border-radius: 10px !important;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(3, 169, 244) !important;
+}
+/* scroll css end*/
+.sys-color-text{
+    color:#37474F !important;
+}
+input.sys-input, .select2-selection--single:not([class*=bg-]):not([class*=border-]) {
+    border-radius:20px !important;
+    color:#2196F3 !important;
+}
+.sys-btn-color{
+    background-color:#136e8a !important;
+}
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus, th{
+    color:#37474F
+}
+.nav-tabs.nav-justified > li:first-child.active > a{
+    border-top-left-radius: 10px;
+}
+.nav-tabs.nav-justified > li:last-child.active > a{
+    border-top-right-radius: 10px
+}
+.sys-shadow-table{
+    border-radius: 10px;
+}
+.sys-notfy-panel, .sys-shadow-table{
+    border:none;
+    box-shadow: -2px 2px 5px 3px rgba(0, 0, 0, .15);
+    -o-box-shadow: -2px 2px 5px 3px rgba(0, 0, 0, .15);
+    -webkit-box-shadow: -2px 2px 5px 3px rgba(0, 0, 0, .15);
+    -moz-box-shadow: -2px 2px 5px 3px rgba(0, 0, 0, .15);
+}
+.sys-notfy-panel:hover{
+    transform: scale(.95);
+    transition: ease-out .2s;
+}
+.sys-btn, a.btn, button.btn{
+    border:none;
+    /* width:100%; */
+    box-shadow: 1px 2px 3px 3px rgba(0, 0, 0, .15);
+    -o-box-shadow: 1px 2px 3px 3px rgba(0, 0, 0, .15);
+    -webkit-box-shadow: 1px 2px 3px 3px rgba(0, 0, 0, .15);
+    -moz-box-shadow: 1px 2px 3px 3px rgba(0, 0, 0, .15);
+}
+.sys-btn:hover, a.btn:hover, button.btn:hover{
+    transform: scale(.95);
+    transition: ease-out .32s;
+    box-shadow: 1px 2px 3px 3px rgba(0, 0, 0, .15);
+    -o-box-shadow: 1px 2px 3px 3px rgba(0, 0, 0, .15);
+    -webkit-box-shadow: 1px 2px 3px 3px rgba(0, 0, 0, .15);
+    -moz-box-shadow: 1px 2px 3px 3px rgba(0, 0, 0, .15);
+}
+.sys-header{
+    border-radius: 30px;
+    box-shadow: 0px 3px 5px 2px rgba(0,0,0,.2);
+}
+.sys-header-sys-color{
+    background-color: #136e8a;
+    color:#fff;
+}
+.sys-header-white-color{
+    background-color: #fff;
+    color: #136e8a
+}
+.sys-color-bg{
+    background-color:#136e8a;
+    border-bottom: none
+}
+.control-label{
+    padding: 8px 10px 7px !important;
+}
+.home-header{
+    width:30%;margin:30px auto 20px auto;
+}
+/* other css */
+.search-cards{
+    border-radius:10px;
+    box-shadow: 0px 3px 5px 2px rgba(0,0,0,.2);
+    -webkit-box-shadow: 0px 3px 5px 2px rgba(0,0,0,.2);
+    -o-shadow: 0px 3px 5px 2px rgba(0,0,0,.2);
+    -moz-box-shadow: 0px 3px 5px 2px rgba(0,0,0,.2);
+}
+.sys-panel-shadow{
+    box-shadow: 5px 5px 8px 5px rgba(0, 0, 0, .15);
+    -webkit-box-shadow: 5px 5px 8px 5px rgba(0, 0, 0, .15);
+    -o-box-shadow: 5px 5px 8px 5px rgba(0, 0, 0, .15);
+}
+.b-r-3{
+    border-radius: 3px
+}
+.b-r-6{
+    border-radius: 6px;
+}
+.b-r-8{
+    border-radius: 8px;
+}
+.b-r-10{
+    border-radius:10px
+}
+.b-r-15{
+    border-radius: 15px;
+}
+.corp-top{
+    border-radius:3px; padding:10px; text-transform: uppercase;margin: 20px 0 10px 0;
+}
+
+.corp-top-btn-div{
+    padding: 0;
+    margin-top: 50px;
+}
+
+.top-btn-corp{
+    width: 100%;
+}
+.dataTables_filter input{
+    border-radius: 6px;
+}
+.dataTables_length select{
+    border-radius: 6px; 
+}
+thead tr{
+    background-color: rgba(0, 0, 0, .13)
+}
+.sidebar-default .navigation > li.active > a, .sidebar-default .navigation > li.active > a:hover, .sidebar-default .navigation > li.active > a:focus{
+    background-color:rgba(6,155,229,.2) !important
+}
+@media(min-width:1200px){
+    .remove_this_row{
+    position: absolute;
+}
+.remove_this_row_span{
+    display: none;
+    font-family: Arial, Helvetica, sans-serif
+}
+}
+/* big screen media queries */
+@media(min-width:1200px){
+    .brand-name{
+        position:relative; left:25%
+    }
+}
+
+/* mobile screen media queries */
+@media(max-width:700px){
+    .panel-table{
+        overflow-x:auto
+    }
+}
+/* keyframes */
+
+.search-loader{
+    padding:10px;
+}
+.search-loader i{
+    animation: rotate-faster .4s  infinite linear;
+    font-size: 30px;
+}
+@keyframes rotate-faster{
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

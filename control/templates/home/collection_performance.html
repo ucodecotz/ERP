@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% load control_filters %}
+{% block content %}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel b-r-6 sys-panel-shadow">
+            <div class="panel-heading bg-blue">
+                <h6 class="panel-title text-center" style="font-weight: 500">
+                    <i class="icon-pulse2"></i>
+                    Collection Performance 
+                </h6>
+            </div>
+            <div class="">
+
+                <table class="table datatable-basic payroll_table">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Staff</th>
+                            <th >
+                                Amount Collected
+                            </th>
+                            <th class="text-center">
+                                Actions
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for staff in staffs %}
+                        <tr>
+                            <td>
+                               {{ forloop.counter }}
+                            </td>
+                            <td>
+                                {{ staff }}
+                            </td>
+                            <td>
+                                {{ staff.user.id|get_total_amount_staff_collected|intcomma }}
+                            </td>
+                            <td class="text-center">
+                                    <a href="{% url 'staff_collection_detail' staff.user.id %}" class="btn btn-sm bg-primary btn-rounded sys-btn "
+                                    data-popup="tooltip" title="Open staff collecton details"><i
+                                        class="icon-square-right"></i></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock content%}
+
+{% block data_table_js %}
+<script>
+    $(function () {
+
+
+        // Table setup
+        // ------------------------------
+
+        // Setting datatable defaults
+        $.extend($.fn.dataTable.defaults, {
+            autoWidth: false,
+            columnDefs: [{
+                orderable: false,
+                width: '100px',
+                targets: [2]
+            }],
+            dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
+            language: {
+                search: '<span>Filter:</span> _INPUT_',
+                searchPlaceholder: 'Type to filter...',
+                lengthMenu: '<span>Show:</span> _MENU_',
+                paginate: { 'first': 'First', 'last': 'Last', 'next': '&rarr;', 'previous': '&larr;' }
+            },
+            drawCallback: function () {
+                $(this).find('tbody tr').slice(-1).find('.dropdown, .btn-group').addClass('dropup');
+            },
+            preDrawCallback: function () {
+                $(this).find('tbody tr').slice(-1).find('.dropdown, .btn-group').removeClass('dropup');
+            }
+        });
+
+
+        // Basic datatable
+        $('.datatable-basic').DataTable({
+            order: []
+        });
+
+    });
+</script>
+{% endblock data_table_js %}

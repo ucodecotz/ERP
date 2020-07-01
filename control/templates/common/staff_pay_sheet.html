@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Salary Sheet</title>
+</head>
+
+<body>
+    <style>
+        @media print{@page {size: landscape}}
+        .table {
+            width: 100%;
+            max-width: 100%;
+            margin-bottom: 20px;
+            border-collapse: collapse;
+            border-spacing: 0
+        }
+
+        thead tr {
+            background-color: rgba(0, 0, 0, .13);
+        }
+
+        tr th {
+            padding: 10px;
+            border-right: white solid 1px;
+        }
+
+        tr th:last-child {
+            padding: 10px;
+            border-right: rgba(0, 0, 0, .13) solid 1px;
+        }
+
+        tr td {
+            padding: 10px;
+            text-align: center;
+            border-right: rgba(0, 0, 0, .13) solid 1px;
+            border-left: rgba(0, 0, 0, .13) solid 1px;
+            border-bottom: rgba(0, 0, 0, .13) solid 1px;
+
+        }
+        .pull-right{
+            float: right !important;
+        }
+        .text-center{
+            text-align: center
+        }
+    </style>
+    <div class="staff_paysheet" style="font-family: Arial, Helvetica, sans-serif;">
+        <h2 class="text-center bg-blue text-semibold"
+            style="background-color: #03A9F4; text-align: center;font-weight: 600; color:white;  padding: 5px">
+            SALARY SHEET
+        </h2>
+        <h6 style="font-size:14px;">
+            <span>
+                Date: {% now " d F Y" %}
+            </span>
+            <span class="pull-right">
+                Salary Sheet No.:
+                H123XD
+            </span>
+        </h6>
+        <table class="table sales_table">
+            <thead>
+                <tr>
+                    <th>Staff Name</th>
+                    <th>
+                        Salary Amount
+                    </th>
+                    <th>
+                        Advance
+                    </th>
+                    <th>
+                        Loan
+                    </th>
+                    <th>
+                        Deduction
+                    </th>
+                    <th>
+                        Net Payable
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <!-- product name -->
+                        EFfort Stevens
+                    </td>
+                    <td>
+                        90,0000
+                    </td>
+                    <td>
+                        0
+                    </td>
+                    <td>
+                        0
+                    </td>
+                    <td>
+                        0
+                    </td>
+                    <td>
+                        90,000
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="row mt-20" style="margin-top: 50px">
+            <div class="col-xs-6 text-center" style="display: inline-block;width:49%;">
+                <h6 class="text-semibold" style="text-transform:uppercase; font-size: 14px">
+                    Effort Stevens
+                    <br>
+                    <small class="text-muted" style="font-size:10px;color:#555">
+                        MANAGING DIRECTOR
+                    </small>
+                </h6>
+                ..........................................
+            </div>
+            <div class="col-xs-6 text-center" style="display: inline-block; width:49%;">
+                <h6 class="text-semibold" style="text-transform:uppercase; font-size: 14px">
+                    Effort Stevens
+                    <br>
+                    <small class="text-muted" style="font-size:10px; color:#555">
+                        ACCOUNTANT
+                    </small>
+                </h6>
+                ..........................................
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

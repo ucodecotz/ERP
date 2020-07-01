@@ -1,0 +1,245 @@
+{% load staticfiles %} {% load control_filters %} {% load humanize %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title> {{ title }} | {{ sysname }}</title>
+
+    <!-- Global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet"
+        type="text/css">
+    <link href="{% static 'assets/css/icons/icomoon/styles.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static   'assets/css/bootstrap.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'assets/css/core.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'assets/css/components.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'assets/css/colors.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'assets/css/animate.css' %}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{% static 'assets/confirm_js/css/jquery-confirm.css' %}">
+    <!-- /global stylesheets -->
+    <link rel="stylesheet" href="{% static 'assets/preloder/css/preloader.css' %}" />
+    <script type="text/javascript" src="{% static 'assets/js/core/libraries/jquery.min.js' %}"></script>
+
+
+</head>
+
+<body>
+    <!-- Main navbar -->
+    <div class="navbar navbar-inverse bg-blue-600">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="{% url 'home' %}"
+                style="text-transform:uppercase; font-weight:700">{{ sysname }}
+                - System</a>
+
+            <ul class="nav navbar-nav visible-xs-block">
+                <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
+                <li><a class="sidebar-mobile-main-toggle"><i class="icon-grid6"></i></a></li>
+
+            </ul>
+        </div>
+
+        <div class="navbar-collapse collapse" id="navbar-mobile">
+            <ul class="nav navbar-nav">
+                <li><a class="sidebar-control sidebar-main-toggle hidden-xs"><i class="icon-grid6"></i></a>
+                </li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+
+
+                <li class="dropdown">
+                    <a href="{% url 'notepad' %}" title="System NotePad" data-popup="tooltip" data-placement="bottom">
+                        <i class="icon-notebook"></i>
+                        <span class="visible-xs-inline-block position-right">System Notes</span>
+                        <span class="badge bg-warning-400">{{ total_notes }}</span>
+                    </a>
+                </li>
+                <li class="dropdown dropdown-user">
+                    <a class="dropdown-toggle" data-toggle="dropdown">
+                        <img src="/static/assets/images/user.png" alt="">
+                        <span>{{ request.user.first_name }} {{ request.user.last_name }}</span>
+                        <i class="caret"></i>
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-right animated flipInX b-r-10">
+                        <li class="divider"></li>
+
+                        {% if request.user.is_superuser %}
+                        <li><a href="/admin/"><i class="icon-cog6 text-primary"></i>Super Control</a></li>
+                        {% endif %}
+
+                        <li><a href="{% url 'user_profile' %}"><i class=" icon-user text-primary"></i> User Profile</a>
+                        </li>
+                        <li><a href="{% url 'logout' %}"><i class="icon-switch2 text-danger"></i> Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- /main navbar -->
+
+
+    <!-- Page container -->
+    <div class="page-container">
+
+        <!-- Page content -->
+        <div class="page-content">
+
+            <!-- Main sidebar -->
+            <div class="sidebar sidebar-main sidebar-default">
+                <div class="sidebar-content">
+
+                    <!-- User menu -->
+                    <div class="sidebar-user-material">
+                        <div class="category-content"
+                            style="background:url(/static/assets/images/user_bg.jpg) center center no-repeat; filter: grayscale(10%)">
+                            <div class="sidebar-user-material-content text-white">
+                                <!-- <a href="#"><img src="/static/assets/images/user.png" class="img-circle img-responsive" alt=""></a> -->
+                                <h6>{{ request.user.first_name }} {{ request.user.last_name }}</h6>
+                                <span class="text-size-small">{{ request.user|current_user_branch }}</span>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- /user menu -->
+
+
+                    <!-- Main navigation -->
+                    <div class="sidebar-category sidebar-category-visible">
+                        <div class="category-content no-padding">
+                            <ul class="navigation navigation-main navigation-accordion">
+
+                                <!-- Main -->
+                                {% include 'common/side_bar.html' %}
+
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /main navigation -->
+
+                </div>
+            </div>
+            <!-- /main sidebar -->
+
+
+            <!-- Main content -->
+            <div class="content-wrapper">
+
+                <!-- Page header -->
+                <div class="page-header page-header-default">
+
+                    <div class="breadcrumb-line">
+                        <ul class="breadcrumb">
+
+                            {% block breadcrumb %}
+                            <li><a href="{% url 'home' %}"><i class="icon-home2 position-left"></i> Home</a></li>
+
+                            <li class="active">
+                                {{ title }}
+                            </li>
+                            {% endblock %}
+
+                        </ul>
+                    </div>
+                </div>
+                <!-- /page header -->
+
+
+                <!-- Content area -->
+                <div class="content">
+                    {% block content %} {% endblock %}
+                    <!-- Footer -->
+                    <div class="footer text-primary">
+
+                        Copyrights &nbsp;&copy;
+                        <script>
+                            document.write(new Date().getFullYear())
+                        </script>
+                        {{ sysname }} - POS &nbsp; by
+                        <a href="https://ngomecloud.com" target="_blank" class="text-orange-600">NgomeCloud</a>
+                    </div>
+                    <!-- /footer -->
+
+
+                </div>
+                <!-- /content area -->
+
+            </div>
+            <!-- /main content -->
+
+        </div>
+        <!-- /page content -->
+
+    </div>
+    <!-- /page container -->
+
+
+</body>
+<!-- Core JS files -->
+<script type="text/javascript" src="{% static 'assets/js/plugins/loaders/pace.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/core/libraries/bootstrap.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/plugins/loaders/blockui.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/confirm_js/js/jquery-confirm.js' %}"></script>
+<!-- /core JS files -->
+
+<script type="text/javascript" src="{% static 'assets/js/plugins/notifications/pnotify.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/plugins/notifications/noty.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/plugins/notifications/jgrowl.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/plugins/tables/datatables/datatables.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/plugins/forms/selects/select2.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/plugins/forms/styling/uniform.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/plugins/forms/styling/switchery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/plugins/forms/styling/switch.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/plugins/pickers/pickadate/picker.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/plugins/pickers/pickadate/picker.date.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/plugins/editors/summernote/summernote.min.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'assets/js/plugins/tables/datatables/extensions/jszip/jszip.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/plugins/tables/datatables/extensions/pdfmake/pdfmake.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/plugins/tables/datatables/extensions/pdfmake/vfs_fonts.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/plugins/tables/datatables/extensions/buttons.min.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'assets/js/core/app.js' %}"></script>
+{% block data_table_js %}
+<script type="text/javascript" src="{% static 'assets/js/pages/datatables_basic.js' %}"></script>
+{% endblock data_table_js %}
+<script type="text/javascript" src="{% static 'assets/js/pages/editor_summernote.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/pages/form_checkboxes_radios.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/style.js' %}"></script>
+<script src="{% static 'assets/preloder/js/jquery.preloader.min.js' %}"></script>
+<script>
+    function call_notify(message, type, position) {
+        noty({
+            width: 200,
+            text: message + '!',
+            type: type,
+            dismissQueue: true,
+            timeout: 2500,
+            layout: position
+        });
+    }
+
+    $(function () {
+
+        $('.select').select2();
+
+        $(".switch").bootstrapSwitch();
+
+        $('.pickadate').pickadate({
+            closeOnSelect: true,
+            max: true,
+        });
+        $("input.pickadate").val('{% now "d F, Y" %}')
+        $("input[type='number']").val('')
+    });
+</script>
+
+{% block scripts %} {% endblock scripts %}
+
+</html>

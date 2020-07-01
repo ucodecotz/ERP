@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+<div class="row">
+    <div class="col-xs-12 mb-5 text-right">
+        <a href="{% url 'add_note' %}" class="btn btn-rounded bg-blue sys-btn  btn-labeled ml-20 add-note">
+            <b><i class="icon-plus22"></i></b>
+            Add Note
+        </a>
+    </div>
+    {% if notes %}
+    {% for note in notes %}
+    <div class="col-md-6">
+        <div class="panel-group">
+            <div class="panel">
+                <div class="panel-heading {% if note.priority %} bg-danger-400 {% else %} bg-blue-400 {% endif %}">
+                    <h5 class="panel-title">
+                        <a class="collapsed" data-toggle="collapse" href="#title{{note.id}}">
+                            {{note.title}}
+                            <br>
+                            <small class="text-white">
+                               {{note.updated}}
+                            </small>
+                        </a>
+                    </h5>
+
+                    <div class="heading-elements">
+                        <ul class="icons-list">
+                            <li>
+                                <a class="edit-note-link " href="{% url 'edit_note' note.id %}" data-popup="tooltip" title="Edit">
+                                    <i class="icon-pencil "></i>
+                                </a>
+                            </li>
+                            <li><a href="javascript:;" class="delete-note-link " data-href="{% url 'delete_note' note.id %}" data-popup="tooltip"
+                                    title="Delete">
+                                    <i class="icon-trash "></i>
+                                </a></li>
+                            <li>
+                                <a data-action="close" data-popup="tooltip" title="Remove"></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="title{{note.id}}" class="panel-collapse collapse">
+                    <div class="panel-body">
+                       <h6>
+                            {{note.description|safe}}
+                       </h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor%}
+    {%else%}
+    <h3 class="alert alert-info col-md-12 text-center">No Note(s) Registered!</h3>
+    {%endif%}
+</div>
+{% endblock content %}
+
+{% block scripts %}
+<script src="{% static 'assets/control/notepad.js' %}"></script>
+{% endblock scripts %}

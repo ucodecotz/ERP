@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+
+{% block breadcrumb %}
+<li><a href="{% url 'home' %}"><i class="icon-home2 position-left"></i> Home</a></li>
+<li><a href="{% url 'purchases' %}"><i class="icon-cart-add2 position-left"></i> Purchases</a></li>
+<li class="active">
+    {{ title }}
+</li>
+{% endblock breadcrumb %}
+
+{% block content %}
+<div class="row">
+    <div class="col-sm-4">
+        {% load widget_tweaks %}
+        <div class="panel b-r-10 sys-panel-shadow">
+            <div class="panel-heading bg-blue">
+                <h6 class="panel-title" style="font-weight: 500">
+                    <i class="icon-cart-add2"></i>
+                    &nbsp;
+                    Add New Purchase
+                </h6>
+            </div>
+            <div class="panel-body">
+                <form action="{% url 'add_purchase_item' purchase_obj.pk %}" method="POST" enctype="multipart/form-data"
+                    class="purchase-form">
+                    {% csrf_token %}
+                    <div class="row">
+                        <label class="col-lg-4 col-sm-4 control-label text-semibold mb-10">Product Name: <span
+                                class="text-danger">*</span></label>
+                        <div class="col-lg-8 col-sm-6 mb-10">
+                            {% render_field form.product class="select" %}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <label class="col-md-4 control-label text-semibold">
+                            Quantity
+                            <br>( <span class="product-short"> </span> )
+                            : <span class="text-danger">*</span>
+                        </label>
+                        <div class="col-md-8">
+                            {% render_field form.quantity class="form-control sys-input " placeholder="Enter quantity..." %}
+                        </div>
+                        <span class="text-danger">{{ form.quantity.errors }}</span>
+                    </div>
+
+                    <div class="row">
+                        <label class="col-md-4 control-label text-semibold">
+                            Purchase Price: <span class="text-danger">*</span>
+                        </label>
+                        <div class="col-md-8">
+                            {% render_field form.buying_price class="form-control sys-input " placeholder="Enter price..." %}
+                        </div>
+                        <span class="text-danger">{{ form.buying_price.errors }}</span>
+
+                    </div>
+
+                    <div class="row">
+                        <label class="col-md-4 control-label text-semibold">
+                            Selling Price: <span class="text-danger">*</span>
+                        </label>
+                        <div class="col-md-8">
+                            {% render_field form.selling_price class="form-control sys-input " placeholder="Enter price..." %}
+                        </div>
+                        <span class="text-danger">{{ form.selling_price.errors }}</span>
+                    </div>
+                    <div class="col-xs-12 text-right">
+                        <button class="btn btn-rounded bg-success-400 sys-btn  btn-labeled ml-20" type="submit">
+                            <b><i class="icon-plus22"></i></b> Add Purchase Item
+                        </button>
+                    </div>
+            </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <div class="panel b-r-6 sys-panel-shadow">
+            <div class="panel-heading bg-blue">
+                <h6 class="panel-title" style="font-weight: 500">
+                    <i class="icon-list-unordered"></i>
+                    Purchase List
+                    <span class="badge badge-flat border-white text-white pull-right purchase_badge">0</span>
+                </h6>
+            </div>
+            <div class="">
+
+                <table class="table datatable-basic sales_table">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Product Name</th>
+                            <th>
+                                Quantity
+                            </th>
+                            <th>
+                                Purchase Price
+                            </th>
+                            <th>Selling Price</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if purchases %}
+                        {% for purchase in purchases %}
+                        <tr>
+                            <td>
+                                <span>
+                                    {{forloop.counter}}
+                                </span>
+                            </td>
+                            <td>
+                                <!-- product name -->
+                                <span class="">
+                                    {{purchase.product.name}}
+                                </span>
+                                -
+                                <span class="badge badge-success">
+                                    {{purchase.product.unit}}
+                                </span>
+                            </td>
+                            <td>{{purchase.quantity}}
+                            </td>
+                            <td>
+                                {{purchase.selling_price}}
+                            </td>
+                            <td>
+                                {{purchase.buying_price}}
+                            </td>
+                            <td class="text-center">
+                                <button type="button" data-href="{% url 'remove_purchases_item' purchase.pk %}"
+                                    class="btn btn-warning btn-icon btn-sm btn-rounded sys-btn remove-purchase-item"><i
+                                        class="icon-trash"></i></button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+<script src="{% static 'assets/home/purchases.js' %}"></script>
+{% endblock scripts %}

@@ -1,0 +1,545 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load widget_tweaks %}
+{% block content%}
+<div class="someBlock">
+</div>
+<div class="row">
+    <div class="tabbable">
+        <ul class="nav nav-sm nav-tabs  nav-tabs-component bg-blue">
+            <li class="active">
+                <a href="#Customers" data-toggle="tab">
+                    <span class="badge text-danger  position-left">{{ total_customers }}</span>
+                    Customers
+                </a>
+            </li>
+            <li><a href="#Suppliers" data-toggle="tab">
+                    <span class="badge text-danger  position-left">{{ total_suppliers }}</span>
+                    Suppliers
+                </a>
+            </li>
+            <li><a href="#Borrowers" data-toggle="tab">
+                    <span class="badge text-danger  position-left">{{ total_borrowers }}</span>
+                    Borrowers
+                </a>
+            </li>
+            <li><a href="#Staffs" data-toggle="tab">
+                    <span class="badge text-danger  position-left">{{ total_staffs }}</span>
+                    Staffs
+                </a>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane active" id="Customers">
+                <form action="{% url 'add_customer' %}" method="POST" class="add-customer-form">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label text-semibold">
+                                    Full Name:
+
+                                    {% if customer_form.full_name.field.required %}
+                                    <span class="text-danger">*</span>
+                                    {% endif %}
+
+                                </label>
+                                <div class="col-lg-9">
+                                    {% render_field customer_form.full_name class="form-control sys-input" placeholder="Enter full name.." %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label text-semibold">
+                                    Customer Email:
+
+                                    {% if customer_form.email.field.required %}
+                                    <span class="text-danger">*</span>
+                                    {% endif %}
+
+                                </label>
+                                <div class="col-lg-9">
+                                    {% render_field customer_form.email class="form-control sys-input" placeholder="Email" %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label text-semibold">
+                                    Phone Number:
+
+                                    {% if customer_form.phone_number.field.required %}
+                                    <span class="text-danger">*</span>
+                                    {% endif %}
+
+                                </label>
+                                <div class="col-lg-9">
+                                    {% render_field customer_form.phone_number class="form-control sys-input" placeholder="Phone Number" %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label text-semibold">
+                                    Location:
+                                    {% if customer_form.location.field.required %}
+                                    <span class="text-danger">*</span>
+                                    {% endif %}
+
+                                </label>
+                                <div class="col-lg-9">
+                                    {% render_field customer_form.location class="form-control sys-input" placeholder="Location" %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label text-semibold">
+                                    Max Credit:
+                                    {% if customer_form.credit_limit.field.required %}
+                                    <span class="text-danger">*</span>
+                                    {% endif %}
+
+                                </label>
+                                <div class="col-lg-9">
+                                    {% render_field customer_form.credit_limit class="form-control sys-input" placeholder="Maximum Credit Amount" %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label text-semibold">
+                                    Credit's Days:
+                                    {% if customer_form.credit_day.field.required %}
+                                    <span class="text-danger">*</span>
+                                    {% endif %}
+                                </label>
+                                <div class="col-lg-9">
+                                    {% render_field customer_form.credit_day class="form-control sys-input" placeholder="Maximum Credit Days" %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label text-semibold">
+                                    Opening Balance:
+                                    {% if customer_form.balance.field.required %}
+                                    <span class="text-danger">*</span>
+                                    {% endif %}
+                                </label>
+                                <div class="col-lg-9">
+                                    {% render_field customer_form.balance class="form-control sys-input" placeholder="Customer Opening balance" %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label text-semibold">
+                                    Added By:
+                                    {% if customer_form.added_by.field.required %}
+                                    <span class="text-danger">*</span>
+                                    {% endif %}
+                                </label>
+                                <div class="col-lg-9">
+                                    {% render_field customer_form.added_by class="select" %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-10">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label text-semibold">
+                                    Registed Date:
+                                    <!-- {% if customer_form.added_by.field.required %}
+                                    <span class="text-danger">*</span>
+                                    {% endif %} -->
+                                </label>
+                                <div class="col-lg-9">
+                                    <input class="form-control sys-input pickadate" name="created_date">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-10">
+                            <div class="col-md-6 pull-right">
+                                <button type="submit" class="btn btn-rounded bg-success sys-btn" style="width: 100%"><i
+                                        class="icon-plus22"></i> Add Customer </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="mb-10" style="border:solid 0.5px rgba(41, 182, 246, .2)"></div>
+
+                <div class="panel  b-r-10 sys-panel-shadow">
+                    <div class="panel-heading bg-blue">
+                        <h6 class="panel-title " style="font-weight: 500">
+                            <i class=" icon-users2"></i>
+                            ALL CUSTOMERS
+                            <span
+                                class="badge badge-flat border-white text-white pull-right customers_table_bagde">{{ total_customers }}</span>
+                        </h6>
+                    </div>
+                    {% include 'common/customers_paginator.html' %}
+                </div>
+            </div>
+
+            <div class="tab-pane" id="Suppliers">
+                <form action="{% url 'add_supplier' %}" method="POST" class="add-supplier-form">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label text-semibold">
+                                    Full Name:
+                                    {% if supplier_form.full_name.field.required %}
+                                    <span class="text-danger">*</span>
+                                    {% endif %}
+                                </label>
+                                <div class="col-lg-9">
+                                    {% render_field supplier_form.full_name class="form-control sys-input" placeholder="Full name Eg.John Seku" %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label text-semibold">
+                                    Supplier Email:
+                                    {% if supplier_form.email.field.required %}
+                                    <span class="text-danger">*</span>
+                                    {% endif %}
+                                </label>
+                                <div class="col-lg-9">
+                                    {% render_field supplier_form.email class="form-control sys-input" placeholder="Email" %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label text-semibold">
+                                    Phone Number:
+                                    {% if supplier_form.phone_number.field.required %}
+                                    <span class="text-danger">*</span>
+                                    {% endif %}
+                                </label>
+                                <div class="col-lg-9">
+                                    {% render_field supplier_form.phone_number class="form-control sys-input" placeholder="Phone Number" %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label text-semibold">
+                                    Opening Balance:
+                                    {% if supplier_form.balance.field.required %}
+                                    <span class="text-danger">*</span>
+                                    {% endif %}
+
+                                </label>
+                                <div class="col-lg-9">
+                                    {% render_field supplier_form.balance class="form-control sys-input" placeholder="Supplier balance" %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-md-6 mb-10">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label text-semibold">
+                                    Registed Date:
+                                    <!-- {% if customer_form.added_by.field.required %}
+                                            <span class="text-danger">*</span>
+                                            {% endif %} -->
+                                </label>
+                                <div class="col-lg-9">
+                                    <input class="form-control sys-input pickadate" name="created_date">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-10">
+                            <div class="col-md-6 pull-right">
+                                <button type="submit" class="btn btn-rounded bg-success sys-btn" style="width: 100%"><i
+                                        class="icon-plus22"></i> Add Supplier </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="mb-10" style="border:solid 0.5px rgba(41, 182, 246, .2)"></div>
+
+                <div class="panel  b-r-10 sys-panel-shadow">
+                    <div class="panel-heading bg-blue">
+                        <h6 class="panel-title " style="font-weight: 500">
+                            <i class=" icon-users2"></i>
+                            ALL SUPPLIERS
+                            <span
+                                class="badge badge-flat border-white text-white pull-right suppliers_table_bagde">0</span>
+                        </h6>
+                    </div>
+                    {% include 'common/suppliers_paginator.html' %}
+                </div>
+            </div>
+
+            <div class="tab-pane" id="Borrowers">
+                <form action="{% url 'add_borrower' %}" method="POST" class="add-borrower-form">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label text-semibold">
+                                    Full Name:
+                                    {% if borrower_form.full_name.field.required %}
+                                    <span class="text-danger">*</span>
+                                    {% endif %}
+                                </label>
+                                <div class="col-lg-9">
+                                    {% render_field borrower_form.full_name class="form-control sys-input" placeholder="Full name Eg.John Seku" %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label text-semibold">
+                                    Borrowers Email:
+                                    {% if borrower_form.email.field.required %}
+                                    <span class="text-danger">*</span>
+                                    {% endif %}
+                                </label>
+                                <div class="col-lg-9">
+                                    {% render_field borrower_form.email class="form-control sys-input" placeholder="Email" %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label text-semibold">
+                                    Phone Number:
+                                    {% if borrower_form.phone_number.field.required %}
+                                    <span class="text-danger">*</span>
+                                    {% endif %}
+                                </label>
+                                <div class="col-lg-9">
+                                    {% render_field borrower_form.phone_number class="form-control sys-input" placeholder="Phone Number" %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label text-semibold">
+                                    Opening Balance:
+                                    {% if borrower_form.balance.field.required %}
+                                    <span class="text-danger">*</span>
+                                    {% endif %}
+
+                                </label>
+                                <div class="col-lg-9">
+                                    {% render_field borrower_form.balance class="form-control sys-input" placeholder="Borrower balance" %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-md-6 mb-10">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label text-semibold">
+                                    Registed Date:
+                                    <!-- {% if customer_form.added_by.field.required %}
+                                            <span class="text-danger">*</span>
+                                            {% endif %} -->
+                                </label>
+                                <div class="col-lg-9">
+                                    <input class="form-control sys-input pickadate" name="created_date">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-10">
+                            <div class="col-md-6 pull-right">
+                                <button type="submit" class="btn btn-rounded bg-success sys-btn" style="width: 100%"><i
+                                        class="icon-plus22"></i> Add Borrower </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="mb-10" style="border:solid 0.5px rgba(41, 182, 246, .2)"></div>
+
+                <div class="panel  b-r-10 sys-panel-shadow">
+                    <div class="panel-heading bg-blue">
+                        <h6 class="panel-title " style="font-weight: 500">
+                            <i class=" icon-users2"></i>
+                            ALL BORROWERS
+                            <span
+                                class="badge badge-flat border-white text-white pull-right borrowers_table_bagde">0</span>
+                        </h6>
+                    </div>
+                    {% include 'common/borrowers_paginator.html' %}
+                </div>
+            </div>
+
+            <div class="tab-pane" id="Staffs">
+                <form action="{% url 'add_staff' %}" method="POST" class="add-staff-form">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label text-semibold">
+                                    Full Name:
+                                    {% if staff_form.full_name.field.required %}
+                                    <span class="text-danger">*</span>
+                                    {% endif %}
+                                </label>
+                                <div class="col-lg-9">
+                                    {% render_field staff_form.full_name class="form-control sys-input" placeholder="Staff name" %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label text-semibold">
+                                    Staff Email:
+                                    {% if staff_form.email.field.required %}
+                                    <span class="text-danger">*</span>
+                                    {% endif %}
+
+                                </label>
+                                <div class="col-lg-9">
+                                    {% render_field staff_form.email class="form-control sys-input" placeholder="Staff email" %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label text-semibold">
+                                    Phone Number:
+                                    {% if staff_form.phone_number.field.required %}
+                                    <span class="text-danger">*</span>
+                                    {% endif %}
+
+                                </label>
+                                <div class="col-lg-9">
+                                    {% render_field staff_form.phone_number class="form-control sys-input" placeholder="Staff Phone number" %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label text-semibold">
+                                    Salary:
+                                    {% if staff_form.salary.field.required %}
+                                    <span class="text-danger">*</span>
+                                    {% endif %}
+
+                                </label>
+                                <div class="col-lg-9">
+                                    {% render_field staff_form.salary class="form-control sys-input" placeholder="Staff Salary" %}
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label text-semibold">
+                                    Roles:
+                                    {% if staff_form.role.field.required %}
+                                    <span class="text-danger">*</span>
+                                    {% endif %}
+
+                                </label>
+                                <div class="col-lg-9">
+                                    {% render_field staff_form.role class="select" %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label text-semibold">
+                                    Branch:
+                                    {% if staff_form.branch.field.required %}
+                                    <span class="text-danger">*</span>
+                                    {% endif %}
+
+                                </label>
+                                <div class="col-lg-9">
+                                    {% render_field staff_form.branch class="select" %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label text-semibold">
+                                    Opening Balance:
+                                    {% if staff_form.balance.field.required %}
+                                    <span class="text-danger">*</span>
+                                    {% endif %}
+
+                                </label>
+                                <div class="col-lg-9">
+                                    {% render_field staff_form.balance class="form-control sys-input" placeholder="Staff balance" %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="col-md-6 pull-right">
+                                    <button type="submit" class="btn btn-rounded bg-success sys-btn" style="width: 100%"><i
+                                        class="icon-plus22"></i> Add Staff </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="mb-10" style="border:solid 0.5px rgba(41, 182, 246, .2)"></div>
+
+                <div class="panel  b-r-10 sys-panel-shadow">
+                    <div class="panel-heading bg-blue">
+                        <h6 class="panel-title " style="font-weight: 500">
+                            <i class=" icon-users2"></i>
+                            ALL STAFFS
+                            <span
+                                class="badge badge-flat border-white text-white pull-right borrowers_table_bagde">0</span>
+                        </h6>
+                    </div>
+                    {% include 'common/staffs_paginator.html' %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content%}
+
+
+{% block scripts %}
+<script src="{% static 'assets/sys_auth/users.js' %}"></script>
+{% endblock scripts %}

@@ -1,0 +1,37 @@
+<table class="table datatable-basic product_list_table">
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Name</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            {% for region in regions %}
+                <tr>
+                    <td>
+                        <span>
+                            {{ forloop.counter }}
+                        </span>
+                    </td>
+                    <td>
+                        {{ region.name }}
+                    </td>
+                    <td class="text-center">
+                        <ul class="icons-list">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
+                                        class="icon-menu7"></i></a>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><a href="{% url 'edit_region' region.id %}"><i class="icon-pencil text-primary"></i>Edit</a></li>                                       
+                                    <li><a href="javascript;;" data-href="{% url 'delete_region' region.id %}" class="delete-region-link"><i class="icon-trash text-danger"></i>Delete</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>                            
+            {% endfor %}
+                
+        </tbody>
+    </table>

@@ -1,0 +1,82 @@
+{% load control_filters %}
+<form action="{% url 'attendence_form' %}" method="post" class="attendence-form">
+    {% csrf_token %}
+    {% load widget_tweaks %}
+    <table class="table datatable-basic payroll_table">
+        <thead>
+        <tr>
+            <th>No.</th>
+            <th>Staff Name</th>
+            <th>
+                Attend
+            </th>
+            <th>
+                Arrive Time
+            </th>
+            <th>
+                Comment
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if staffs %}
+            {% for staff in staffs %}
+                <tr class="user1">
+                    <td>
+                        {{ forloop.counter }}
+                    </td>
+                    <td class="username">
+                        <input type="hidden" name="staff" class="staff" value="{{ staff.pk }}">
+                        {{ staff }}
+                    </td>
+                    <td>
+                                <span class="checkbox checkbox-switchery switchery-sm"
+                                      style="margin-top: 0px; margin-bottom:0px">
+                                    <label>
+                                        {% with staff.pk|get_attendence_time:selected_date as time %}
+                                            {% if time %}
+                                                {% render_field form.attend class="switchery attend" checked="checked" style="margin-top: 0px; margin-bottom:0px"  %}
+                                            {% else %}
+                                                {% render_field form.attend class="switchery attend" style="margin-top: 0px; margin-bottom:0px" %}
+                                            {% endif %}
+                                        {% endwith %}
+                                    </label>
+                                </span>
+                    </td>
+                    <td>
+                        {% with staff.pk|get_attendence_time:selected_date as time %}
+                            {% if time %}
+                                {% render_field form.time_in class="form-control text-primary sys-input arrive_time" placeholder="Eg 23:00" value=time %}
+                            {% else %}
+                                <input type="time" name="time_in"
+                                       class="form-control text-primary sys-input arrive_time"
+                                       placeholder="Eg 23:00" disabled="disabled">
+                            {% endif %}
+                        {% endwith %}
+
+                    </td>
+                    <td>
+                        {% with staff.pk|get_attendence_comment:selected_date as comment %}
+                            {% if comment %}
+                                {% render_field form.comment class="form-control text-primary sys-input comment" placeholder="Write comments here.." value=comment %}
+                            {% else %}
+                                {% render_field form.comment class="form-control text-primary sys-input comment" placeholder="Write comments here.." %}
+                            {% endif %}
+                        {% endwith %}
+                    </td>
+
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="6">
+                    <div class="alert alert-info text-center">
+                        No Staff Found
+                    </div>
+                </td>
+            </tr>
+        {% endif %}
+
+        </tbody>
+    </table>
+</form>
