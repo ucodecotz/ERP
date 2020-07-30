@@ -11,22 +11,45 @@
         <i class="icon-cart-remove"></i>
         <span>Sales</span>
     </a>
-    <ul>
+    <!-- <ul>
         <li class="{% active_link 'add_}sales' %">
             <a href="{% url 'add_sales' %}" class="text-primary">
                 <i class="icon-database-menu" aria-hidden="true"></i>
                 Sales
             </a>
         </li>
-        <li class="{% active_link 'sales_assessment:sales_assessment' %}">
-            <a href="{% url 'sales_assessment:sales_assessment' %}" class="text-primary">
+       <li class="{% active_link '' %}">
+            <a href="{% url '" class="text-primary">
                 <i class="icon-checkbox-checked"></i>
                 Sales Assessment
             </a>
+        </li> -->
+
+    <!-- </ul> -->
+</li>
+<li class="{% active_link 'Incentives' %} ">
+    <a href="{% url 'add_sales' %}" class="text-primary">
+        <i class="icon-cart-remove"></i>
+        <span>Incentives</span>
+    </a>
+    <ul>
+        <li class="{% active_link 'add_incentives' %">
+            <a href="{% url 'sales_assessment:add_incentives' %}" class="text-primary">
+                <i class="icon-database-menu" aria-hidden="true"></i>
+                Add incentives
+            </a>
         </li>
+        <li class="{% active_link 'add_incentives_chart' %">
+            <a href="{% url 'sales_assessment:incentives_chart' %}" class="text-primary">
+                <i class="icon-database-menu" aria-hidden="true"></i>
+                Add incentives
+            </a>
+        </li>
+       
 
     </ul>
 </li>
+
 
 
 <li class="{% active_link 'expenses' %}">

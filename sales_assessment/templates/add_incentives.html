@@ -1,0 +1,186 @@
+{% extends 'base.html'%}
+
+{% block content %}
+
+<style>
+    table.dataTable thead .sorting:after,
+    table.dataTable thead .sorting:before,
+    table.dataTable thead .sorting_asc:after,
+    table.dataTable thead .sorting_asc:before,
+    table.dataTable thead .sorting_asc_disabled:after,
+    table.dataTable thead .sorting_asc_disabled:before,
+    table.dataTable thead .sorting_desc:after,
+    table.dataTable thead .sorting_desc:before,
+    table.dataTable thead .sorting_desc_disabled:after,
+    table.dataTable thead .sorting_desc_disabled:before {
+        bottom: .5em;
+    }
+</style>
+
+
+<div class="col-sm-6">
+    <div class="panel b-r-6 sys-panel-shadow">
+        <div class="panel-heading bg-blue">
+            <h6 class="panel-title text-center" style="font-weight: 500">
+                <i class="icon-checkbox-checked2"></i>
+                Employee
+            </h6>
+        </div>
+        <div class="panel-body">
+            <h4 style="text-align:center;">SELECT EMPLOYEE</h4>
+            <div class="table-responsive">
+                <table id="dtBasicExample" class="table table-striped table-hover table-sm" cellspacing="0"
+                    width="100%">
+                    <thead>
+                        <tr>
+                            <th style="width:10px;" class="th-sm">No</th>
+                            <th style="width:30em" class="th-sm">Employees</th>
+                            <th style="width:10px;" class="th-sm">Select</th>
+                            <th class="th-sm">S_Date</th>
+                            <th class="th-sm">E_Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1.</td>
+                            <td>Maria Maria</td>
+                            <td> <input type="checkbox"></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>2.</td>
+                            <td>Dulla Dulla</td>
+                            <td> <input type="checkbox"></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>3.</td>
+                            <td>Joseph Joseph</td>
+                            <td> <input type="checkbox"></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                        <tr>
+                            <td>4.</td>
+                            <td>Shaban Shaban</td>
+                            <td> <input type="checkbox"></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>5.</td>
+                            <td> Gabby Gabby</td>
+                            <td> <input type="checkbox"></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+
+                        </tr>
+                    </tbody>
+                    <thead>
+                        <tr>
+                            <th style="width:10px;" class="th-sm">No</th>
+                            <th style="width:30em" class="th-sm">Employees</th>
+                            <th style="width:10px;" class="th-sm">Select</th>
+                            <th class="th-sm">S_Date</th>
+                            <th class="th-sm">E_Date</th>
+                        </tr>
+                    </thead>
+
+                </table>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <button type="button" class="btn btn-success"
+                style="width: 9em;float:inline-end; height: 3em;font-size: 1em; font-weight: 500;">Save</button>
+        </div>
+
+    </div>
+</div>
+<div class="col-sm-6">
+    <div class="panel b-r-6 sys-panel-shadow">
+        <div class="panel-heading bg-blue">
+            <h6 class="panel-title text-center" style="font-weight: 500">
+                <i class="icon-checkbox-checked2"></i>
+                insentives
+            </h6>
+        </div>
+        <div class="panel-body">
+            <h4 style="text-align: center;">SELECT ITEMS</h4>
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <th style="width: 10px;">No</th>
+                        <th>Product</th>
+                        <th>Select</th>
+                        <th>Amount</th>
+                        <th>Total</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Dimond</td>
+                            <td> <input type="checkbox"></td>
+                            <td>8900</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Falion</td>
+                            <td> <input type="checkbox"></td>
+                            <td>3000</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>ToothPicks</td>
+                            <td> <input type="checkbox"></td>
+                            <td>3000</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Falion</td>
+                            <td> <input type="checkbox"></td>
+                            <td>4000</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>Falion</td>
+                            <td> <input type="checkbox"></td>
+                            <td>9000</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                    <thead>
+                        <th style="width: 10px;">No</th>
+                        <th>Product</th>
+                        <th>Select</th>
+                        <th>Amount</th>
+                        <th>Total</th>
+                    </thead>
+                </table>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <button type="button" class="btn btn-success"
+                style="width: 9em;float:inline-end; height: 3em;font-size: 1em; font-weight: 500;">Save</button>
+        </div>
+
+
+    </div>
+</div>
+
+
+
+<script>
+    $(document).ready(function () {
+        $('#dtBasicExample').DataTable();
+        $('.dataTables_length').addClass('bs-select');
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends 'base.html'%}
+
+{% block content %}
+<div class="col-sm-12">
+    <div class="panel b-r-6 sys-panel-shadow">
+        <div class="panel-heading bg-blue">
+            <h6 class="panel-title text-center" style="font-weight: 500">
+                <i class="icon-checkbox-checked2"></i>
+                items
+            </h6>
+        </div>
+        <div class="panel-body">
+
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped table-hover">
+
+                    <thead>
+                        <tr>
+                            <th style="width: 10px;">No</th>
+                            <th>Employees</th>
+                            <th>Asets</th>
+                            <th>Diamonds</th>
+                            <th>Falcom</th>
+                            <th>Toothpics</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1.</td>
+                            <td><a href="{% url 'sales_assessment:individual_incentives_chart' %}">Jimmy</a></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+
+                        </tr>
+                        <tr>
+                            <td>2.</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>3.</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Employes</th>
+                            <th>Asets</th>
+                            <th>Diamonds</th>
+                            <th>Falcom</th>
+                            <th>Toothpics</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

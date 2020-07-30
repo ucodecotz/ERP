@@ -103,7 +103,8 @@
                                 <!-- <a href="#"><img src="/static/assets/images/user.png" class="img-circle img-responsive" alt=""></a> -->
                                 <h6>{{ request.user.first_name }} {{ request.user.last_name }}</h6>
 {#                                <span class="text-size-small">{{ request.user }}</span>#}
-                                <span class="text-size-small">{{ request.user|current_user_branch }}</span>
+                                <span class="text-size-small">{{ request.user }}</span>
+
                             </div>
 
                         </div>
