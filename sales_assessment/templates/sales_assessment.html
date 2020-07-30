@@ -1,0 +1,105 @@
+{% extends 'base.html'%}
+
+{% block content %}
+    <div class="col-sm-12">
+        <div class="panel b-r-6 sys-panel-shadow">
+            <div class="panel-heading bg-blue">
+                <h6 class="panel-title text-center" style="font-weight: 500">
+                    <i class="icon-checkbox-checked2"></i>
+                    Sales Assessments
+                </h6>
+            </div>
+            <div class="">
+                <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                    <div class="datatable-header">
+                        <div id="DataTables_Table_0_filter" class="dataTables_filter">
+                            <label>
+                                <span>Filter:</span>
+                                <input type="search" class="" placeholder="Type to filter..." aria-controls="DataTables_Table_0">
+                            </label>
+                        </div>
+                        <div class="dataTables_length" id="DataTables_Table_0_length">
+                            <label>
+                                <span>Show:
+                                </span>
+                                <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="">
+                                    <option value="10">10</option>
+                                    <option value="25">25</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                </select>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="datatable-scroll">
+                        <table class="table datatable-basic payroll_table dataTable no-footer" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+                    <thead>
+                        <tr role="row"><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="No.: activate to sort column ascending"><i class="icon-graph"></i></th>
+                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Staff: activate to sort column ascending">No</th>
+                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Staff: activate to sort column ascending">Staff</th>
+                            <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 100px;" aria-label="
+                                Quantity
+                            ">
+                                Quantity
+                            </th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="
+                                Sales Value
+                            : activate to sort column ascending">
+                                Sales Value
+                            </th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="
+                                Profit
+                            : activate to sort column ascending">
+                                Profit
+                            </th>
+                            <th class="text-center sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="
+                                Actions
+                            : activate to sort column ascending">
+                                Actions
+                            </th>
+                            <th class="text-center sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="
+                                Actions
+                            : activate to sort column ascending">
+                                estimated Commissioner
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="odd">
+                        <td colspan="1" class="dataTables_empty" valign="top"><a  class="text-primary" href="{% url 'sales_assessment:sales_assessment_analytics' %}"><i class="icon-graph"></i></a> </td>
+                        <td colspan="1" class="dataTables_empty" valign="top">1 </td>
+                        <td colspan="1" class="dataTables_empty" valign="top">Job </td>
+                        <td colspan="1" class="dataTables_empty" valign="top">200 Q </td>
+                        <td colspan="1" class="dataTables_empty" valign="top">500*Q </td>
+                        <td colspan="1" class="dataTables_empty" valign="top">P=TR-TC </td>
+                        <td colspan="1" class="dataTables_empty" valign="top">Sold items </td>
+                        <td colspan="1" class="dataTables_empty" valign="top">@Q * %@Q</td>
+                    </tr>
+                    <tr class="odd">
+                        <td colspan="1" class="dataTables_empty" valign="top"><a  class="text-primary" href=""><i class="icon-graph"></i></a> </td>
+                       <td colspan="1" class="dataTables_empty" valign="top">2 </td>
+                        <td colspan="1" class="dataTables_empty" valign="top">Job </td>
+                        <td colspan="1" class="dataTables_empty" valign="top">200 Q </td>
+                        <td colspan="1" class="dataTables_empty" valign="top">500*Q </td>
+                        <td colspan="1" class="dataTables_empty" valign="top">P=TR-TC </td>
+                        <td colspan="1" class="dataTables_empty" valign="top">Sold items </td>
+                        <td colspan="1" class="dataTables_empty" valign="top">@Q * %@Q</td>
+                    </tr>
+                    <tr class="odd">
+                        <td colspan="1" class="dataTables_empty" valign="top"><a  class="text-primary" href=""><i class="icon-graph"></i></a> </td>
+                        <td <td colspan="1" class="dataTables_empty" valign="top">3 </td>
+                        <td colspan="1" class="dataTables_empty" valign="top">Job </td>
+                        <td colspan="1" class="dataTables_empty" valign="top">200 Q </td>
+                        <td colspan="1" class="dataTables_empty" valign="top">500*Q </td>
+                        <td colspan="1" class="dataTables_empty" valign="top">P=TR-TC </td>
+                        <td colspan="1" class="dataTables_empty" valign="top">Sold items </td>
+                        <td colspan="1" class="dataTables_empty" valign="top">@Q * %@Q</td>
+                    </tr>
+
+                    <tr class="odd">
+                        <td colspan="7" class="dataTables_empty" valign="top">No data available in table</td>
+                    </tr>
+                    </tbody>
+               </table></div><div class="datatable-footer"><div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Showing 0 to 0 of 0 entries</div><div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate"><a class="paginate_button previous disabled" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0" id="DataTables_Table_0_previous">←</a><span></span><a class="paginate_button next disabled" aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0" id="DataTables_Table_0_next">→</a>
+        </div>
+        </div>
+    </div>
+{% endblock %}

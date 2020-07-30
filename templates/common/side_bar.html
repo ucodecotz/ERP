@@ -11,21 +11,23 @@
         <i class="icon-cart-remove"></i>
         <span>Sales</span>
     </a>
-    <!-- <ul>
-        <li class="">
-            <a href="" class="text-primary">
-                <i class="icon-database-add"></i>
-                Add Sales
+    <ul>
+        <li class="{% active_link 'add_}sales' %">
+            <a href="{% url 'add_sales' %}" class="text-primary">
+                <i class="icon-database-menu" aria-hidden="true"></i>
+                Sales
             </a>
         </li>
-        <li>
-            <a href="" class="text-primary">
-                <i class="icon-database-menu"></i>
-                Today Sales
+        <li class="{% active_link 'sales_assessment:sales_assessment' %}">
+            <a href="{% url 'sales_assessment:sales_assessment' %}" class="text-primary">
+                <i class="icon-checkbox-checked"></i>
+                Sales Assessment
             </a>
         </li>
-    </ul> -->
+
+    </ul>
 </li>
+
 
 <li class="{% active_link 'expenses' %}">
     <a href="{% url 'expenses' %}" class="text-primary"><i class=" icon-drawer-out"></i>

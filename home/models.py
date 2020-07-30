@@ -20,6 +20,7 @@ class MyManager(models.Manager):
                 items.append(obj)
         return items
 
+
 class Product(ModelIsDeletable):
     """Model definition for Product."""
     name = models.CharField(max_length=200)
@@ -58,7 +59,7 @@ class Purchase(ModelIsDeletable):
     supplier = models.ForeignKey(
         User, related_name="supplier", on_delete=models.DO_NOTHING)
     purchase_type = models.BooleanField(default=False)
-    #purchase_date = models.CharField(max_length=100, null=True, blank=True)
+    # purchase_date = models.CharField(max_length=100, null=True, blank=True)
     purchase_date = models.DateField(default=timezone.now)
     created_by = models.ForeignKey(
         User, related_name="authorized_by", on_delete=models.DO_NOTHING, null=True, blank=True)
@@ -85,7 +86,6 @@ class Purchase(ModelIsDeletable):
     def __str__(self):
         return str(self.supplier)
 
-    
     def format_date(self, year, month, day):
         return Purchase.objects.filter(id=self.id).filter()
 
@@ -143,6 +143,7 @@ class SaleItem(ModelIsDeletable):
 
         verbose_name = 'SaleItem'
         verbose_name_plural = 'SaleItems'
+
     def __str__(self):
         if self.product:
             return str(self.product.name) + ' ' + str(self.quantity)
@@ -192,11 +193,11 @@ class ExpenseDetail(ModelIsDeletable):
 PAYMENT_TYPE_CHOICES = (
     ("customer payment", "customer payment"),
     ("staff collection", "staff collection"),
-    ("loan collection", "loan collection"),
+    ("loan collection",  "loan collection"),
     ("supplier payment", "supplier payment"),
-    ("other payment", "other payment"),
-    ("loan provision", "loan provision"),
-    ("staff loan", "staff loan"),
+    ("other payment",    "other payment"),
+    ("loan provision",   "loan provision"),
+    ("staff loan",       "staff loan"),
 )
 
 

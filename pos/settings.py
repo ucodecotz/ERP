@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'active_link',
     'control',
     'report',
+    'sales_assessment',
 ]
 
 MIDDLEWARE = [
@@ -87,32 +88,43 @@ WSGI_APPLICATION = 'pos.wsgi.application'
 
 
 # Database
-db_name = 'pos_db'
-db_user = 'pos_admin'
-db_password = 'e4tmachabamanoni@2019'
+db_name = 'erp_db'
+db_user = 'erp_admin'
+db_password = 'erp123erp'
 
-if DOCKER:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': db_name,
-            'USER': db_user,
-            'PASSWORD': db_password,
-            'HOST': '157.230.25.124',
-            'PORT': '5432',
-        }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': db_name,
+        'USER': db_user,
+        'PASSWORD': db_password,
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': db_name,
-            'USER': db_user,
-            'PASSWORD': db_password,
-            'HOST': '127.0.0.1',
-            'PORT': '5432',
-        }
-    }
+}
+
+# if DOCKER:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.postgresql',
+#             'NAME': db_name,
+#             'USER': db_user,
+#             'PASSWORD': db_password,
+#             'HOST': '157.230.25.124',
+#             'PORT': '5432',
+#         }
+#     }
+# else:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.postgresql',
+#             'NAME': db_name,
+#             'USER': db_user,
+#             'PASSWORD': db_password,
+#             'HOST': '127.0.0.1',
+#             'PORT': '5432',
+#         }
+#     }
 
 
 # Password validation
