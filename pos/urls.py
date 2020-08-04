@@ -8,5 +8,5 @@ urlpatterns = [
     path('auth/', include('sys_auth.urls')),
     path('control/',include('control.urls')),
     path('reports/',include('report.urls')),
-    path('sales_assessments/',include('sales_assessment.urls')),
+    path('sales_assessments/', include('Incentives_app.urls')),
 ]

@@ -27,22 +27,22 @@
 
     <!-- </ul> -->
 </li>
-<li class="{% active_link 'Incentives' %} ">
-    <a href="{% url 'add_sales' %}" class="text-primary">
-        <i class="icon-cart-remove"></i>
+<li class="{% active_link 'Incentives_app' %} ">
+    <a href="{% url 'Incentives_app:add_incentives' %}" class="text-primary">
+        <i class="icon-gift"></i>
         <span>Incentives</span>
     </a>
     <ul>
         <li class="{% active_link 'add_incentives' %">
-            <a href="{% url 'sales_assessment:add_incentives' %}" class="text-primary">
-                <i class="icon-database-menu" aria-hidden="true"></i>
+            <a href="{% url 'Incentives_app:add_incentives' %}" class="text-primary">
+                <i class="icon-gift" aria-hidden="true"></i>
                 Add incentives
             </a>
         </li>
         <li class="{% active_link 'add_incentives_chart' %">
-            <a href="{% url 'sales_assessment:incentives_chart' %}" class="text-primary">
-                <i class="icon-database-menu" aria-hidden="true"></i>
-                Add incentives
+            <a href="{% url 'Incentives_app:incentives_chart' %}" class="text-primary">
+                <i class="icon-gift" aria-hidden="true"></i>
+                 Incentives chart
             </a>
         </li>
        

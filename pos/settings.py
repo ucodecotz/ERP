@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'active_link',
     'control',
     'report',
-    'sales_assessment',
+    'Incentives_app',
 ]
 
 MIDDLEWARE = [
@@ -95,16 +95,16 @@ db_password = 'erp123erp'
 DATABASES = {
     'default': {
 
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         
 
-        # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        # 'NAME': db_name,
-        # 'USER': db_user,
-        # 'PASSWORD': db_password,
-        # 'HOST': 'localhost',
-        # 'PORT': '5432',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': db_name,
+        'USER': db_user,
+        'PASSWORD': db_password,
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
@@ -191,4 +191,6 @@ else:
 SESSION_EXPIRE_SECONDS = 1800  # 1/2 hour
 
 SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True
+
+
 
