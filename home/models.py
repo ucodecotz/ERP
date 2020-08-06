@@ -23,8 +23,12 @@ class MyManager(models.Manager):
 
 class Product(ModelIsDeletable):
     """Model definition for Product."""
-    name = models.CharField(max_length=200)
-    unit = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, null=True)
+    unit = models.CharField(max_length=200, null=True)
+    inncentive_amount = models.CharField(max_length=255, null=True)
+    isIncentive = models.BooleanField(default=False)
+    start_date = models.DateField(default=timezone.now,blank=True, null=True)
+    end_date = models.DateField(blank=True,null=True)
 
     class Meta:
         """Meta definition for Product."""

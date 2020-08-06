@@ -12,7 +12,8 @@ class staff_incentives(models.Model):
 
 
 class ProductIncentives(models.Model):
-    products = models.ManyToManyField(Product, )
+    products = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
+    inncentive_amount = models.CharField(max_length=255)
     start_date = models.DateTimeField(default=timezone.now, null=True)
     end_date = models.DateTimeField(null=True)
 
@@ -20,7 +21,7 @@ class ProductIncentives(models.Model):
         verbose_name_plural = '2: Incentives'
 
     def __str__(self):
-        return self.products.name
+        return str(self.products.name)
 
 
 class Incentives_chart(models.Model):

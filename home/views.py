@@ -13,7 +13,7 @@ from home.forms import *
 from control.models import UserProfile, Branch
 from .forms import *
 import datetime
-from datetime import date
+from datetime import date, datetime
 import itertools
 from control.customer_calculation import get_customer_debt
 from control.templatetags import control_filters
@@ -1165,3 +1165,81 @@ def delete_ror_commodity(request, ror_id):
         }
     context.append(info)
     return HttpResponse(json.dumps(context))
+
+
+
+
+
+from django.forms import CheckboxSelectMultiple, CheckboxInput, DateInput, TextInput
+from django.http import HttpResponseRedirect
+from django.urls import reverse, reverse_lazy
+
+from funky_sheets.formsets import HotView
+
+from .models import *
+
+
+def index(request):
+    return HttpResponseRedirect(reverse('update'))
+
+
+class CreateMovieView(HotView):
+    model = Product
+    template_name = 'common/create.html'
+    prefix = 'table'
+    checkbox_checked = 'yes'
+    checkbox_unchecked = 'no'
+    success_url = reverse_lazy('update')
+    fields = (
+        'name',
+        'isIncentive',
+        'inncentive_amount',
+        'start_date',
+        'end_date',
+        
+    )
+
+    factory_kwargs = {
+        'widgets': {
+            'start_date': DateInput(attrs={'type': 'date'}),
+            'end_date': DateInput(attrs={'type': 'date'}),
+            'genre': CheckboxSelectMultiple(),
+            'products': TextInput(),
+            'isIncentive': CheckboxInput()
+        }
+    }
+
+    hot_settings = {
+        # 'columnSorting': 'true',
+        'contextMenu': 'true',
+        'autoWrapRow': 'true',
+        'rowHeaders': 'true',
+        'contextMenu': 'true',
+        'search': 'true',
+        'licenseKey': 'non-commercial-and-evaluation',
+        'dropdownMenu': [
+            'remove_col',
+            '---------',
+            'make_read_only',
+            '---------',
+            'alignment'
+        ]
+    }
+
+
+
+class UpdateMovieView(CreateMovieView):
+    template_name = 'common/update.html'
+    action = 'update'
+    button_text = 'Update'
+
+    hot_settings = {
+        # 'columnSorting': 'true',
+        'contextMenu': 'true',
+        'autoWrapRow': 'true',
+        'rowHeaders': 'true',
+        'contextMenu': 'true',
+        'search': 'true',
+        'licenseKey': 'non-commercial-and-evaluation',
+    }
+

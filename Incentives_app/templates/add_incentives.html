@@ -29,6 +29,8 @@
                 Add Employees to incentives
             </h6>
         </div>
+        <form method="post" ac>
+            {% csrf_token %}
         <div class="panel-body">
             <h4 style="text-align:center;">SELECT PRODUCT</h4>
             <div class="table-responsive">
@@ -37,48 +39,43 @@
                     <thead>
                         <tr>
                             <th style="width:10px;" class="th-sm">No</th>
+                            <th style='display: none;'>No</th>
                             <th style="width:10em" class="th-sm">Product</th>
                             <th style="width:10px;" class="th-sm">Select</th>
-                            <th>Incentive amount </th>
-                            <th class="th-sm">S_Date</th>
-                            <th class="th-sm">E_Date</th>
+                            <th style="margin-right: 50px">Incentive amount </th>
+                            <th style="display: none;" class="th-sm">S_Date</th>
+                            <th style="display: none;" class="th-sm">E_Date</th>
                         </tr>
                     </thead>
                     <tbody>
-                     {% for product in products %}
+                        {{ form.management_form }}
+                        {% for form in form %}
                         <tr>
-                            <td>{{ forloop.counter }}.</td>
-                            <td>{{product.name }}</td>
-                            <td> <input type="checkbox"></td>
-                            <td>100</td>
-                            <td><i class="icon-calendar3"></td>
-                            <td><i class="icon-calendar3"></td>
+                            <td>{{ forloop.counter }}</td>
+                            <td style="display: none;">{{form.id}}</td>
+                            <td>{{form.name}}</td>
+                            <td> {{form.isIncentive}}</td>
+                            <td> {{form.inncentive_amount}}</td>
+                            <!-- <td><i class="icon-calendar3"></i></td>
+                            <td><i class="icon-calendar3"></i></td> -->
                         </tr>
-                        {% empty %}
-                        <tr>
-                            <td colspan="3">No data for now</td>
-                        </tr>
-                    {% endfor %}
+                        {% endfor %}
+                        
 
 
-                   <thead>
-                    <tr>
-                        <td colspan="3">
-                            <span class="text-primary">
-                                <input type="text" name="expense_date" class="form-control pickadate sys-input  picker__input" style="width: 85%; display:inline-block;" placeholder="Pick a date…" readonly="" id="P1275941754" aria-haspopup="true" aria-expanded="false" aria-readonly="false" aria-owns="P1275941754_root"><div class="picker" id="P1275941754_root" aria-hidden="true"><div class="picker__holder" tabindex="-1"><div class="picker__frame"><div class="picker__wrap"><div class="picker__box"><div class="picker__header"><div class="picker__month">August</div><div class="picker__year">2020</div><div class="picker__nav--prev" data-nav="-1" role="button" aria-controls="P1275941754_table" title="Previous month"> </div><div class="picker__nav--next picker__nav--disabled" data-nav="1" role="button" aria-controls="P1275941754_table" title="Next month"> </div></div><table class="picker__table" id="P1275941754_table" role="grid" aria-controls="P1275941754" aria-readonly="true"><thead><tr><th class="picker__weekday" scope="col" title="Sunday">Sun</th><th class="picker__weekday" scope="col" title="Monday">Mon</th><th class="picker__weekday" scope="col" title="Tuesday">Tue</th><th class="picker__weekday" scope="col" title="Wednesday">Wed</th><th class="picker__weekday" scope="col" title="Thursday">Thu</th><th class="picker__weekday" scope="col" title="Friday">Fri</th><th class="picker__weekday" scope="col" title="Saturday">Sat</th></tr></thead><tbody><tr><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1595710800000" role="gridcell" aria-label="26 July, 2020">26</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1595797200000" role="gridcell" aria-label="27 July, 2020">27</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1595883600000" role="gridcell" aria-label="28 July, 2020">28</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1595970000000" role="gridcell" aria-label="29 July, 2020">29</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1596056400000" role="gridcell" aria-label="30 July, 2020">30</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1596142800000" role="gridcell" aria-label="31 July, 2020">31</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1596229200000" role="gridcell" aria-label="1 August, 2020">1</div></td></tr><tr><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1596315600000" role="gridcell" aria-label="2 August, 2020">2</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1596402000000" role="gridcell" aria-label="3 August, 2020">3</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--today picker__day--highlighted" data-pick="1596488400000" role="gridcell" aria-label="4 August, 2020" aria-activedescendant="true">4</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1596574800000" role="gridcell" aria-label="5 August, 2020" aria-disabled="true">5</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1596661200000" role="gridcell" aria-label="6 August, 2020" aria-disabled="true">6</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1596747600000" role="gridcell" aria-label="7 August, 2020" aria-disabled="true">7</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1596834000000" role="gridcell" aria-label="8 August, 2020" aria-disabled="true">8</div></td></tr><tr><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1596920400000" role="gridcell" aria-label="9 August, 2020" aria-disabled="true">9</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1597006800000" role="gridcell" aria-label="10 August, 2020" aria-disabled="true">10</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1597093200000" role="gridcell" aria-label="11 August, 2020" aria-disabled="true">11</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1597179600000" role="gridcell" aria-label="12 August, 2020" aria-disabled="true">12</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1597266000000" role="gridcell" aria-label="13 August, 2020" aria-disabled="true">13</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1597352400000" role="gridcell" aria-label="14 August, 2020" aria-disabled="true">14</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1597438800000" role="gridcell" aria-label="15 August, 2020" aria-disabled="true">15</div></td></tr><tr><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1597525200000" role="gridcell" aria-label="16 August, 2020" aria-disabled="true">16</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1597611600000" role="gridcell" aria-label="17 August, 2020" aria-disabled="true">17</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1597698000000" role="gridcell" aria-label="18 August, 2020" aria-disabled="true">18</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1597784400000" role="gridcell" aria-label="19 August, 2020" aria-disabled="true">19</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1597870800000" role="gridcell" aria-label="20 August, 2020" aria-disabled="true">20</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1597957200000" role="gridcell" aria-label="21 August, 2020" aria-disabled="true">21</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1598043600000" role="gridcell" aria-label="22 August, 2020" aria-disabled="true">22</div></td></tr><tr><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1598130000000" role="gridcell" aria-label="23 August, 2020" aria-disabled="true">23</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1598216400000" role="gridcell" aria-label="24 August, 2020" aria-disabled="true">24</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1598302800000" role="gridcell" aria-label="25 August, 2020" aria-disabled="true">25</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1598389200000" role="gridcell" aria-label="26 August, 2020" aria-disabled="true">26</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1598475600000" role="gridcell" aria-label="27 August, 2020" aria-disabled="true">27</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1598562000000" role="gridcell" aria-label="28 August, 2020" aria-disabled="true">28</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1598648400000" role="gridcell" aria-label="29 August, 2020" aria-disabled="true">29</div></td></tr><tr><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1598734800000" role="gridcell" aria-label="30 August, 2020" aria-disabled="true">30</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1598821200000" role="gridcell" aria-label="31 August, 2020" aria-disabled="true">31</div></td><td role="presentation"><div class="picker__day picker__day--outfocus picker__day--disabled" data-pick="1598907600000" role="gridcell" aria-label="1 September, 2020" aria-disabled="true">1</div></td><td role="presentation"><div class="picker__day picker__day--outfocus picker__day--disabled" data-pick="1598994000000" role="gridcell" aria-label="2 September, 2020" aria-disabled="true">2</div></td><td role="presentation"><div class="picker__day picker__day--outfocus picker__day--disabled" data-pick="1599080400000" role="gridcell" aria-label="3 September, 2020" aria-disabled="true">3</div></td><td role="presentation"><div class="picker__day picker__day--outfocus picker__day--disabled" data-pick="1599166800000" role="gridcell" aria-label="4 September, 2020" aria-disabled="true">4</div></td><td role="presentation"><div class="picker__day picker__day--outfocus picker__day--disabled" data-pick="1599253200000" role="gridcell" aria-label="5 September, 2020" aria-disabled="true">5</div></td></tr></tbody></table><div class="picker__footer"><button class="picker__button--today" type="button" data-pick="1596488400000" aria-controls="P1275941754" disabled="disabled">Today</button><button class="picker__button--clear" type="button" data-clear="1" aria-controls="P1275941754" disabled="disabled">Clear</button><button class="picker__button--close" type="button" data-close="true" aria-controls="P1275941754" disabled="disabled">Close</button></div></div></div></div></div></div>
-                            </span>
-                        </td>
-                    </tr>
+                      
 
-                    </thead>
 
+                    </tbody>
+                   
                 </table>
             </div>
         </div>
         <div class="panel-footer">
-            <button type="button" class="btn btn-success"
+            <button type="submit" class="btn btn-success"
                 style="width: 9em;float:inline-end; height: 3em;font-size: 1em; font-weight: 500;">Save</button>
         </div>
+    </form>
 
     </div>
 </div>
@@ -106,6 +103,13 @@
 
                     </tbody>
                     <tbody>
+                        <tr>
+                            <td></td>
+                            <td>Joseph Joseph</td>
+                            <td> <input type="checkbox"></td>
+                            <td><i class="icon-calendar3"></i></td>
+                            <td><i class="icon-calendar3"></i></td>
+                        </tr>
                         <tr>
                             <td>3.</td>
                             <td>Joseph Joseph</td>
@@ -143,8 +147,11 @@
 
     </div>
 </div>
-
-
+<style type="text/css">
+    td input{
+        border:none;
+    }
+</style>
 
 
 

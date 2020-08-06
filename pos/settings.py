@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     'control',
     'report',
     'Incentives_app',
+    'extra_views',
+    'funky_sheets',
 ]
 
 MIDDLEWARE = [

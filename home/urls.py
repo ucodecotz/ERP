@@ -48,4 +48,8 @@ urlpatterns = [
     path('edit_ror_commodity/<ror_id>', views.EditRORView.as_view(), name="edit_ror_commodity"),
     path('delete_ror_commodity/<ror_id>', views.delete_ror_commodity, name="delete_ror_commodity"),
 
+
+    path('create/', views.CreateMovieView.as_view(), name='create'),
+    path('update/', views.UpdateMovieView.as_view(), name='update'),
+
 ]
